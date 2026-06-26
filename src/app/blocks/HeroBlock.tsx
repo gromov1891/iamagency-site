@@ -2,11 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/* Hero «Маркетинг» — единый холст 1440×1024, масштабируется под ширину
-   контейнера (как BuilderBlock и весь остальной сайт). За счёт этого заголовок
-   «МАРКЕТИНГ» всегда тянется почти на всю строку, а фигуры стоят на своих
-   местах на любом экране. Правая группа (карточка «Как мы работаем») вписана
-   в тот же холст со сдвигом вправо (left: 780 = 1440 − 660). */
+/* Hero «Маркетинг» — единый холст 1440×1024. Масштабируется так, чтобы целиком
+   вписаться в первый экран (высота = 100vh − хедер): берём меньший из масштабов
+   по ширине и по высоте, поэтому вся композиция (от «МАРКЕТИНГ» до кнопки
+   «Консультация») всегда помещается без прокрутки. Холст центрируется по
+   горизонтали. Правая группа (карточка «Как мы работаем») вписана в тот же холст
+   со сдвигом вправо (left: 780 = 1440 − 660). */
+const W = 1440;
 const H = 1024;
 
 export default function HeroBlock({
@@ -22,7 +24,8 @@ export default function HeroBlock({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const update = () => setScale(el.clientWidth / 1440);
+    // вписываем холст целиком: что меньше — ширина или высота
+    const update = () => setScale(Math.min(el.clientWidth / W, el.clientHeight / H));
     update();
     const ro = new ResizeObserver(update);
     ro.observe(el);
@@ -37,11 +40,15 @@ export default function HeroBlock({
     <div
       ref={ref}
       className="relative w-full"
-      style={{ aspectRatio: `1440 / ${H}`, overflow: "hidden", background: "#fff" }}
+      style={{
+        height: "calc(100vh - var(--header-h))",
+        overflow: "hidden",
+        background: "#fff",
+      }}
     >
       <div
         style={{
-          width: 1440,
+          width: W,
           height: H,
           position: "absolute",
           top: 0,
