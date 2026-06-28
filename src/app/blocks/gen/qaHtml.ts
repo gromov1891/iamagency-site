@@ -31,8 +31,8 @@ export const qaHtml = `<div style="position:absolute;left:0;top:0;width:1440px;h
 .qa-row:hover .qa-arrow{transform:rotate(-90deg)}
 .qa-arrow{transition:transform .3s ease;transform-origin:center}
 </style>
-<img src="/blk/qa/airship.webp" alt="" style="position:absolute;left:-350px;top:531px;width:1331px;height:1331px"/>
-<img src="/blk/qa/gold.webp" alt="" style="position:absolute;left:1245px;top:124px;width:265px;height:265px;transform:rotate(-16deg)"/>
+<img src="/blk/qa/airship.webp?v=2" alt="" style="position:absolute;left:-350px;top:531px;width:1331px;height:1331px"/>
+<img src="/blk/qa/gold.webp?v=2" alt="" style="position:absolute;left:1245px;top:124px;width:265px;height:265px;transform:rotate(-16deg)"/>
 <div style="position:absolute;left:65px;top:56px;width:880px;color:#1C1C1C;font-family:Coolvetica;font-weight:400;font-size:104px;line-height:86%;text-transform:uppercase">Частые вопросы<br/>про маркетинг</div>
 <div style="position:absolute;left:1028px;top:69px;width:347px;color:#9A9895;font-family:Inter;font-weight:500;font-size:25px;line-height:86%;letter-spacing:-0.05em">Если не нашли свой вопрос — напишите нам, ответим лично</div>
 ${rows}
