@@ -27,7 +27,9 @@ export default function Home() {
       <div id="uslugi">
         <BuilderBlock html={uslugiHtml} />
       </div>
-      <BuilderBlock html={tarifyHtml} />
+      <div id="tarify">
+        <BuilderBlock html={tarifyHtml} />
+      </div>
       <div id="portfolio">
         <FloatChips html={portfolioHtml} />
       </div>
