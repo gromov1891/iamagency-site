@@ -1,11 +1,11 @@
 [
   {
-    "nodeId": "12446:498",
-    "imageRef": "569dc2073ca1023444c20a6af1933ad649cebf2b",
+    "nodeId": "12457:647",
+    "imageRef": null,
     "suffix": null,
     "fileName": "shkola-01.png",
-    "w": 2275.38,
-    "h": 1416,
+    "w": 1478,
+    "h": 420,
     "needsCropping": false,
     "cropTransform": null
   }
