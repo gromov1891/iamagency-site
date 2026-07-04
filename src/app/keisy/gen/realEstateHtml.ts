@@ -70,11 +70,16 @@ const pill = (
     : `<div style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;border:0.77px solid #272727;border-radius:23px;background:#FFF;display:flex;align-items:center;justify-content:center;box-sizing:border-box;"><span style="${nick(fs)}">${text}</span></div>`;
 
 /* Аватар 127.84 с инста-градиентным кольцом (136) */
-const avatar = (x: number, y: number, node: string, ref: string) =>
-  `<div style="position:absolute;left:${x}px;top:${y}px;width:127.84px;height:127.84px;">
+const avatar = (x: number, y: number, node: string, ref: string) => {
+  const _f = (IMGMAP as Record<string, string>)[node + "|" + (ref || "")];
+  const inner = _f
+    ? `<img src="/blk/keisy/${_f}" alt="" loading="lazy" style="position:absolute;left:0.09px;top:0.09px;width:127.84px;height:127.84px;border-radius:50%;object-fit:cover;border:4.08px solid #FFFFFF;box-sizing:border-box;" />`
+    : `<div style="position:absolute;left:0.09px;top:0.09px;width:127.84px;height:127.84px;border-radius:50%;background:${PH};border:4.08px solid #FFFFFF;box-sizing:border-box;" data-figma-node="${node}" data-image-ref="${ref}"></div>`;
+  return `<div style="position:absolute;left:${x}px;top:${y}px;width:127.84px;height:127.84px;">
     <div style="position:absolute;left:-3.99px;top:-3.99px;width:136px;height:136px;border-radius:50%;background:${IG_GRAD};"></div>
-    <div style="position:absolute;left:0.09px;top:0.09px;width:127.84px;height:127.84px;border-radius:50%;background:${PH};border:4.08px solid #FFFFFF;box-sizing:border-box;" data-figma-node="${node}" data-image-ref="${ref}"></div>
+    ${inner}
   </div>`;
+};
 
 export const realEstateH = 2735;
 

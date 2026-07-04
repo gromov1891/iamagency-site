@@ -51,8 +51,14 @@ const avatar = (
   ring: number,
   node: string,
   ref?: string,
-) =>
-  `<div style="position:absolute;left:${x - ring}px;top:${y - ring}px;width:${d + 2 * ring}px;height:${d + 2 * ring}px;border-radius:50%;background:${RING}"></div><div style="position:absolute;left:${x}px;top:${y}px;width:${d}px;height:${d}px;border-radius:50%;background:${PH};border:4px solid #FFF;box-sizing:border-box" data-figma-node="${node}"${ref ? ` data-image-ref="${ref}"` : ""}></div>`;
+) => {
+  const ring_div = `<div style="position:absolute;left:${x - ring}px;top:${y - ring}px;width:${d + 2 * ring}px;height:${d + 2 * ring}px;border-radius:50%;background:${RING}"></div>`;
+  const _f = (IMGMAP as Record<string, string>)[node + "|" + (ref || "")];
+  const inner = _f
+    ? `<img src="/blk/keisy/${_f}" alt="" loading="lazy" style="position:absolute;left:${x}px;top:${y}px;width:${d}px;height:${d}px;border-radius:50%;object-fit:cover;border:4px solid #FFF;box-sizing:border-box" />`
+    : `<div style="position:absolute;left:${x}px;top:${y}px;width:${d}px;height:${d}px;border-radius:50%;background:${PH};border:4px solid #FFF;box-sizing:border-box" data-figma-node="${node}"></div>`;
+  return ring_div + inner;
+};
 
 /* Плашка-ник профиля */
 const pill = (

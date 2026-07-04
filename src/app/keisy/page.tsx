@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import BuilderBlock from "../blocks/BuilderBlock";
 import FloatChips from "../blocks/FloatChips";
 import { portfolioHtml } from "../blocks/gen/portfolioHtml";
 import { CASES, caseScrollLinks } from "../case/cases";
 
-/* Хаб «Кейсы» — /keisy. Одностраничник: сверху одна хлебная крошка
-   «Главная → Кейсы» + блок с плашками ниш (анимация «убегания»), ниже все 10
-   кейсов подряд. Клик по плашке = плавная прокрутка к секции этого кейса.
-   Внутри секций собственная крошка убрана (остаётся только на /case/<slug>). */
+/* Хаб «Кейсы» — /keisy. Одностраничник: сверху блок с плашками ниш (внутри
+   холста крошка «Главная → Кейсы» — тем же кеглем и позицией, что на /case),
+   ниже все 10 кейсов подряд. Клик по плашке = плавная прокрутка к секции.
+   Внутри секций собственная крошка убрана. Коричневая спираль показана целиком
+   (холст расширен по высоте + overflow visible). */
 
 export const metadata: Metadata = {
   title: "Кейсы — портфолио SMM-агентства",
@@ -16,6 +16,21 @@ export const metadata: Metadata = {
     "Кейсы I AM AGENCY в разных нишах: beauty, fashion, sport & education, эксперты, недвижимость, туризм, авто, HoReCa, товарный бизнес и события. Результаты продвижения в соцсетях.",
   robots: { index: true, follow: true },
 };
+
+/* крошка внутри холста — идентична /case по кеглю (23.42px) и позиции (left:65,top:30) */
+const CRUMB =
+  `<div style="position:absolute;left:65px;top:30px;display:flex;gap:13px;align-items:baseline;white-space:nowrap;` +
+  `font-family:Inter,sans-serif;font-weight:500;font-size:23.42px;line-height:1;letter-spacing:-0.05em;text-transform:uppercase;">` +
+  `<a href="/" style="color:#9A9895;text-decoration:none;">Главная</a>` +
+  `<span style="color:#9A9895;">→</span>` +
+  `<span style="color:#1C1C1C;">Кейсы</span></div>`;
+
+/* портфолио-блок для хаба: крошка внутри + холст выше и без обрезки (полная спираль) */
+const HUB_H = 1313;
+const hubPortfolio = portfolioHtml.replace(
+  'width:1440px;height:1024px;background:#FFF;overflow:hidden">',
+  `width:1440px;height:${HUB_H}px;background:#FFF;overflow:visible">` + CRUMB
+);
 
 /* убрать внутреннюю хлебную крошку из холста секции (она нужна только на /case) */
 const stripCrumb = (html: string) =>
@@ -28,29 +43,8 @@ export default function KeisyPage() {
   return (
     <>
       <div className="header-spacer" style={{ background: "#FFFFFF" }} />
-      {/* единственная хлебная крошка — над блоком «доказательства эффективности» */}
-      <div
-        style={{
-          background: "#FFFFFF",
-          padding: "clamp(12px,1.5vw,24px) clamp(20px,4.5vw,65px) 0",
-          display: "flex",
-          gap: 13,
-          alignItems: "baseline",
-          fontFamily: "Inter, sans-serif",
-          fontWeight: 500,
-          fontSize: "clamp(13px,1.1vw,16px)",
-          letterSpacing: "-0.03em",
-          textTransform: "uppercase",
-        }}
-      >
-        <Link href="/" style={{ color: "#9A9895", textDecoration: "none" }}>
-          Главная
-        </Link>
-        <span style={{ color: "#9A9895" }}>→</span>
-        <span style={{ color: "#1C1C1C" }}>Кейсы</span>
-      </div>
-      {/* плашки: клик = прокрутка к секции */}
-      <FloatChips html={portfolioHtml} links={caseScrollLinks} mode="flee" />
+      {/* плашки: клик = прокрутка к секции; крошка «Главная → Кейсы» внутри холста */}
+      <FloatChips html={hubPortfolio} h={HUB_H} links={caseScrollLinks} mode="flee" />
       {/* все кейсы подряд, у каждого id = slug для якорной прокрутки */}
       {CASES.map((c) => (
         <div key={c.slug} id={c.slug}>
