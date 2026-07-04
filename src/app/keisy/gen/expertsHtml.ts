@@ -70,7 +70,7 @@ export const expertsHtml = `
     <div style="position:absolute;left:23.75px;top:30.03px;width:129.21px;height:145.28px;">
       <div style="position:absolute;left:2.1px;top:0;width:127.12px;height:127.12px;">
         <div style="position:absolute;left:-3.96px;top:-3.97px;width:135.23px;height:135.23px;border-radius:50%;background:${IG_GRAD};"></div>
-        <img src="/blk/keisy/experts-01-69bd11.png" alt="" loading="lazy" style="position:absolute;left:0.09px;top:0.09px;width:127.12px;height:127.12px;border-radius:50%;border:4.06px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
+        <img src="/blk/keisy/experts-01-69bd11.webp" alt="" loading="lazy" style="position:absolute;left:0.09px;top:0.09px;width:127.12px;height:127.12px;border-radius:50%;border:4.06px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
       </div>
       ${pill(0, 115.24, 129.21, 30.03, 15.25, "natalianaila")}
     </div>

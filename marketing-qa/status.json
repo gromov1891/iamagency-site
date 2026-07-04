@@ -1,0 +1,62 @@
+{
+  "_comment": "Дизайн-QA /marketing. Агент берёт блок с самым старым lastChecked, сверяет с Figma-SVG, пишет в REPORT.md, чинит безопасное. blocks: svg = эталон в папке Figma, live = якорь/текст на странице, gen = файл блока (или MISSING если блока нет).",
+  "figmaDir": "C:/Users/gromo/Downloads/Im agency (3)",
+  "blocks": [
+    {
+      "key": "hero",
+      "svg": "Hero.svg",
+      "live": "Маркетинг (заголовок-герой)",
+      "gen": "src/app/blocks/gen/marketingHeroHtml.ts (ДОБАВЛЕН 2026-06-26 00:38)",
+      "lastChecked": "2026-06-26 00:38"
+    },
+    {
+      "key": "napravleniya",
+      "svg": "Направления.svg",
+      "live": "НАПРАВЛЕНИЯ",
+      "gen": "src/app/blocks/gen/napravleniyaHtml.ts",
+      "lastChecked": "2026-06-24 00:54"
+    },
+    {
+      "key": "keysy",
+      "svg": "Кейсы.svg",
+      "live": "Кейсы маркетингового продвижения",
+      "gen": "src/app/blocks/gen/keysyHtml.ts",
+      "lastChecked": "2026-06-24 01:28"
+    },
+    {
+      "key": "process",
+      "svg": "Процесс.svg",
+      "live": "наведи мышкой на блок",
+      "gen": "src/app/blocks/gen/processHtml.ts",
+      "lastChecked": "2026-06-24 01:54"
+    },
+    {
+      "key": "sozdanie",
+      "svg": "Создание.svg",
+      "live": "СОЗДАНИЕ САЙТОВ",
+      "gen": "src/app/blocks/gen/sozdanieHtml.ts",
+      "lastChecked": "2026-06-24 02:23"
+    },
+    {
+      "key": "qa",
+      "svg": "Q&A.svg",
+      "live": "Q&A / вопросы",
+      "gen": "src/app/blocks/gen/qaHtml.ts",
+      "lastChecked": "2026-06-24 02:53"
+    },
+    {
+      "key": "skidka",
+      "svg": "Скидка.svg",
+      "live": "Скидка / обратный отсчёт",
+      "gen": "src/app/blocks/gen/skidkaHtml.ts",
+      "lastChecked": "2026-06-24 03:23"
+    },
+    {
+      "key": "futer",
+      "svg": "Футер.svg",
+      "live": "футер",
+      "gen": "src/app/blocks/gen/futerHtml.ts",
+      "lastChecked": "2026-06-24 03:54"
+    }
+  ]
+}

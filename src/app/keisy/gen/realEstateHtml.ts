@@ -122,7 +122,7 @@ export const realEstateHtml = `
     <div style="position:absolute;left:38px;top:0;width:118.49px;height:127.51px;">
       <div style="position:absolute;left:5.41px;top:0;width:109.47px;height:109.47px;">
         <div style="position:absolute;left:-3.41px;top:-3.41px;width:116.45px;height:116.45px;border-radius:50%;background:${IG_GRAD};"></div>
-        <img src="/blk/keisy/realestate-02-1a6031.png" alt="" loading="lazy" style="position:absolute;left:0.08px;top:0.08px;width:109.47px;height:109.47px;border-radius:50%;border:3.49px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
+        <img src="/blk/keisy/realestate-02-1a6031.webp" alt="" loading="lazy" style="position:absolute;left:0.08px;top:0.08px;width:109.47px;height:109.47px;border-radius:50%;border:3.49px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
       </div>
       ${pill(0, 101.65, 118.49, 25.86, 13.13, "villo.indonesia")}
     </div>

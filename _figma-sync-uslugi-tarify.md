@@ -16,6 +16,12 @@
 - Тариф «ТРИУМФ» → /tarify/triumf (панель triumf-panel.svg сгенерирована вручную - Figma 429). Карточка на главной кликабельна.
 - Услуги 2-4 → /uslugi/vedenie-sotssetey, /uslugi/marketing-i-prodvizhenie, /uslugi/kontent-syomki. Карточки 01-04 блока УСЛУГИ кликабельны. Якорь /#tarify добавлен.
 
+## Сделано 2026-07-03
+
+- /keisy - одностраничник кейсов: шапка = блок ПОРТФОЛИО с главной (FloatChips + links, клик по чипу = плавный скролл к разделу), ниже 10 разделов 1:1 из Figma: beauty, fashion, sport-education, experts, real-estate, tourism, cars-equipment, horeca, product, events (src/app/keisy/gen/*Html.ts).
+- Чипы на главной ведут на /keisy#<раздел>; меню ПОРТФОЛИО (Header + hero) → /keisy; все пункты hero-меню стали ссылками.
+- ФОТО В КЕЙСАХ = серые заглушки (Figma 429). Для замены: в каждом gen/*.images.json манифест {nodeId, imageRef, fileName, w, h}; заглушки в HTML помечены data-figma-node/data-image-ref. После снятия лимита: скачать по nodeId → public/blk/keisy/, заменить div-заглушки на <img>.
+
 ## Осталось
 
 - «Обучение» (Школа SMM): дизайнер ПЕРЕСОЗДАЛ фрейм (старый id 12455:557 умер), а Figma REST API в лимите 429 до ~2026-07-07. Разблокировка: юзер включает Dev Mode MCP Server в десктопном Figma (Preferences) ИЛИ новый токен с платного аккаунта, ИЛИ ждать сброса лимита. Карточка 05 «Обучение» на главной не кликабельна.

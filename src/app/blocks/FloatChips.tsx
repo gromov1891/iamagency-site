@@ -43,24 +43,43 @@ export default function FloatChips({
         .filter((el): el is HTMLElement => !!el);
       if (!chips.length) return;
 
-      // кликабельность (одинаково для обоих режимов)
+      // кликабельность (делегирование + hit-test по прямоугольнику пилюли —
+      // так ловится клик по всей видимой плашке: тексту, «+», фону)
       if (links) {
-        chips.forEach((chip) => {
-          const name = (chip.textContent || "").toLowerCase();
-          const key = Object.keys(links).find((k) => name.includes(k));
-          if (!key) return;
-          const href = links[key];
-          chip.style.cursor = "pointer";
-          chip.addEventListener("click", () => {
-            if (href.startsWith("#")) {
-              document
-                .getElementById(href.slice(1))
-                ?.scrollIntoView({ behavior: "smooth", block: "start" });
-            } else {
-              window.location.href = href;
+        const targets = pills
+          .map((pill) => {
+            const chip = pill.parentElement;
+            const name = (chip?.textContent || "").toLowerCase();
+            const key = Object.keys(links).find((k) => name.includes(k));
+            if (!key) return null;
+            // курсор-указатель на всю плашку
+            pill.style.cursor = "pointer";
+            if (chip) chip.style.cursor = "pointer";
+            return { pill, href: links[key] };
+          })
+          .filter((x): x is { pill: HTMLElement; href: string } => !!x);
+
+        const onClick = (e: MouseEvent) => {
+          for (const { pill, href } of targets) {
+            const r = pill.getBoundingClientRect();
+            if (
+              e.clientX >= r.left &&
+              e.clientX <= r.right &&
+              e.clientY >= r.top &&
+              e.clientY <= r.bottom
+            ) {
+              if (href.startsWith("#")) {
+                document
+                  .getElementById(href.slice(1))
+                  ?.scrollIntoView({ behavior: "smooth", block: "start" });
+              } else {
+                window.location.href = href;
+              }
+              break;
             }
-          });
-        });
+          }
+        };
+        root.addEventListener("click", onClick);
       }
 
       if (reduced) return;

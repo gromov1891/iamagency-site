@@ -117,7 +117,7 @@ ${b("+40%")} заявок
     <div style="position:absolute;left:4.98px;top:0;width:113.2px;height:131.86px;">
       <div style="position:absolute;left:0;top:0;width:113.2px;height:113.2px;">
         <div style="position:absolute;left:-3.53px;top:-3.53px;width:120.42px;height:120.42px;border-radius:50%;background:${IG_GRAD};"></div>
-        <img src="/blk/keisy/tourism-02-542cbe.png" alt="" loading="lazy" style="position:absolute;left:0.08px;top:0.08px;width:113.2px;height:113.2px;border-radius:50%;border:3.61px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
+        <img src="/blk/keisy/tourism-02-542cbe.webp" alt="" loading="lazy" style="position:absolute;left:0.08px;top:0.08px;width:113.2px;height:113.2px;border-radius:50%;border:3.61px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
       </div>
       ${pill(0.62, 105.11, 110.09, 26.74, 13.58, "whale.tours")}
     </div>
@@ -163,7 +163,7 @@ ${b("+40%")} заявок
     <div style="position:absolute;left:32.98px;top:23.16px;width:127.71px;height:145.96px;">
       <div style="position:absolute;left:0;top:0;width:127.71px;height:127.71px;">
         <div style="position:absolute;left:-3.98px;top:-3.98px;width:135.87px;height:135.87px;border-radius:50%;background:${IG_GRAD};"></div>
-        <img src="/blk/keisy/tourism-33-7d4316.png" alt="" loading="lazy" style="position:absolute;left:0.09px;top:0.09px;width:127.71px;height:127.71px;border-radius:50%;border:4.08px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
+        <img src="/blk/keisy/tourism-33-7d4316.webp" alt="" loading="lazy" style="position:absolute;left:0.09px;top:0.09px;width:127.71px;height:127.71px;border-radius:50%;border:4.08px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
       </div>
       ${pill(9.82, 115.78, 105.96, 30.17, 15.32, "tvs_visa", "https://www.instagram.com/tvs_visa?igsh=MTZ6dzJjdjJvdG1kaA==")}
     </div>
@@ -211,7 +211,7 @@ ${b("50+")} довольных клиентов на туры и визы за 2
       <div style="position:absolute;left:45.72px;top:0;width:193.49px;height:148.77px;">
         <div style="position:absolute;left:0;top:0;width:193.49px;height:127.71px;">
           <div style="position:absolute;left:29px;top:-3.98px;width:135.87px;height:135.87px;border-radius:50%;background:${IG_GRAD};"></div>
-          <img src="/blk/keisy/tourism-49-46cd20.png" alt="" loading="lazy" style="position:absolute;left:33.07px;top:0.1px;width:127.71px;height:127.71px;border-radius:50%;border:4.08px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
+          <img src="/blk/keisy/tourism-49-46cd20.webp" alt="" loading="lazy" style="position:absolute;left:33.07px;top:0.1px;width:127.71px;height:127.71px;border-radius:50%;border:4.08px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
           ${ph(128.31, -6.31, 45.61, 45.61, "50%", "12354:3570", "92019180f321ba0111956ed4708ba9013ea4ae43")}
         </div>
         ${pill(32.18, 118.59, 128.42, 30.17, 15.32, "citgroupe", "https://www.instagram.com/citgroupe?igsh=cjZjcXl3Nm41aDAx")}
@@ -232,7 +232,7 @@ ${b("50+")} довольных клиентов на туры и визы за 2
       <div style="position:absolute;left:46.78px;top:0;width:193.49px;height:148.77px;">
         <div style="position:absolute;left:0;top:0;width:193.49px;height:127.71px;">
           <div style="position:absolute;left:29px;top:-3.98px;width:135.87px;height:135.87px;border-radius:50%;background:${IG_GRAD};"></div>
-          <img src="/blk/keisy/tourism-55-6e61ad.png" alt="" loading="lazy" style="position:absolute;left:33.07px;top:0.1px;width:127.71px;height:127.71px;border-radius:50%;border:4.08px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
+          <img src="/blk/keisy/tourism-55-6e61ad.webp" alt="" loading="lazy" style="position:absolute;left:33.07px;top:0.1px;width:127.71px;height:127.71px;border-radius:50%;border:4.08px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
         </div>
         ${pill(14.88, 118.59, 162.66, 30.17, 15.32, "vizavshengen", "https://www.instagram.com/vizavshengen?igsh=MWkxc2FibWlrbDBtNQ==")}
       </div>

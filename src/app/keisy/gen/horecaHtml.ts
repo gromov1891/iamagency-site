@@ -42,63 +42,63 @@ export const horecaHtml = `
       <div style="position:absolute;left:24.09px;top:0px;width:112.44px;height:112.44px;">
         <div style="position:absolute;left:-3.51px;top:-3.51px;width:119.61px;height:119.61px;border-radius:50%;background:linear-gradient(180deg, rgba(255, 0, 197, 1) 0%, rgba(255, 0, 0, 1) 32%, rgba(255, 134, 0, 1) 67%, rgba(255, 202, 0, 1) 100%);"></div>
         <div style="position:absolute;left:0.08px;top:0.08px;width:112.44px;height:112.44px;">
-          <img src="/blk/keisy/horeca-01-5223f9.png" alt="" loading="lazy" style="position:absolute;left:0px;top:0px;width:112.44px;height:112.44px;border-radius:50%;border:3.59px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
+          <img src="/blk/keisy/horeca-01-5223f9.webp" alt="" loading="lazy" style="position:absolute;left:0px;top:0px;width:112.44px;height:112.44px;border-radius:50%;border:3.59px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
         </div>
       </div>
       <div style="position:absolute;left:0px;top:104.41px;width:158.77px;height:26.56px;display:flex;align-items:center;justify-content:center;background:#FFFFFF;border:0.67px solid #272727;box-sizing:border-box;border-radius:20.23px;">
         <div style="font-family:Inter,sans-serif;font-weight:500;font-size:13.49px;line-height:86%;letter-spacing:-0.03em;text-align:right;color:#272727;white-space:pre-line;margin:0;">altay_village_teletskoe</div>
       </div>
     </div>
-    <img src="/blk/keisy/horeca-02-37e6a0.png" alt="" loading="lazy" style="position:absolute;left:22.24px;top:142.09px;width:172.98px;height:40.16px;;object-fit:cover;" />
-    <img src="/blk/keisy/horeca-04.png" alt="" loading="lazy" style="position:absolute;left:213.14px;top:94.52px;width:173.51px;height:307.18px;border-radius:6.7px;;object-fit:cover;" />
-    <img src="/blk/keisy/horeca-06-64b5c9.png" alt="" loading="lazy" style="position:absolute;left:154.45px;top:32.13px;width:219.16px;height:48.7px;;object-fit:cover;" />
-    <img src="/blk/keisy/horeca-07.png" alt="" loading="lazy" style="position:absolute;left:22.24px;top:193.98px;width:176.1px;height:234.71px;border-radius:6.18px;;object-fit:cover;" />
-    <img src="/blk/keisy/horeca-08.png" alt="" loading="lazy" style="position:absolute;left:22.24px;top:436.77px;width:175.55px;height:177.82px;border-radius:6.18px;;object-fit:cover;" />
-    <img src="/blk/keisy/horeca-09.png" alt="" loading="lazy" style="position:absolute;left:401.56px;top:13.59px;width:166.98px;height:296.84px;border-radius:6.18px;;object-fit:cover;" />
-    <img src="/blk/keisy/horeca-10.png" alt="" loading="lazy" style="position:absolute;left:580.72px;top:13.59px;width:167.28px;height:297.39px;border-radius:6.18px;;object-fit:cover;" />
-    <img src="/blk/keisy/horeca-11.png" alt="" loading="lazy" style="position:absolute;left:401.56px;top:316.92px;width:167.48px;height:297.66px;border-radius:6.18px;;object-fit:cover;" />
-    <img src="/blk/keisy/horeca-12.png" alt="" loading="lazy" style="position:absolute;left:580.1px;top:316.92px;width:167.48px;height:297.66px;border-radius:6.18px;;object-fit:cover;" />
-    <img src="/blk/keisy/horeca-13-23c850.png" alt="" loading="lazy" style="position:absolute;left:211.9px;top:398.47px;width:174.83px;height:216.22px;border-radius:6.7px;;object-fit:cover;" />
+    <img src="/blk/keisy/horeca-02-37e6a0.webp" alt="" loading="lazy" style="position:absolute;left:22.24px;top:142.09px;width:172.98px;height:40.16px;;object-fit:cover;" />
+    <img src="/blk/keisy/horeca-04.webp" alt="" loading="lazy" style="position:absolute;left:213.14px;top:94.52px;width:173.51px;height:307.18px;border-radius:6.7px;;object-fit:cover;" />
+    <img src="/blk/keisy/horeca-06-64b5c9.webp" alt="" loading="lazy" style="position:absolute;left:154.45px;top:32.13px;width:219.16px;height:48.7px;;object-fit:cover;" />
+    <img src="/blk/keisy/horeca-07.webp" alt="" loading="lazy" style="position:absolute;left:22.24px;top:193.98px;width:176.1px;height:234.71px;border-radius:6.18px;;object-fit:cover;" />
+    <img src="/blk/keisy/horeca-08.webp" alt="" loading="lazy" style="position:absolute;left:22.24px;top:436.77px;width:175.55px;height:177.82px;border-radius:6.18px;;object-fit:cover;" />
+    <img src="/blk/keisy/horeca-09.webp" alt="" loading="lazy" style="position:absolute;left:401.56px;top:13.59px;width:166.98px;height:296.84px;border-radius:6.18px;;object-fit:cover;" />
+    <img src="/blk/keisy/horeca-10.webp" alt="" loading="lazy" style="position:absolute;left:580.72px;top:13.59px;width:167.28px;height:297.39px;border-radius:6.18px;;object-fit:cover;" />
+    <img src="/blk/keisy/horeca-11.webp" alt="" loading="lazy" style="position:absolute;left:401.56px;top:316.92px;width:167.48px;height:297.66px;border-radius:6.18px;;object-fit:cover;" />
+    <img src="/blk/keisy/horeca-12.webp" alt="" loading="lazy" style="position:absolute;left:580.1px;top:316.92px;width:167.48px;height:297.66px;border-radius:6.18px;;object-fit:cover;" />
+    <img src="/blk/keisy/horeca-13-23c850.webp" alt="" loading="lazy" style="position:absolute;left:211.9px;top:398.47px;width:174.83px;height:216.22px;border-radius:6.7px;;object-fit:cover;" />
   </div>
   <div style="position:absolute;left:65px;top:952px;width:1306px;height:721.02px;">
     <div style="position:absolute;left:470.86px;top:273.6px;width:80.11px;font-family:Inter,sans-serif;font-weight:600;font-size:9.07px;line-height:104%;text-transform:uppercase;color:#1F1F1F;white-space:pre-line;margin:0;">до:</div>
     <div style="position:absolute;left:461.03px;top:0px;width:383.94px;height:721.02px;">
       <div style="position:absolute;left:0px;top:178.37px;width:383.94px;height:542.66px;border-radius:15.12px;background:#FFFFFF;border:1.51px solid #000000;box-sizing:border-box;"></div>
-      <img src="/blk/keisy/horeca-14.png" alt="" loading="lazy" style="position:absolute;left:24.94px;top:529.05px;width:100.64px;height:178.91px;border-radius:7.56px;;object-fit:cover;" />
-      <img src="/blk/keisy/horeca-15.png" alt="" loading="lazy" style="position:absolute;left:141.33px;top:529.05px;width:101.02px;height:179.58px;border-radius:7.56px;;object-fit:cover;" />
-      <img src="/blk/keisy/horeca-16.png" alt="" loading="lazy" style="position:absolute;left:258.48px;top:529.05px;width:100.64px;height:178.91px;border-radius:7.56px;;object-fit:cover;" />
-      <img src="/blk/keisy/horeca-17.png" alt="" loading="lazy" style="position:absolute;left:12.85px;top:287.2px;width:174.87px;height:232.41px;border-radius:7.81px;;object-fit:cover;" />
-      <img src="/blk/keisy/horeca-18.png" alt="" loading="lazy" style="position:absolute;left:196.5px;top:287.2px;width:175.24px;height:232.91px;border-radius:7.81px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-14.webp" alt="" loading="lazy" style="position:absolute;left:24.94px;top:529.05px;width:100.64px;height:178.91px;border-radius:7.56px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-15.webp" alt="" loading="lazy" style="position:absolute;left:141.33px;top:529.05px;width:101.02px;height:179.58px;border-radius:7.56px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-16.webp" alt="" loading="lazy" style="position:absolute;left:258.48px;top:529.05px;width:100.64px;height:178.91px;border-radius:7.56px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-17.webp" alt="" loading="lazy" style="position:absolute;left:12.85px;top:287.2px;width:174.87px;height:232.41px;border-radius:7.81px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-18.webp" alt="" loading="lazy" style="position:absolute;left:196.5px;top:287.2px;width:175.24px;height:232.91px;border-radius:7.81px;;object-fit:cover;" />
       <div style="position:absolute;left:198.77px;top:272.84px;width:49.88px;font-family:Inter,sans-serif;font-weight:600;font-size:9.07px;line-height:104%;text-transform:uppercase;color:#1F1F1F;white-space:pre-line;margin:0;">после:</div>
       <div style="position:absolute;left:123.19px;top:0px;width:137.55px;height:160.23px;">
         <div style="position:absolute;left:0px;top:0px;width:137.55px;height:137.55px;">
           <div style="position:absolute;left:-4.29px;top:-4.29px;width:146.33px;height:146.33px;border-radius:50%;background:linear-gradient(180deg, rgba(255, 0, 197, 1) 0%, rgba(255, 0, 0, 1) 32%, rgba(255, 134, 0, 1) 67%, rgba(255, 202, 0, 1) 100%);"></div>
           <div style="position:absolute;left:0.1px;top:0.1px;width:137.55px;height:137.55px;">
-            <img src="/blk/keisy/horeca-19-47b6b9.png" alt="" loading="lazy" style="position:absolute;left:0px;top:0px;width:137.55px;height:137.55px;border-radius:50%;border:4.39px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
+            <img src="/blk/keisy/horeca-19-47b6b9.webp" alt="" loading="lazy" style="position:absolute;left:0px;top:0px;width:137.55px;height:137.55px;border-radius:50%;border:4.39px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
           </div>
         </div>
         <div style="position:absolute;left:14.36px;top:127.73px;width:108.08px;height:32.5px;display:flex;align-items:center;justify-content:center;background:#FFFFFF;border:0.82px solid #272727;box-sizing:border-box;border-radius:24.75px;">
           <div style="font-family:Inter,sans-serif;font-weight:500;font-size:16.5px;line-height:86%;letter-spacing:-0.03em;text-align:right;color:#272727;white-space:pre-line;margin:0;">eskq.bar</div>
         </div>
       </div>
-      <img src="/blk/keisy/horeca-20-5cbfce.png" alt="" loading="lazy" style="position:absolute;left:21.92px;top:186.68px;width:338.65px;height:75.74px;;object-fit:cover;" />
-      <img src="/blk/keisy/horeca-23.png" alt="" loading="lazy" style="position:absolute;left:232.03px;top:0.76px;width:46.1px;height:46.1px;border-radius:50%;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-20-5cbfce.webp" alt="" loading="lazy" style="position:absolute;left:21.92px;top:186.68px;width:338.65px;height:75.74px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-23.webp" alt="" loading="lazy" style="position:absolute;left:232.03px;top:0.76px;width:46.1px;height:46.1px;border-radius:50%;;object-fit:cover;" />
     </div>
     <div style="position:absolute;left:922.06px;top:0px;width:383.94px;height:721.02px;">
       <div style="position:absolute;left:0px;top:178.37px;width:383.94px;height:542.66px;border-radius:15.12px;background:#FFFFFF;border:1.51px solid #000000;box-sizing:border-box;"></div>
-      <img src="/blk/keisy/horeca-24.png" alt="" loading="lazy" style="position:absolute;left:24.94px;top:529.05px;width:100.64px;height:178.91px;border-radius:7.56px;;object-fit:cover;" />
-      <img src="/blk/keisy/horeca-25.png" alt="" loading="lazy" style="position:absolute;left:141.33px;top:529.05px;width:101.02px;height:179.58px;border-radius:7.56px;;object-fit:cover;" />
-      <img src="/blk/keisy/horeca-26.png" alt="" loading="lazy" style="position:absolute;left:258.48px;top:529.05px;width:100.64px;height:178.91px;border-radius:7.56px;;object-fit:cover;" />
-      <img src="/blk/keisy/horeca-27.png" alt="" loading="lazy" style="position:absolute;left:12.85px;top:287.2px;width:174.87px;height:232.41px;border-radius:7.81px;;object-fit:cover;" />
-      <img src="/blk/keisy/horeca-28.png" alt="" loading="lazy" style="position:absolute;left:196.5px;top:287.2px;width:175.24px;height:232.91px;border-radius:7.81px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-24.webp" alt="" loading="lazy" style="position:absolute;left:24.94px;top:529.05px;width:100.64px;height:178.91px;border-radius:7.56px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-25.webp" alt="" loading="lazy" style="position:absolute;left:141.33px;top:529.05px;width:101.02px;height:179.58px;border-radius:7.56px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-26.webp" alt="" loading="lazy" style="position:absolute;left:258.48px;top:529.05px;width:100.64px;height:178.91px;border-radius:7.56px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-27.webp" alt="" loading="lazy" style="position:absolute;left:12.85px;top:287.2px;width:174.87px;height:232.41px;border-radius:7.81px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-28.webp" alt="" loading="lazy" style="position:absolute;left:196.5px;top:287.2px;width:175.24px;height:232.91px;border-radius:7.81px;;object-fit:cover;" />
       <div style="position:absolute;left:198.77px;top:272.84px;width:49.88px;font-family:Inter,sans-serif;font-weight:600;font-size:9.07px;line-height:104%;text-transform:uppercase;color:#1F1F1F;white-space:pre-line;margin:0;">после:</div>
       <div style="position:absolute;left:12.85px;top:273.59px;width:80.11px;font-family:Inter,sans-serif;font-weight:600;font-size:9.07px;line-height:104%;text-transform:uppercase;color:#1F1F1F;white-space:pre-line;margin:0;">до:</div>
-      <img src="/blk/keisy/horeca-29-3fe9e6.png" alt="" loading="lazy" style="position:absolute;left:35.52px;top:191.21px;width:321.13px;height:71.82px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-29-3fe9e6.webp" alt="" loading="lazy" style="position:absolute;left:35.52px;top:191.21px;width:321.13px;height:71.82px;;object-fit:cover;" />
       <div style="position:absolute;left:113.37px;top:0px;width:156.45px;height:160.23px;">
         <div style="position:absolute;left:9.83px;top:0px;width:137.55px;height:137.55px;">
           <div style="position:absolute;left:-4.29px;top:-4.29px;width:146.33px;height:146.33px;border-radius:50%;background:linear-gradient(180deg, rgba(255, 0, 197, 1) 0%, rgba(255, 0, 0, 1) 32%, rgba(255, 134, 0, 1) 67%, rgba(255, 202, 0, 1) 100%);"></div>
           <div style="position:absolute;left:0.1px;top:0.1px;width:137.55px;height:137.55px;">
-            <img src="/blk/keisy/horeca-32-67034f.png" alt="" loading="lazy" style="position:absolute;left:0px;top:0px;width:137.55px;height:137.55px;border-radius:50%;border:4.39px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
+            <img src="/blk/keisy/horeca-32-67034f.webp" alt="" loading="lazy" style="position:absolute;left:0px;top:0px;width:137.55px;height:137.55px;border-radius:50%;border:4.39px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
           </div>
         </div>
         <div style="position:absolute;left:0px;top:127.73px;width:156.45px;height:32.5px;display:flex;align-items:center;justify-content:center;background:#FFFFFF;border:0.82px solid #272727;box-sizing:border-box;border-radius:24.75px;">
@@ -112,21 +112,21 @@ export const horecaHtml = `
         <div style="position:absolute;left:9.83px;top:0px;width:137.55px;height:137.55px;">
           <div style="position:absolute;left:-4.29px;top:-4.29px;width:146.33px;height:146.33px;border-radius:50%;background:linear-gradient(180deg, rgba(255, 0, 197, 1) 0%, rgba(255, 0, 0, 1) 32%, rgba(255, 134, 0, 1) 67%, rgba(255, 202, 0, 1) 100%);"></div>
           <div style="position:absolute;left:0.1px;top:0.1px;width:137.55px;height:137.55px;">
-            <img src="/blk/keisy/horeca-33-478f0d.png" alt="" loading="lazy" style="position:absolute;left:0px;top:0px;width:137.55px;height:137.55px;border-radius:50%;border:4.39px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
+            <img src="/blk/keisy/horeca-33-478f0d.webp" alt="" loading="lazy" style="position:absolute;left:0px;top:0px;width:137.55px;height:137.55px;border-radius:50%;border:4.39px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
           </div>
         </div>
         <div style="position:absolute;left:0px;top:127.73px;width:156.45px;height:32.5px;display:flex;align-items:center;justify-content:center;background:#FFFFFF;border:0.82px solid #272727;box-sizing:border-box;border-radius:24.75px;">
           <div style="font-family:Inter,sans-serif;font-weight:500;font-size:16.5px;line-height:86%;letter-spacing:-0.03em;text-align:right;color:#272727;white-space:pre-line;margin:0;"><a href="https://www.instagram.com/usadba_seehof.ru?igsh=MXNqaWl1cjN3dndsYQ==" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">usadba_seehof</a></div>
         </div>
       </div>
-      <img src="/blk/keisy/horeca-34-2b6556.png" alt="" loading="lazy" style="position:absolute;left:30.23px;top:187.43px;width:321.51px;height:71.9px;;object-fit:cover;" />
-      <img src="/blk/keisy/horeca-37.png" alt="" loading="lazy" style="position:absolute;left:16.63px;top:287.2px;width:174.87px;height:232.41px;border-radius:7.81px;;object-fit:cover;" />
-      <img src="/blk/keisy/horeca-38.png" alt="" loading="lazy" style="position:absolute;left:200.28px;top:287.2px;width:175.24px;height:232.91px;border-radius:7.81px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-34-2b6556.webp" alt="" loading="lazy" style="position:absolute;left:30.23px;top:187.43px;width:321.51px;height:71.9px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-37.webp" alt="" loading="lazy" style="position:absolute;left:16.63px;top:287.2px;width:174.87px;height:232.41px;border-radius:7.81px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-38.webp" alt="" loading="lazy" style="position:absolute;left:200.28px;top:287.2px;width:175.24px;height:232.91px;border-radius:7.81px;;object-fit:cover;" />
       <div style="position:absolute;left:202.55px;top:272.84px;width:49.88px;font-family:Inter,sans-serif;font-weight:600;font-size:9.07px;line-height:104%;text-transform:uppercase;color:#1F1F1F;white-space:pre-line;margin:0;">после:</div>
       <div style="position:absolute;left:16.63px;top:273.59px;width:80.11px;font-family:Inter,sans-serif;font-weight:600;font-size:9.07px;line-height:104%;text-transform:uppercase;color:#1F1F1F;white-space:pre-line;margin:0;">до:</div>
-      <img src="/blk/keisy/horeca-39.png" alt="" loading="lazy" style="position:absolute;left:27.21px;top:529.05px;width:100.64px;height:178.91px;border-radius:7.56px;;object-fit:cover;" />
-      <img src="/blk/keisy/horeca-40.png" alt="" loading="lazy" style="position:absolute;left:143.6px;top:529.05px;width:101.02px;height:179.58px;border-radius:7.56px;;object-fit:cover;" />
-      <img src="/blk/keisy/horeca-41.png" alt="" loading="lazy" style="position:absolute;left:260.75px;top:529.05px;width:100.64px;height:178.91px;border-radius:7.56px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-39.webp" alt="" loading="lazy" style="position:absolute;left:27.21px;top:529.05px;width:100.64px;height:178.91px;border-radius:7.56px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-40.webp" alt="" loading="lazy" style="position:absolute;left:143.6px;top:529.05px;width:101.02px;height:179.58px;border-radius:7.56px;;object-fit:cover;" />
+      <img src="/blk/keisy/horeca-41.webp" alt="" loading="lazy" style="position:absolute;left:260.75px;top:529.05px;width:100.64px;height:178.91px;border-radius:7.56px;;object-fit:cover;" />
     </div>
     <div style="position:absolute;left:184.41px;top:154.93px;width:21.84px;height:20.38px;background:#E5E3E0;" data-figma-node="12355:4156"></div>
   </div>

@@ -47,7 +47,7 @@ export default function KeisyPage() {
       <FloatChips html={hubPortfolio} h={HUB_H} links={caseScrollLinks} mode="flee" />
       {/* все кейсы подряд, у каждого id = slug для якорной прокрутки */}
       {CASES.map((c) => (
-        <div key={c.slug} id={c.slug}>
+        <div key={c.slug} id={c.slug} style={{ scrollMarginTop: "90px" }}>
           <BuilderBlock html={stripCrumb(c.html)} h={c.height} />
         </div>
       ))}
