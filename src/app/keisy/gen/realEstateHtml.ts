@@ -47,7 +47,7 @@ const ph = (
   ref?: string,
 ) => {
   const _f = (IMGMAP as Record<string, string>)[node + "|" + (ref || "")];
-  if (_f) return `<img src="/blk/keisy/${_f}" alt="" loading="lazy" style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;${r ? `border-radius:${r};` : ""}object-fit:cover;" />`;
+  if (_f) return `<img src="/blk/keisy/${_f}" alt="кейс I AM AGENCY - недвижимость" loading="lazy" style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;${r ? `border-radius:${r};` : ""}object-fit:cover;" />`;
   return `<div style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;background:${PH};${r ? `border-radius:${r};` : ""}" data-figma-node="${node}"${ref ? ` data-image-ref="${ref}"` : ""}></div>`;
 };
 
@@ -71,7 +71,7 @@ const pill = (
 const avatar = (x: number, y: number, node: string, ref: string) => {
   const _f = (IMGMAP as Record<string, string>)[node + "|" + (ref || "")];
   const inner = _f
-    ? `<img src="/blk/keisy/${_f}" alt="" loading="lazy" style="position:absolute;left:0.09px;top:0.09px;width:127.84px;height:127.84px;border-radius:50%;object-fit:cover;border:4.08px solid #FFFFFF;box-sizing:border-box;" />`
+    ? `<img src="/blk/keisy/${_f}" alt="кейс I AM AGENCY - недвижимость" loading="lazy" style="position:absolute;left:0.09px;top:0.09px;width:127.84px;height:127.84px;border-radius:50%;object-fit:cover;border:4.08px solid #FFFFFF;box-sizing:border-box;" />`
     : `<div style="position:absolute;left:0.09px;top:0.09px;width:127.84px;height:127.84px;border-radius:50%;background:${PH};border:4.08px solid #FFFFFF;box-sizing:border-box;" data-figma-node="${node}" data-image-ref="${ref}"></div>`;
   return `<div style="position:absolute;left:${x}px;top:${y}px;width:127.84px;height:127.84px;">
     <div style="position:absolute;left:-3.99px;top:-3.99px;width:136px;height:136px;border-radius:50%;background:${IG_GRAD};"></div>
@@ -120,7 +120,7 @@ export const realEstateHtml = `
     <div style="position:absolute;left:38px;top:0;width:118.49px;height:127.51px;">
       <div style="position:absolute;left:5.41px;top:0;width:109.47px;height:109.47px;">
         <div style="position:absolute;left:-3.41px;top:-3.41px;width:116.45px;height:116.45px;border-radius:50%;background:${IG_GRAD};"></div>
-        <img src="/blk/keisy/realestate-02-1a6031.webp" alt="" loading="lazy" style="position:absolute;left:0.08px;top:0.08px;width:109.47px;height:109.47px;border-radius:50%;border:3.49px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
+        <img src="/blk/keisy/realestate-02-1a6031.webp" alt="кейс I AM AGENCY - недвижимость" loading="lazy" style="position:absolute;left:0.08px;top:0.08px;width:109.47px;height:109.47px;border-radius:50%;border:3.49px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
       </div>
       ${pill(0, 101.65, 118.49, 25.86, 13.13, "villo.indonesia")}
     </div>

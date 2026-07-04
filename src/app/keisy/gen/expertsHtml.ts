@@ -37,7 +37,7 @@ const ph = (
   ref?: string,
 ) => {
   const _f = (IMGMAP as Record<string, string>)[node + "|" + (ref || "")];
-  if (_f) return `<img src="/blk/keisy/${_f}" alt="" loading="lazy" style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;${r ? `border-radius:${r};` : ""}object-fit:cover;" />`;
+  if (_f) return `<img src="/blk/keisy/${_f}" alt="кейс I AM AGENCY - эксперты" loading="lazy" style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;${r ? `border-radius:${r};` : ""}object-fit:cover;" />`;
   return `<div style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;background:${PH};${r ? `border-radius:${r};` : ""}" data-figma-node="${node}"${ref ? ` data-image-ref="${ref}"` : ""}></div>`;
 };
 
@@ -76,7 +76,7 @@ export const expertsHtml = `
     <div style="position:absolute;left:23.75px;top:30.03px;width:129.21px;height:145.28px;">
       <div style="position:absolute;left:2.1px;top:0;width:127.12px;height:127.12px;">
         <div style="position:absolute;left:-3.96px;top:-3.97px;width:135.23px;height:135.23px;border-radius:50%;background:${IG_GRAD};"></div>
-        <img src="/blk/keisy/experts-01-69bd11.webp" alt="" loading="lazy" style="position:absolute;left:0.09px;top:0.09px;width:127.12px;height:127.12px;border-radius:50%;border:4.06px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
+        <img src="/blk/keisy/experts-01-69bd11.webp" alt="кейс I AM AGENCY - эксперты" loading="lazy" style="position:absolute;left:0.09px;top:0.09px;width:127.12px;height:127.12px;border-radius:50%;border:4.06px solid #FFFFFF;box-sizing:border-box;;object-fit:cover;" />
       </div>
       ${pill(0, 115.24, 129.21, 30.03, 15.25, "natalianaila")}
     </div>
