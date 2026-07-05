@@ -6,7 +6,7 @@ export const heroHtml = `<div style="position:absolute;left:0;top:0;width:1440px
 
 <img src="/blk/hero/blue_full2.png" style="width:1010px;height:960px;object-fit:contain;position:absolute;left:700px;top:250px" alt="" />
 <img src="/blk/hero/hero-speckled.webp" class="hero-float-stone" style="width:332px;height:299px;position:absolute;left:115px;top:621px" alt="" />
-<img src="/blk/hero/hero-egg.webp" class="hero-float-egg" style="width:500px;height:360px;object-fit:contain;position:absolute;left:660px;top:110px" alt="" />
+<img src="/blk/hero/hero-egg.webp" class="hero-float-egg" style="width:400px;height:440px;object-fit:contain;position:absolute;left:700px;top:70px" alt="" />
 
 <div style="position:absolute;left:72px;top:150px;width:640px;font-family:Inter;font-weight:500;font-size:37.669px;line-height:1em;letter-spacing:-1.883px;text-transform:uppercase;color:#1C1C1C"><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:500;font-size:38px;color:rgba(28,28,28,1)">Стратегия <span style="color:#9A9895">/</span> Брендинг<br>Ведение соцсетей <span style="color:#9A9895">/</span> Контент и съёмки <span style="color:#9A9895">/</span> Продвижение</span></div>
 
