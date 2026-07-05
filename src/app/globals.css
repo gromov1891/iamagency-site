@@ -102,3 +102,10 @@ div[layer-name="🤵🏼‍♂️"] span {
 @media (prefers-reduced-motion: reduce) {
   .hero-float-egg, .hero-float-stone { animation: none; }
 }
+
+/* Переключение десктоп/планшет (BuilderBlock-холсты). Планшет < 900px. */
+.rb-tablet { display: none; }
+@media (max-width: 900px) {
+  .rb-desktop { display: none; }
+  .rb-tablet  { display: block; }
+}

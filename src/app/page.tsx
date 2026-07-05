@@ -1,9 +1,11 @@
 import Partners from "./blocks/Partners";
 import BuilderBlock from "./blocks/BuilderBlock";
+import ResponsiveBlock from "./blocks/ResponsiveBlock";
 import MarqueeBlock from "./blocks/MarqueeBlock";
 import ContactBlock from "./blocks/ContactBlock";
 import FloatChips from "./blocks/FloatChips";
-import { heroHtml } from "./blocks/gen/heroHtml";
+import { heroHtml, heroH } from "./blocks/gen/heroHtml";
+import { heroTabletHtml, heroTabletH } from "./blocks/gen/heroTabletHtml";
 import { utpHtml } from "./blocks/gen/utpHtml";
 import { uslugiHtml } from "./blocks/gen/uslugiHtml";
 import { tarifyHtml } from "./blocks/gen/tarifyHtml";
@@ -22,7 +24,7 @@ import { caseLinks } from "./case/cases";
 export default function Home() {
   return (
     <>
-      <BuilderBlock html={heroHtml} />
+      <ResponsiveBlock desktopHtml={heroHtml} desktopH={heroH} tabletHtml={heroTabletHtml} tabletH={heroTabletH} />
       <Partners />
       <BuilderBlock html={utpHtml} />
       <div id="uslugi">
