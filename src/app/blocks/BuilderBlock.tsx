@@ -9,7 +9,7 @@ export default function BuilderBlock({
   html,
   w = 1440,
   h = 1024,
-  overflow = "hidden",
+  overflow = "visible",
 }: {
   html: string;
   w?: number;

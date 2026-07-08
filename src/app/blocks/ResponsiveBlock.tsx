@@ -11,7 +11,7 @@ export default function ResponsiveBlock({
   tabletH,
   mobileHtml,
   mobileH,
-  overflow = "hidden",
+  overflow = "visible",
 }: {
   desktopHtml: string;
   desktopH: number;

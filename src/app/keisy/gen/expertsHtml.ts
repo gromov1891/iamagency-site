@@ -61,7 +61,7 @@ const pill = (
 export const expertsH = 989;
 
 export const expertsHtml = `
-<div style="position:relative;width:1440px;height:989px;background:#FFFFFF;overflow:hidden;">
+<div style="position:relative;width:1440px;height:989px;background:#FFFFFF;overflow:visible;">
 
   <!-- хлебные крошки -->
   <div style="position:absolute;left:65px;top:30px;display:flex;gap:13px;align-items:baseline;white-space:nowrap;font-family:Inter,sans-serif;font-weight:500;font-size:23.42px;line-height:1;letter-spacing:-0.05em;text-transform:uppercase;"><a href="/" style="color:#9A9895;text-decoration:none;">Главная</a><span style="color:#9A9895;">→</span><a href="/keisy" style="color:#9A9895;text-decoration:none;">Кейсы</a><span style="color:#9A9895;">→</span><span style="color:#1C1C1C;">Experts</span></div>

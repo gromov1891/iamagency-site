@@ -5,7 +5,7 @@
 // и переверстаны нативно под слот 220.6×400 (по ширине sx=0.5836, по высоте sy=0.7561),
 // чтобы карточка заполняла слот целиком, а не оставляла пустой низ. Ссылки → /tarify/dvizhenie|proryv|triumf.
 export const tarifyTabletH = 801;
-export const tarifyTabletHtml = `<div style="position:absolute;left:0;top:0;width:768px;height:801px;background:#1C1C1C;overflow:hidden">
+export const tarifyTabletHtml = `<div style="position:absolute;left:0;top:0;width:768px;height:801px;background:#1C1C1C;overflow:visible">
 <img layer-name="twisted-side-1 2" style="width:1047px;height:1047px;object-fit:contain;position:absolute;left:-453px;top:-651px" src="/blk/tarify/twisted_spiral.png" alt="" />
 <img layer-name="46 2" style="width:133px;height:124.99px;object-fit:contain;position:absolute;left:693px;top:413px" src="/blk/tarify/cf166417adcf.png" alt="" />
 

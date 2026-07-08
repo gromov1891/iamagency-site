@@ -46,7 +46,7 @@ const tag = (
   <p style="position:absolute;left:${x + plusX}px;top:${y + 12}px;width:37px;height:48px;${tagPlus}">+</p>`;
 
 export const shkolaHtml = `
-<div style="position:relative;width:1440px;height:4860px;background:${DARK};overflow:hidden;">
+<div style="position:relative;width:1440px;height:4860px;background:${DARK};overflow:visible;">
 
   <!-- H1 -->
   <p style="position:absolute;left:65px;top:142px;width:685px;color:${WHITE};${h1}">Школа SMM от агентства I AM</p>

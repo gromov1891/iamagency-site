@@ -49,7 +49,7 @@ const pDesc = (x: number, y: number, t: string) =>
   `<div style="position:absolute;left:${x}px;top:${y}px;width:571px;${desc}color:${GRAY};">${t}</div>`;
 
 export const dvizhenieHtml = `
-<div style="position:relative;width:1440px;height:5589px;background:#1C1C1C;overflow:hidden;">
+<div style="position:relative;width:1440px;height:5589px;background:#1C1C1C;overflow:visible;">
 
   <!-- хлебные крошки -->
   <div style="position:absolute;left:65px;top:30px;display:flex;gap:10px;align-items:baseline;">

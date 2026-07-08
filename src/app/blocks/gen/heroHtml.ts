@@ -2,9 +2,9 @@
 // Заголовок «SMM-АГЕНТСТВО ПОЛНОГО ЦИКЛА», строка-теги, подзаголовок, кнопка, 3D-фигуры,
 // меню и соцыконки. Холст 1440×1024, рендер через BuilderBlock.
 export const heroH = 1024;
-export const heroHtml = `<div style="position:absolute;left:0;top:0;width:1440px;height:1024px;background:#FFF;overflow:hidden"><div style="width:1461px;height:966px;position:absolute;left:25px;top:68px"><div style="width:1418px;height:941px;border-radius:42px;border:2px solid #1C1C1C;box-shadow:0 4px 4px 0 rgba(0, 0, 0, 0.25) inset;position:absolute;left:15px;top:18px"></div><div style="width:1377px;height:911px;border-radius:42px;background:#FFF;position:absolute;left:23px;top:22px"></div><div style="width:1461px;height:67px;background:#FFF;position:absolute;left:0px;top:899px"></div><div style="width:78px;height:44px;background:#FFF;position:absolute;left:1350px;top:0px"></div></div>
+export const heroHtml = `<div style="position:absolute;left:0;top:0;width:1440px;height:1024px;background:#FFF;overflow:visible"><div style="width:1461px;height:966px;position:absolute;left:25px;top:68px"><div style="width:1418px;height:941px;border-radius:42px;border:2px solid #1C1C1C;box-shadow:0 4px 4px 0 rgba(0, 0, 0, 0.25) inset;position:absolute;left:15px;top:18px"></div><div style="width:1377px;height:911px;border-radius:42px;background:#FFF;position:absolute;left:23px;top:22px"></div><div style="width:1461px;height:67px;background:#FFF;position:absolute;left:0px;top:899px"></div><div style="width:78px;height:44px;background:#FFF;position:absolute;left:1350px;top:0px"></div></div>
 
-<img src="/blk/hero/blue_full2.png" style="width:880px;height:815px;object-fit:contain;position:absolute;left:550px;top:250px" alt="" />
+<img src="/blk/hero/blue_full2.png" style="width:1080px;height:1000px;object-fit:contain;position:absolute;left:700px;top:250px" alt="" />
 <img src="/blk/hero/hero-speckled.webp" class="hero-float-stone" style="width:332px;height:299px;position:absolute;left:115px;top:621px" alt="" />
 <img src="/blk/hero/hero-egg.webp" class="hero-float-egg" style="width:320px;height:300px;object-fit:contain;position:absolute;left:720px;top:120px" alt="" />
 

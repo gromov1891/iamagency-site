@@ -36,7 +36,7 @@ const line = (y: number) =>
   `<div style="position:absolute;left:65px;top:${y}px;width:1310px;height:0;border-top:2px solid ${GRAY}"></div>`;
 
 export const vedenieHtml = `
-<div style="position:relative;width:1440px;height:5425px;background:#1C1C1C;overflow:hidden;">
+<div style="position:relative;width:1440px;height:5425px;background:#1C1C1C;overflow:visible;">
 
   <!-- хлебные крошки -->
   <div style="position:absolute;left:65px;top:30px;display:flex;gap:10px;align-items:baseline;">

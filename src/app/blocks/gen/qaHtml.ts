@@ -22,7 +22,7 @@ const rows = QA.map((it, i) => {
   </div>`;
 }).join("");
 
-export const qaHtml = `<div style="position:absolute;left:0;top:0;width:1440px;height:1024px;background:#FFF;overflow:hidden">
+export const qaHtml = `<div style="position:absolute;left:0;top:0;width:1440px;height:1024px;background:#FFF;overflow:visible">
 <style>
 .qa-row{width:1311px;height:80px;background:#fff;border:1px solid #EAEAEA;border-radius:42px;overflow:hidden;cursor:pointer;transition:height .32s cubic-bezier(.4,.7,.3,1),box-shadow .32s ease}
 .qa-row:hover{height:210px;z-index:30;box-shadow:0 16px 38px rgba(0,0,0,.14)}

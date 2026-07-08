@@ -167,7 +167,7 @@ export default function FloatChips({
   if (!tabletHtml) {
     return (
       <div ref={ref}>
-        <BuilderBlock html={html} h={h} overflow={mode === "flee" ? "visible" : "hidden"} />
+        <BuilderBlock html={html} h={h} overflow="visible" />
       </div>
     );
   }
@@ -175,16 +175,16 @@ export default function FloatChips({
   return (
     <div ref={ref}>
       <div className="rb-desktop">
-        <BuilderBlock html={html} w={1440} h={h} overflow={mode === "flee" ? "visible" : "hidden"} />
+        <BuilderBlock html={html} w={1440} h={h} overflow="visible" />
       </div>
       {tabletHtml ? (
         <div className={mobileHtml ? "rb-tablet rb-has-mobile" : "rb-tablet"}>
-          <BuilderBlock html={tabletHtml} w={768} h={tabletH ?? h} overflow={mode === "flee" ? "visible" : "hidden"} />
+          <BuilderBlock html={tabletHtml} w={768} h={tabletH ?? h} overflow="visible" />
         </div>
       ) : null}
       {mobileHtml ? (
         <div className="rb-mobile">
-          <BuilderBlock html={mobileHtml} w={375} h={mobileH ?? tabletH ?? h} overflow={mode === "flee" ? "visible" : "hidden"} />
+          <BuilderBlock html={mobileHtml} w={375} h={mobileH ?? tabletH ?? h} overflow="visible" />
         </div>
       ) : null}
     </div>

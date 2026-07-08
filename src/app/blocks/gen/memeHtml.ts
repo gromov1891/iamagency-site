@@ -3,7 +3,7 @@
 // и появляется облачко (I AM AGENCY / МАРКЕТИНГ СВОИМИ СИЛАМИ). Чистый CSS-hover.
 // Эмодзи и декор-фигура — картинки-оригиналы из Figma. Холст 1440×595.
 export const memeH = 595;
-export const memeHtml = `<div style="position:absolute;left:0;top:0;width:1440px;height:595px;background:#FFF;overflow:hidden">
+export const memeHtml = `<div style="position:absolute;left:0;top:0;width:1440px;height:595px;background:#FFF;overflow:visible">
 <style>
 .meme-card{cursor:pointer}
 .meme-h{opacity:0;pointer-events:none;transition:opacity .25s ease}

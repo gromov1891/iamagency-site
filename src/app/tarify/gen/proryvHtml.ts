@@ -39,7 +39,7 @@ const chip = (x: number, y: number, wpx: number, title: string) =>
   </div>`;
 
 export const proryvHtml = `
-<div style="position:relative;width:1440px;height:4133px;background:#1C1C1C;overflow:hidden;">
+<div style="position:relative;width:1440px;height:4133px;background:#1C1C1C;overflow:visible;">
 
   <!-- хлебные крошки -->
   <div style="position:absolute;left:65px;top:30px;display:flex;gap:10px;align-items:baseline;">

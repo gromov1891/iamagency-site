@@ -28,7 +28,7 @@ const CRUMB =
 /* портфолио-блок для хаба: крошка внутри + холст выше и без обрезки (полная спираль) */
 const HUB_H = 1313;
 const hubPortfolio = portfolioHtml.replace(
-  'width:1440px;height:1024px;background:#FFF;overflow:hidden">',
+  'width:1440px;height:1024px;background:#FFF;overflow:visible">',
   `width:1440px;height:${HUB_H}px;background:#FFF;overflow:visible">` + CRUMB
 );
 
