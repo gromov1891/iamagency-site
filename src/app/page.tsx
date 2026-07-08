@@ -8,8 +8,9 @@ import { heroHtml, heroH } from "./blocks/gen/heroHtml";
 import { heroTabletHtml, heroTabletH } from "./blocks/gen/heroTabletHtml";
 import { utpHtml, utpH } from "./blocks/gen/utpHtml";
 import { utpTabletHtml, utpTabletH } from "./blocks/gen/utpTabletHtml";
-import { uslugiHtml } from "./blocks/gen/uslugiHtml";
-import { tarifyHtml } from "./blocks/gen/tarifyHtml";
+import { uslugiHtml, uslugiH } from "./blocks/gen/uslugiHtml";
+import { uslugiTabletHtml, uslugiTabletH } from "./blocks/gen/uslugiTabletHtml";
+import { tarifyHtml, tarifyH } from "./blocks/gen/tarifyHtml";
 import { tarifyTabletHtml, tarifyTabletH } from "./blocks/gen/tarifyTabletHtml";
 import { portfolioHtml } from "./blocks/gen/portfolioHtml";
 import { marketingHtml } from "./blocks/gen/marketingHtml";
@@ -31,10 +32,10 @@ export default function Home() {
       <Partners />
       <ResponsiveBlock desktopHtml={utpHtml} desktopH={utpH} tabletHtml={utpTabletHtml} tabletH={utpTabletH} />
       <div id="uslugi">
-        <BuilderBlock html={uslugiHtml} />
+        <ResponsiveBlock desktopHtml={uslugiHtml} desktopH={uslugiH} tabletHtml={uslugiTabletHtml} tabletH={uslugiTabletH} />
       </div>
       <div id="tarify">
-        <BuilderBlock html={tarifyHtml} />
+        <ResponsiveBlock desktopHtml={tarifyHtml} desktopH={tarifyH} tabletHtml={tarifyTabletHtml} tabletH={tarifyTabletH} />
       </div>
       <div id="portfolio">
         <FloatChips html={portfolioHtml} links={caseLinks} />

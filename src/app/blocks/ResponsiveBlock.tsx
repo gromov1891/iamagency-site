@@ -24,14 +24,14 @@ export default function ResponsiveBlock({
   return (
     <>
       <div className="rb-desktop">
-        <BuilderBlock html={desktopHtml} h={desktopH} overflow={overflow} />
+        <BuilderBlock html={desktopHtml} w={1440} h={desktopH} overflow={overflow} />
       </div>
       <div className={mobileHtml ? "rb-tablet rb-has-mobile" : "rb-tablet"}>
-        <BuilderBlock html={tabletHtml} h={tabletH} overflow={overflow} />
+        <BuilderBlock html={tabletHtml} w={768} h={tabletH} overflow={overflow} />
       </div>
       {mobileHtml ? (
         <div className="rb-mobile">
-          <BuilderBlock html={mobileHtml} h={mobileH ?? tabletH} overflow={overflow} />
+          <BuilderBlock html={mobileHtml} w={375} h={mobileH ?? tabletH} overflow={overflow} />
         </div>
       ) : null}
     </>
