@@ -6,7 +6,7 @@ import ContactBlock from "./blocks/ContactBlock";
 import FloatChips from "./blocks/FloatChips";
 import { heroHtml, heroH } from "./blocks/gen/heroHtml";
 import { heroTabletHtml, heroTabletH } from "./blocks/gen/heroTabletHtml";
-import { utpHtml } from "./blocks/gen/utpHtml";
+import { utpHtml, utpH } from "./blocks/gen/utpHtml";
 import { utpTabletHtml, utpTabletH } from "./blocks/gen/utpTabletHtml";
 import { uslugiHtml } from "./blocks/gen/uslugiHtml";
 import { tarifyHtml } from "./blocks/gen/tarifyHtml";
@@ -29,7 +29,7 @@ export default function Home() {
     <>
       <ResponsiveBlock desktopHtml={heroHtml} desktopH={heroH} tabletHtml={heroTabletHtml} tabletH={heroTabletH} />
       <Partners />
-      <BuilderBlock html={utpHtml} />
+      <ResponsiveBlock desktopHtml={utpHtml} desktopH={utpH} tabletHtml={utpTabletHtml} tabletH={utpTabletH} />
       <div id="uslugi">
         <BuilderBlock html={uslugiHtml} />
       </div>
