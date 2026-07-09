@@ -18,7 +18,8 @@ import { marketingHtml, marketingH } from "./blocks/gen/marketingHtml";
 import { marketingTabletHtml, marketingTabletH } from "./blocks/gen/marketingTabletHtml";
 import { otzyvyHtml } from "./blocks/gen/otzyvyHtml";
 import { otzyvyTabletHtml, otzyvyTabletH } from "./blocks/gen/otzyvyTabletHtml";
-import { shkolaHtml } from "./blocks/gen/shkolaHtml";
+import { shkolaHtml, shkolaH } from "./blocks/gen/shkolaHtml";
+import { shkolaTabletHtml, shkolaTabletH } from "./blocks/gen/shkolaTabletHtml";
 import { blogHtml } from "./blocks/gen/blogHtml";
 import { kontaktyHtml } from "./blocks/gen/kontaktyHtml";
 import { futerHtml, futerH } from "./blocks/gen/futerHtml";
@@ -68,7 +69,7 @@ export default function Home() {
         tabletSpeed={32}
       />
       <div id="shkola">
-        <BuilderBlock html={shkolaHtml} />
+        <ResponsiveBlock desktopHtml={shkolaHtml} desktopH={shkolaH} tabletHtml={shkolaTabletHtml} tabletH={shkolaTabletH} />
       </div>
       <div id="blog">
         <BuilderBlock html={blogHtml} />
