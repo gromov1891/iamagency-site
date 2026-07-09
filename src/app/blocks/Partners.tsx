@@ -9,13 +9,12 @@ export default function Partners() {
     <div style={{ containerType: "inline-size" }} className="w-full">
       <section
         aria-label="Партнёры"
-        className="relative w-full overflow-hidden"
-        style={{ height: "5.2cqw" }}
+        className="partners-section relative w-full overflow-hidden"
       >
         {/* лента логотипов (голубая фигура-продолжение убрана: новый hero держит
             фигуру внутри себя, чтобы она не резалась в следующем блоке) */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="marquee-track absolute left-0 top-0 h-full">
+          <div className="partners-track marquee-track absolute left-0">
             {[0, 1, 2, 3].map((i) => (
               <img
                 key={i}
@@ -28,6 +27,17 @@ export default function Partners() {
             ))}
           </div>
         </div>
+        <style>{`
+          .partners-section { height: 5.2cqw; }
+          .partners-track { top: 0; height: 100%; }
+          @media (max-width: 900px) {
+            .partners-section { height: calc(100cqw * 110 / 768); }
+            .partners-track {
+              top: calc(100cqw * 25 / 768);
+              height: calc(100cqw * 60.31 / 768);
+            }
+          }
+        `}</style>
       </section>
     </div>
   );
