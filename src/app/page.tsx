@@ -79,7 +79,7 @@ export default function Home() {
       <div id="kontakty">
         <ContactBlock html={kontaktyHtml} h={kontaktyH} tabletHtml={kontaktyTabletHtml} tabletH={kontaktyTabletH} />
       </div>
-      <BuilderBlock html={futerHtml} h={futerH} />
+      <ResponsiveBlock desktopHtml={futerHtml} desktopH={futerH} tabletHtml={futerTabletHtml} tabletH={futerTabletH} />
     </>
   );
 }
