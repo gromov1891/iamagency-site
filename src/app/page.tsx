@@ -9,6 +9,7 @@ import { heroTabletHtml, heroTabletH } from "./blocks/gen/heroTabletHtml";
 import { heroMobileHtml, heroMobileH } from "./blocks/gen/heroMobileHtml";
 import { utpHtml, utpH } from "./blocks/gen/utpHtml";
 import { utpTabletHtml, utpTabletH } from "./blocks/gen/utpTabletHtml";
+import { utpMobileHtml, utpMobileH } from "./blocks/gen/utpMobileHtml";
 import { uslugiHtml, uslugiH } from "./blocks/gen/uslugiHtml";
 import { uslugiTabletHtml, uslugiTabletH } from "./blocks/gen/uslugiTabletHtml";
 import { tarifyHtml, tarifyH } from "./blocks/gen/tarifyHtml";
@@ -48,7 +49,14 @@ export default function Home() {
       <div className="relative z-30">
         <Partners />
       </div>
-      <ResponsiveBlock desktopHtml={utpHtml} desktopH={utpH} tabletHtml={utpTabletHtml} tabletH={utpTabletH} />
+      <ResponsiveBlock
+        desktopHtml={utpHtml}
+        desktopH={utpH}
+        tabletHtml={utpTabletHtml}
+        tabletH={utpTabletH}
+        mobileHtml={utpMobileHtml}
+        mobileH={utpMobileH}
+      />
       <div id="uslugi">
         <ResponsiveBlock desktopHtml={uslugiHtml} desktopH={uslugiH} tabletHtml={uslugiTabletHtml} tabletH={uslugiTabletH} />
       </div>
