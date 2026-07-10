@@ -117,12 +117,22 @@ export default function MarqueeBlock({
   tabletRowTop,
   tabletRowHeight,
   tabletSpeed,
+  mobileHtml,
+  mobileH,
+  mobileRowTop,
+  mobileRowHeight,
+  mobileSpeed,
 }: MarqueeCanvasProps & {
   tabletHtml?: string;
   tabletH?: number;
   tabletRowTop?: number;
   tabletRowHeight?: number;
   tabletSpeed?: number;
+  mobileHtml?: string;
+  mobileH?: number;
+  mobileRowTop?: number;
+  mobileRowHeight?: number;
+  mobileSpeed?: number;
 }) {
   const desktop = (
     <MarqueeCanvas
@@ -143,7 +153,7 @@ export default function MarqueeBlock({
   return (
     <>
       <div className="rb-desktop">{desktop}</div>
-      <div className="rb-tablet">
+      <div className={mobileHtml ? "rb-tablet rb-has-mobile" : "rb-tablet"}>
         <MarqueeCanvas
           html={tabletHtml}
           h={tabletH}
@@ -154,6 +164,19 @@ export default function MarqueeBlock({
           clip={clip}
         />
       </div>
+      {mobileHtml ? (
+        <div className="rb-mobile">
+          <MarqueeCanvas
+            html={mobileHtml}
+            h={mobileH}
+            w={375}
+            rowTop={mobileRowTop ?? tabletRowTop ?? rowTop}
+            rowHeight={mobileRowHeight ?? tabletRowHeight ?? rowHeight}
+            speed={mobileSpeed ?? tabletSpeed ?? speed}
+            clip={clip}
+          />
+        </div>
+      ) : null}
     </>
   );
 }

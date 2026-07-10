@@ -24,6 +24,12 @@ import { marketingTabletHtml, marketingTabletH } from "./blocks/gen/marketingTab
 import { marketingMobileHtml, marketingMobileH } from "./blocks/gen/marketingMobileHtml";
 import { otzyvyHtml } from "./blocks/gen/otzyvyHtml";
 import { otzyvyTabletHtml, otzyvyTabletH } from "./blocks/gen/otzyvyTabletHtml";
+import {
+  otzyvyShkolaMobileHtml,
+  otzyvyShkolaMobileH,
+  shkolaMobileEmptyHtml,
+  shkolaMobileEmptyH,
+} from "./blocks/gen/otzyvyShkolaMobileHtml";
 import { shkolaHtml, shkolaH } from "./blocks/gen/shkolaHtml";
 import { shkolaTabletHtml, shkolaTabletH } from "./blocks/gen/shkolaTabletHtml";
 import { blogHtml, blogH } from "./blocks/gen/blogHtml";
@@ -113,9 +119,21 @@ export default function Home() {
         tabletRowTop={201}
         tabletRowHeight={288.41}
         tabletSpeed={32}
+        mobileHtml={otzyvyShkolaMobileHtml}
+        mobileH={otzyvyShkolaMobileH}
+        mobileRowTop={123}
+        mobileRowHeight={231.81}
+        mobileSpeed={32}
       />
       <div id="shkola">
-        <ResponsiveBlock desktopHtml={shkolaHtml} desktopH={shkolaH} tabletHtml={shkolaTabletHtml} tabletH={shkolaTabletH} />
+        <ResponsiveBlock
+          desktopHtml={shkolaHtml}
+          desktopH={shkolaH}
+          tabletHtml={shkolaTabletHtml}
+          tabletH={shkolaTabletH}
+          mobileHtml={shkolaMobileEmptyHtml}
+          mobileH={shkolaMobileEmptyH}
+        />
       </div>
       <div id="blog">
         <ResponsiveBlock desktopHtml={blogHtml} desktopH={blogH} tabletHtml={blogTabletHtml} tabletH={blogTabletH} />
