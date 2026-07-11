@@ -13,7 +13,7 @@ const social = (left: number, src: string, href: string, label: string) => `
 </a>`;
 
 export const kontaktyMobileHtml = `<div data-contact-variant="mobile" style="position:absolute;left:0;top:0;width:375px;height:874px;background:#FFF;overflow:visible">
-<div style="position:absolute;left:20px;top:11px;width:335px;height:158px;color:#F0F0F0;text-shadow:0 1px 3px rgba(0,0,0,.18);font-family:Coolvetica,-apple-system,Roboto,Helvetica,sans-serif;font-size:55px;font-weight:400;line-height:86%;text-transform:uppercase;letter-spacing:0;white-space:nowrap">I AM AGENCY</div>
+<img src="/blk/figma-mobile/mobile-contact-logo.svg" style="position:absolute;left:20px;top:11px;width:335px;height:157.56px;display:block" alt="I AM AGENCY" />
 <div style="position:absolute;left:211px;top:244px;width:144px;height:46px;color:#1C1C1C;font-family:Coolvetica,-apple-system,Roboto,Helvetica,sans-serif;font-size:27.091px;font-weight:400;line-height:86%;text-transform:uppercase;text-align:left">Свяжитесь<br/>с нами</div>
 ${label(327, "Имя", 32)}
 ${line(380.84)}

@@ -1,6 +1,6 @@
 // Portfolio mobile version from Figma file 197KqVv6GjBDHHypLH55K9, frame #365:2946.
 // Canvas 375x999. Chip markup preserves the empty black pill used by FloatChips for links and animation.
-export const portfolioMobileH = 999;
+export const portfolioMobileH = 1235;
 
 const chip = (
   x: number,
@@ -20,10 +20,10 @@ const chip = (
   <div style="color:#1C1C1C;font-family:Inter;font-size:23.359px;font-style:normal;font-weight:400;line-height:86%;letter-spacing:-1.168px;text-transform:uppercase;position:absolute;left:${circleX - x + 5.8}px;top:${circleY - y + 2.1}px;width:16px;height:21px;white-space:nowrap"><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:23.359px;color:rgba(28,28,28,1)">+</span></div>
 </div>`;
 
-export const portfolioMobileHtml = `<div style="position:absolute;left:0;top:0;width:375px;height:999px;background:#FFF;overflow:visible">
+export const portfolioMobileHtml = `<div style="position:absolute;left:0;top:0;width:375px;height:1235px;background:#FFF;overflow:visible">
 <div layer-name="доказательства эффективности нашей работы" style="width:326px;color:#272727;font-family:Coolvetica;font-size:24px;font-style:normal;font-weight:400;line-height:100%;text-transform:uppercase;position:absolute;left:20px;top:70px;height:72px"><span style="font-family:Coolvetica, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:24px;color:rgba(39,39,39,1)">доказательства эффективности нашей работы</span></div>
 <div layer-name="кейсы в различных нишах" style="width:153px;color:#9A9895;text-align:justify;font-family:Inter;font-size:13px;font-style:normal;font-weight:400;line-height:86%;letter-spacing:-0.65px;text-transform:lowercase;position:absolute;left:20px;top:152px;height:11px;white-space:nowrap"><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:13px;color:rgba(154,152,149,1)">кейсы в различных нишах</span></div>
-<img layer-name="3D Abstract Shape (11) 1" style="width:533.56px;height:533.99px;object-fit:contain;position:absolute;left:-295px;top:697px" src="/blk/figma-mobile/mobile-portfolio-shape-large.png" alt="" />
+<img layer-name="3D Abstract Shape (11) 1" style="width:533.56px;height:533.99px;max-width:none;object-fit:contain;position:absolute;left:-295px;top:697px" src="/blk/figma-mobile/mobile-portfolio-shape-large.png" alt="" />
 <img layer-name="Abstract 3D Shapes TG@Jam_Mockup96 1" style="width:142.72px;height:142.72px;object-fit:contain;position:absolute;left:211px;top:381px" src="/blk/figma-mobile/mobile-portfolio-shape-small.png" alt="" />
 ${chip(207.44, 299.75, 147.9, "HoReCa", 220.01, 306.45, 324.76, 302.68, "#FFAD19")}
 ${chip(198.45, 216, 156.7, "Tourism", 211.86, 222.7, 324.57, 218.93, "#F55D1C")}
