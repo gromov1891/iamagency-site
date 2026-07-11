@@ -2,7 +2,6 @@
 export const marketingMobileH = 664;
 
 export const marketingMobileHtml = `<div style="position:absolute;left:0;top:0;width:375px;height:664px;background:#FFF;overflow:visible">
-<img layer-name="3D Abstract Shape (11) 2" style="width:511px;height:290px;object-fit:contain;position:absolute;left:-170px;top:-60px" src="/blk/marketing/spiral_bottom.png" alt="" />
 <div layer-name="Мы помогаем как крупному, так и малому бизнесу решать задачи" style="width:186px;color:#9A9895;text-align:justify;font-family:Inter;font-size:11px;font-style:normal;font-weight:400;line-height:86%;letter-spacing:-0.55px;position:absolute;left:169px;top:196px;height:63px">
 <span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:500;font-size:11px;color:rgba(28,28,28,1)">Мы&nbsp;&nbsp;&nbsp;&nbsp; помогаем&nbsp;&nbsp;&nbsp;&nbsp; как&nbsp;&nbsp;&nbsp;&nbsp; крупному,<br/>так и малому бизнесу решать задачи</span><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:11px;color:rgba(28,28,28,1)"><br/></span><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:11px;color:rgba(154,152,149,1)">Детально&nbsp;&nbsp;&nbsp; погружаемся&nbsp;&nbsp;&nbsp; в&nbsp;&nbsp;&nbsp; бизнес<br/>и&nbsp;&nbsp;&nbsp;&nbsp; предлагаем&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; стратегию<br/>и инструменты, которые работают<br/>именно в вашей нише</span>
 </div>
