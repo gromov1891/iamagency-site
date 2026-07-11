@@ -46,10 +46,37 @@ export default function FloatChips({
           d.children.length === 0
         );
       });
-      const chips = pills
-        .map((p) => p.parentElement)
-        .filter((el): el is HTMLElement => !!el);
+      const chips = [...new Set([
+        ...pills.map((p) => p.parentElement),
+        ...root.querySelectorAll<HTMLElement>('[data-float-chip="true"]'),
+      ])].filter((el): el is HTMLElement => !!el);
       if (!chips.length) return;
+
+      if (!reduced) {
+        chips.forEach((chip, i) => {
+          const circle = [...chip.children].find((el) => {
+            const node = el as HTMLElement;
+            const radius = node.style.borderRadius;
+            return radius === "50%" && node.style.background === "rgb(255, 255, 255)" ||
+              (radius === "50%" && node.style.background === "#FFF");
+          }) as HTMLElement | undefined;
+          const plus = circle?.nextElementSibling as HTMLElement | null;
+          if (!circle) return;
+          const targets = plus ? [circle, plus] : [circle];
+          targets.forEach((target) => {
+            target.style.transformOrigin = "50% 50%";
+            target.style.willChange = "transform";
+            target.animate(
+              [
+                { transform: "rotate(0deg) scale(1)" },
+                { transform: "rotate(90deg) scale(1.08)" },
+                { transform: "rotate(180deg) scale(1)" },
+              ],
+              { duration: 3800 + (i % 4) * 450, iterations: Infinity, easing: "ease-in-out", direction: "alternate" }
+            );
+          });
+        });
+      }
 
       // кликабельность (делегирование + hit-test по прямоугольнику пилюли —
       // так ловится клик по всей видимой плашке: тексту, «+», фону)
@@ -159,8 +186,9 @@ export default function FloatChips({
 
     return () => {
       clearTimeout(t);
-      const r = ref.current as (HTMLElement & { _fleeCleanup?: () => void }) | null;
-      r?._fleeCleanup?.();
+      const currentRoot = root as HTMLElement & { _fleeCleanup?: () => void };
+      currentRoot._fleeCleanup?.();
+      currentRoot.getAnimations({ subtree: true }).forEach((animation) => animation.cancel());
     };
   }, [links, mode]);
 

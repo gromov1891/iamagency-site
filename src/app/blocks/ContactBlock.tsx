@@ -50,11 +50,11 @@ export default function ContactBlock({
     if (!root) return;
 
     const t = setTimeout(() => {
-      root.querySelectorAll<HTMLElement>("#kf-submit").forEach((submit) => {
+      root.querySelectorAll<HTMLElement>('[id="kf-submit"]').forEach((submit) => {
         const canvas = submit.parentElement as HTMLElement | null;
         if (!canvas || canvas.dataset.kfReady === "1") return;
-        const modal = canvas.querySelector("#kf-modal") as HTMLElement | null;
-        const close = canvas.querySelector("#kf-close") as HTMLElement | null;
+        const modal = canvas.querySelector('[id="kf-modal"]') as HTMLElement | null;
+        const close = canvas.querySelector('[id="kf-close"]') as HTMLElement | null;
         if (!modal || !close) return;
         canvas.dataset.kfReady = "1";
 

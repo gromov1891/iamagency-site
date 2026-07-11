@@ -33,11 +33,13 @@ function MarqueeCanvas({
   useEffect(() => {
     const root = ref.current;
     if (!root) return;
+    let cleanup = () => {};
 
     const t = setTimeout(() => {
       const match = (c: HTMLElement) => {
-        const s = c.getAttribute("style") || "";
-        return s.includes(`top:${rowTop}px`) && s.includes(`height:${rowHeight}px`);
+        const top = parseFloat(c.style.top || "NaN");
+        const height = parseFloat(c.style.height || "NaN");
+        return Math.abs(top - rowTop) < 0.75 && Math.abs(height - rowHeight) < 0.75;
       };
       const cards = ([...root.querySelectorAll("div")] as HTMLElement[]).filter(match);
       if (cards.length < 2) return;
@@ -70,7 +72,8 @@ function MarqueeCanvas({
       }
 
       const track = document.createElement("div");
-      track.style.cssText = "position:absolute;left:0;top:0;width:0;height:0";
+      track.dataset.marqueeTrack = "true";
+      track.style.cssText = `position:absolute;left:0;top:0;width:${period * 2}px;height:${rowHeight}px;will-change:transform`;
       host.appendChild(track);
       for (const c of cards) {
         c.style.left = parseFloat(c.style.left || "0") - offX + "px";
@@ -88,11 +91,22 @@ function MarqueeCanvas({
         { duration: (period / speed) * 1000, iterations: Infinity, easing: "linear" }
       );
 
-      track.addEventListener("mouseenter", () => anim.pause());
-      track.addEventListener("mouseleave", () => anim.play());
+      const pause = () => anim.pause();
+      const play = () => anim.play();
+      track.addEventListener("mouseenter", pause);
+      track.addEventListener("mouseleave", play);
+      cleanup = () => {
+        track.removeEventListener("mouseenter", pause);
+        track.removeEventListener("mouseleave", play);
+        anim.cancel();
+        track.remove();
+      };
     }, 120);
 
-    return () => clearTimeout(t);
+    return () => {
+      clearTimeout(t);
+      cleanup();
+    };
   }, [rowTop, rowHeight, speed, clip, clipLeft, clipWidth, clipRadius]);
 
   return (

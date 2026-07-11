@@ -22,16 +22,19 @@ const card = (
   <div layer-name="${text}" style="width:230.5px;color:#FFF;font-family:Inter;font-size:10.74px;font-weight:400;line-height:86%;letter-spacing:-0.537px;position:absolute;left:10.74px;top:${textTop}px;height:${textH}px"><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:10.74px;color:#FFF">${text}</span></div>
 </div>`;
 
-const schoolRow = (top: number, num: string, title: string, titleW: number) => `
-<div style="width:361.97px;height:288.75px;position:absolute;left:13px;top:${top}px">
-  <div style="width:338.13px;height:242.78px;border-radius:10.83px;border:0.516px solid #9A9895;box-shadow:0 1.031px 1.031px 0 rgba(0,0,0,.25) inset;position:absolute;left:7.25px;top:0"></div>
-  <div style="width:361.97px;height:255.42px;border-radius:10.83px;background:#1C1C1C;position:absolute;left:0;top:33.33px"></div>
-  <div layer-name="${num}" style="color:#9A9895;font-family:Inter;font-size:14px;font-weight:400;line-height:86%;letter-spacing:-0.7px;text-transform:uppercase;position:absolute;left:14px;top:8px;width:20px;height:14px;white-space:nowrap"><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:14px;color:#9A9895">${num}</span></div>
-  <div layer-name="${title}" style="color:#FFF;font-family:Inter;font-size:14px;font-weight:400;line-height:86%;letter-spacing:-0.7px;text-transform:uppercase;position:absolute;left:41.47px;top:9px;width:${titleW}px;height:14px;white-space:nowrap"><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:14px;color:#FFF">${title}</span></div>
-</div>`;
+const schoolRow = (num: string, title: string, text: string) => `
+<details name="mobile-school" style="width:338px;border:.52px solid #9A9895;border-radius:10.83px;background:#1C1C1C;color:#FFF;overflow:hidden">
+  <summary style="height:31px;display:flex;align-items:center;gap:8px;padding:0 7px;list-style:none;cursor:pointer;font-family:Inter,-apple-system,Roboto,Helvetica,sans-serif;font-size:14px;line-height:86%;letter-spacing:-.7px;text-transform:uppercase;white-space:nowrap">
+    <span style="color:#9A9895">${num}</span><span>${title}</span>
+  </summary>
+  <div style="padding:1px 10px 8px 35px;font-family:Inter,-apple-system,Roboto,Helvetica,sans-serif;font-size:7px;line-height:105%;letter-spacing:0;color:#FFF">
+    ${text}<br/><a href="/shkola-smm" style="display:inline-block;margin-top:5px;color:#FFF;text-decoration:underline;text-underline-offset:2px">Подробнее →</a>
+  </div>
+</details>`;
 
 export const otzyvyShkolaMobileHtml = `<div style="position:absolute;left:0;top:0;width:375px;height:874px;background:#1C1C1C;overflow:visible">
-<img layer-name="55 2" style="width:199.42px;height:222px;object-fit:contain;position:absolute;left:-17.21px;top:332px" src="/blk/otzyvy/glass_top.png" alt="" />
+<style>.mobile-school summary::-webkit-details-marker{display:none}</style>
+<img layer-name="55 2" style="width:199.42px;height:222px;object-fit:contain;position:absolute;left:-17.21px;top:332px" src="/blk/figma-mobile/mobile-reviews-glass.png" alt="" />
 <div layer-name="Отзывы" style="color:#FFF;font-family:Coolvetica;font-size:27.091px;font-weight:400;line-height:86%;text-transform:uppercase;position:absolute;left:20px;top:49px;width:98px;height:23px;white-space:nowrap"><span style="font-family:Coolvetica, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:27.091px;color:#FFF">Отзывы</span></div>
 
 ${card(
@@ -109,10 +112,12 @@ ${card(
 
 <div layer-name="обучение профессии с нуля" style="color:#9A9895;font-family:Coolvetica;font-size:24px;font-weight:400;line-height:100%;text-transform:uppercase;position:absolute;left:129px;top:509px;width:226px;height:48px;text-align:right"><span style="font-family:Coolvetica, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:24px;color:#9A9895">обучение профессии с нуля</span></div>
 <div layer-name="школа SMM" style="color:#FFF;text-align:justify;font-family:Inter;font-size:13px;font-weight:400;line-height:86%;letter-spacing:-0.65px;text-transform:lowercase;position:absolute;left:287px;top:564px;width:68px;height:11px;white-space:nowrap"><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:13px;color:#FFF">школа SMM</span></div>
-${schoolRow(627, "01", "почему наш курс лучший на рынке", 293)}
-${schoolRow(660, "02", "Истории учеников", 161)}
-${schoolRow(693, "03", "Кому подойдет", 135)}
-${schoolRow(726, "04", "Программа", 94)}
+<div class="mobile-school" style="position:absolute;left:20px;top:627px;width:338px;display:flex;flex-direction:column;gap:1px">
+${schoolRow("01", "почему наш курс лучший на рынке", "Обучаем SMM уже 7 лет. Через школу прошли больше 350 человек — сегодня они ведут крупные бренды, работают на удалёнке из любой точки мира, а многие являются действующими менеджерами I AM")}
+${schoolRow("02", "Истории учеников", "Обучаем SMM уже 7 лет. Через школу прошли больше 350 человек — сегодня они ведут крупные бренды, работают на удалёнке из любой точки мира, а многие являются действующими менеджерами I AM")}
+${schoolRow("03", "Кому подойдет", "Обучение подойдёт тем, кто хочет поменять вектор деятельности и попробовать себя в чём-то новом; ищет стабильный дополнительный заработок; вышел в декрет и хочет работать удалённо; хочет попасть в команду I AM")}
+${schoolRow("04", "Программа", "Введение. Запуск проекта. Instagram. Reels. Работа с блогерами. Telegram. ВКонтакте. Маркетинг. Мастермайнды каждую неделю и онлайн-выпускной")}
+</div>
 <a href="/shkola-smm" style="display:flex;width:169.22px;height:18.77px;justify-content:center;align-items:center;border-radius:27.722px;background:linear-gradient(90deg, #8992E4 0%, #F55D1C 100%);position:absolute;left:189px;top:815px;text-decoration:none"><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:11.233px;line-height:86%;letter-spacing:-0.562px;color:#FFF;white-space:nowrap">Оставить заявку на обучение</span></a>
 </div>`;
 
