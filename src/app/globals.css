@@ -117,6 +117,13 @@ div[layer-name="🤵🏼‍♂️"] span {
   .rb-mobile { display: block; }
 }
 
+/* A narrow desktop browser can report a wider CSS viewport because of zoom/scaling.
+   Show the mobile canvas there, while touch tablets keep the dedicated tablet layout. */
+@media (min-width: 768px) and (max-width: 900px) and (pointer: fine) {
+  .rb-tablet.rb-has-mobile { display: none; }
+  .rb-mobile { display: block; }
+}
+
 /* Desktop UTP: keep the decorative donut behind the statistic cards. */
 @media (min-width: 901px) {
   [layer-name="21 1"] { z-index: 0 !important; }
