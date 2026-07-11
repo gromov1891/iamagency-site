@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import BuilderBlock from "../blocks/BuilderBlock";
+import ResponsiveBlock from "../blocks/ResponsiveBlock";
 import { futerHtml, futerH } from "../blocks/gen/futerHtml";
+import { futerTabletHtml, futerTabletH } from "../blocks/gen/futerTabletHtml";
+import { futerMobileHtml, futerMobileH } from "../blocks/gen/futerMobileHtml";
 import { shkolaHtml, shkolaH } from "../shkola/gen/shkolaHtml";
+import { shkolaPageTabletHtml, shkolaPageTabletH } from "../shkola/gen/shkolaPageTabletHtml";
+import { shkolaPageMobileHtml, shkolaPageMobileH } from "../shkola/gen/shkolaPageMobileHtml";
 
 /* Страница «Школа SMM» — /shkola-smm. Холст 1:1 из Figma (фрейм «Школа»),
    ниже SEO-блок (текст + FAQ) и футер. JSON-LD: BreadcrumbList + Course. */
@@ -77,9 +81,18 @@ export default function ShkolaSmmPage() {
   return (
     <>
       <div className="header-spacer" style={{ background: "#1C1C1C" }} />
-      <BuilderBlock html={shkolaHtml} h={shkolaH} />
+      <ResponsiveBlock
+        desktopHtml={shkolaHtml}
+        desktopH={shkolaH}
+        tabletHtml={shkolaPageTabletHtml}
+        tabletH={shkolaPageTabletH}
+        mobileHtml={shkolaPageMobileHtml}
+        mobileH={shkolaPageMobileH}
+        overflow="hidden"
+      />
 
       <section
+        className="shkola-seo"
         style={{
           maxWidth: 1000,
           margin: "0 auto",
@@ -132,7 +145,15 @@ export default function ShkolaSmmPage() {
         </nav>
       </section>
 
-      <BuilderBlock html={futerHtml} h={futerH} />
+      <ResponsiveBlock
+        desktopHtml={futerHtml}
+        desktopH={futerH}
+        tabletHtml={futerTabletHtml}
+        tabletH={futerTabletH}
+        mobileHtml={futerMobileHtml}
+        mobileH={futerMobileH}
+        overflow="hidden"
+      />
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </>
