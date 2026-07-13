@@ -7,10 +7,14 @@ import { futerHtml, futerH } from "../../blocks/gen/futerHtml";
 import { futerTabletHtml, futerTabletH } from "../../blocks/gen/futerTabletHtml";
 import { futerMobileHtml, futerMobileH } from "../../blocks/gen/futerMobileHtml";
 import BlogCard from "../BlogCard";
-import { BLOG_ARTICLES, getArticle, getRelatedArticles } from "../articles";
+import { BLOG_ARTICLES } from "../articles";
+import { getPublishedArticle, getPublishedRelatedArticles } from "@/lib/cms-store";
 import styles from "../blog.module.css";
 
 const SITE = "https://iamagency.su";
+export const dynamic = "force-dynamic";
+
+const absoluteImage = (image: string) => image.startsWith("http") ? image : `${SITE}${image}`;
 
 export function generateStaticParams() {
   return BLOG_ARTICLES.map((article) => ({ slug: article.slug }));
@@ -22,7 +26,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const article = getArticle(slug);
+  const article = await getPublishedArticle(slug);
   if (!article) return {};
 
   return {
@@ -47,10 +51,10 @@ export default async function ArticlePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const article = getArticle(slug);
+  const article = await getPublishedArticle(slug);
   if (!article) notFound();
 
-  const related = getRelatedArticles(article);
+  const related = await getPublishedRelatedArticles(article);
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -71,7 +75,7 @@ export default async function ArticlePage({
       "@type": "Article",
       headline: article.title,
       description: article.excerpt,
-      image: `${SITE}${article.image}`,
+      image: absoluteImage(article.image),
       mainEntityOfPage: `${SITE}/blog/${article.slug}`,
       author: { "@type": "Organization", name: "I AM AGENCY" },
       publisher: {
@@ -80,6 +84,8 @@ export default async function ArticlePage({
         logo: { "@type": "ImageObject", url: `${SITE}/apple-icon.png` },
       },
       keywords: article.tags.join(", "),
+      datePublished: article.publishedAt,
+      dateModified: article.updatedAt || article.publishedAt,
     },
   ];
 
@@ -133,6 +139,19 @@ export default async function ArticlePage({
                   <ul>
                     {section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
                   </ul>
+                )}
+                {section.image && (
+                  <figure className={styles.articleInlineFigure}>
+                    <Image
+                      src={section.image}
+                      alt={section.imageAlt || "Иллюстрация к статье I AM AGENCY"}
+                      width={1200}
+                      height={800}
+                      sizes="(max-width: 767px) calc(100vw - 30px), 768px"
+                      className={styles.articleInlineImage}
+                    />
+                    {section.caption && <figcaption>{section.caption}</figcaption>}
+                  </figure>
                 )}
               </section>
             ))}

@@ -15,6 +15,9 @@ export type ArticleSection = {
   paragraphs?: string[];
   bullets?: string[];
   commands?: string[];
+  image?: string;
+  imageAlt?: string;
+  caption?: string;
 };
 
 export type BlogArticle = {
@@ -25,6 +28,8 @@ export type BlogArticle = {
   imageAlt: string;
   tags: BlogTag[];
   sections: ArticleSection[];
+  publishedAt?: string;
+  updatedAt?: string;
 };
 
 export const BLOG_ARTICLES: BlogArticle[] = [
@@ -289,8 +294,12 @@ export function getArticle(slug: string) {
   return BLOG_ARTICLES.find((article) => article.slug === slug);
 }
 
-export function getRelatedArticles(article: BlogArticle, limit = 3) {
-  return BLOG_ARTICLES.filter((candidate) => candidate.slug !== article.slug)
+export function getRelatedArticles(
+  article: BlogArticle,
+  limit = 3,
+  articles: BlogArticle[] = BLOG_ARTICLES
+) {
+  return articles.filter((candidate) => candidate.slug !== article.slug)
     .map((candidate, index) => ({
       candidate,
       index,

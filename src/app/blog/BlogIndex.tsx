@@ -3,29 +3,23 @@
 import Image from "next/image";
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import BlogCard from "./BlogCard";
-import { BLOG_ARTICLES, BLOG_TAGS, type BlogTag } from "./articles";
+import { BLOG_TAGS, type BlogArticle, type BlogTag } from "./articles";
 import styles from "./blog.module.css";
 
-export default function BlogIndex() {
+export default function BlogIndex({ articles }: { articles: BlogArticle[] }) {
   const [activeTag, setActiveTag] = useState<BlogTag | null>(null);
 
   useEffect(() => {
     const requestedTag = new URLSearchParams(window.location.search).get("tag");
     const tag = BLOG_TAGS.find((candidate) => candidate === requestedTag);
+    // Read the URL after hydration so direct links to a filter remain shareable.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (tag) setActiveTag(tag);
   }, []);
 
   const visibleArticles = useMemo(() => {
-    const figmaOrder = [
-      "claude-dlya-biznesa-prostym-yazykom",
-      "instagram-po-starim-pravilam",
-      "chto-vliyaet-na-prodazhi-v-2026",
-      "servisy-dlya-sozdaniya-vizuala",
-    ];
-    return BLOG_ARTICLES
-      .filter((article) => !activeTag || article.tags.includes(activeTag))
-      .sort((a, b) => figmaOrder.indexOf(a.slug) - figmaOrder.indexOf(b.slug));
-  }, [activeTag]);
+    return articles.filter((article) => !activeTag || article.tags.includes(activeTag));
+  }, [activeTag, articles]);
 
   return (
     <main className={styles.blogPage}>

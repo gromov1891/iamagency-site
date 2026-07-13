@@ -360,6 +360,25 @@
 
 .articleBody li { margin: 0.05em 0; }
 
+.articleInlineFigure {
+  margin: 1.15em 0 1.4em;
+}
+
+.articleInlineImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.articleInlineFigure figcaption {
+  margin-top: 10px;
+  color: #777;
+  font-size: 0.55em;
+  line-height: 1.25;
+}
+
 .commands {
   display: flex;
   margin: 0.35em 0 0.7em;

@@ -4,6 +4,9 @@ import ResponsiveBlock from "../blocks/ResponsiveBlock";
 import { futerHtml, futerH } from "../blocks/gen/futerHtml";
 import { futerTabletHtml, futerTabletH } from "../blocks/gen/futerTabletHtml";
 import { futerMobileHtml, futerMobileH } from "../blocks/gen/futerMobileHtml";
+import { getPublishedArticles } from "@/lib/cms-store";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: { absolute: "Блог о SMM, маркетинге и визуале | I AM AGENCY" },
@@ -21,11 +24,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const articles = await getPublishedArticles();
   return (
     <>
       <div className="header-spacer" style={{ background: "#fff" }} />
-      <BlogIndex />
+      <BlogIndex articles={articles} />
       <ResponsiveBlock
         desktopHtml={futerHtml}
         desktopH={futerH}

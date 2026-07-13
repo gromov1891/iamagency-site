@@ -4,7 +4,7 @@ import { CASES } from "../case/cases";
 import { DIRECTIONS } from "../marketing/directions";
 import { TARIFY } from "../tarify/tarify";
 import { USLUGI } from "../uslugi/uslugi";
-import { BLOG_ARTICLES } from "../blog/articles";
+import { getPublishedArticles } from "@/lib/cms-store";
 
 export const metadata: Metadata = {
   title: "Карта сайта",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 /* HTML-карта сайта (по аналогии с seo-lebedev.ru/sitemap) — простой список
    всех разделов со ссылками. Ссылка «Карта сайта» ведёт сюда из футера. */
-const TREE: { title: string; href: string; children?: { title: string; href: string }[] }[] = [
+const getTree = (blogArticles: Awaited<ReturnType<typeof getPublishedArticles>>): { title: string; href: string; children?: { title: string; href: string }[] }[] => [
   {
     title: "Главная",
     href: "/",
@@ -49,13 +49,14 @@ const TREE: { title: string; href: string; children?: { title: string; href: str
   {
     title: "Блог",
     href: "/blog",
-    children: BLOG_ARTICLES.map((item) => ({ title: item.title, href: `/blog/${item.slug}` })),
+    children: blogArticles.map((item) => ({ title: item.title, href: `/blog/${item.slug}` })),
   },
   { title: "Согласие на обработку персональных данных", href: "/privacy-consent" },
   { title: "Политика конфиденциальности", href: "/privacy-policy" },
 ];
 
-export default function SitemapPage() {
+export default async function SitemapPage() {
+  const tree = getTree(await getPublishedArticles());
   return (
     <>
       <div className="header-spacer" />
@@ -73,7 +74,7 @@ export default function SitemapPage() {
         </h1>
 
         <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
-          {TREE.map((n) => (
+          {tree.map((n) => (
             <li key={n.href} style={{ marginBottom: 18 }}>
               <Link
                 href={n.href}
