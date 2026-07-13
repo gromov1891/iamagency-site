@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import BuilderBlock from "../blocks/BuilderBlock";
 import HeroBlock from "../blocks/HeroBlock";
 import SkidkaCountdown from "../blocks/SkidkaCountdown";
@@ -17,6 +18,13 @@ import { skidkaHtml, skidkaH } from "../blocks/gen/skidkaHtml";
 import { futerHtml, futerH } from "../blocks/gen/futerHtml";
 import MarketingLeadModal from "./MarketingLeadModal";
 
+export const metadata: Metadata = {
+  title: { absolute: "Маркетинговое агентство полного цикла | I AM AGENCY" },
+  description:
+    "Performance, media и digital-маркетинг под ключ: реклама, SEO, аналитика, PR, influence-маркетинг и разработка сайтов. Команда экспертов I AM AGENCY.",
+  alternates: { canonical: "/marketing" },
+};
+
 const EXTRA_SITES = [
   { title: "UPPERCUTS", subtitle: "музыкальная академия", mark: "UC", href: "https://uppercuts.academy/" },
   { title: "PRIVATE TRAVEL", subtitle: "travel & concierge", mark: "PT", href: "https://private-travel-club.com/" },
@@ -27,6 +35,7 @@ const EXTRA_SITES = [
 export default function MarketingPage() {
   return (
     <>
+      <h1 className="sr-only">Маркетинговое агентство полного цикла</h1>
       {/* отступ под липкий хедер */}
       <div className="header-spacer" />
       <MarketingLeadModal />

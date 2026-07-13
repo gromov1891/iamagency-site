@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 
 /* Делает легал-ссылки футера кликабельными и добавляет «Карта сайта».
-   «Политика конфиденциальности» и «Согласие…» → /privacy-policy.
+   Политика и согласие ведут на отдельные юридические документы.
    Новая строка «Карта сайта» (клон «Согласия», ниже) → /sitemap. */
 export default function FooterLinks() {
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function FooterLinks() {
 
       // 2) оборачиваем существующие легал-ссылки
       wrap(pol, "/privacy-policy");
-      wrap(sog, "/privacy-policy");
+      wrap(sog, "/privacy-consent");
     };
 
     const t1 = setTimeout(run, 280);

@@ -99,13 +99,36 @@ export default function ContactBlock({
           inputs.push(inp);
         }
 
+        const consent = document.createElement("label");
+        const consentTop = isMobile ? 612 : isTablet ? 542 : 780;
+        const consentFont = isMobile ? 8.5 : isTablet ? 9.5 : 13;
+        consent.style.cssText = [
+          "position:absolute",
+          `left:${left}px`,
+          `top:${consentTop}px`,
+          `width:${width}px`,
+          "display:flex",
+          "align-items:center",
+          "gap:8px",
+          "font-family:Inter,sans-serif",
+          `font-size:${consentFont}px`,
+          "line-height:1.2",
+          "color:#5b5b5b",
+          "cursor:pointer",
+        ].join(";");
+        consent.innerHTML = `<input type="checkbox" required aria-label="Согласие на обработку персональных данных" style="width:14px;height:14px;margin:0;accent-color:#8992E4"><span>Я согласен с <a href="/privacy-consent" target="_blank" style="color:inherit;text-underline-offset:2px">обработкой персональных данных</a></span>`;
+        canvas.appendChild(consent);
+        const consentInput = consent.querySelector("input") as HTMLInputElement;
+
         const showForm = () => {
           modal.style.display = "none";
           inputs.forEach((i) => (i.style.display = ""));
+          consent.style.display = "flex";
           submit.style.display = "flex";
         };
         const showThanks = () => {
           inputs.forEach((i) => (i.style.display = "none"));
+          consent.style.display = "none";
           submit.style.display = "none";
           modal.style.display = "";
         };
@@ -119,10 +142,15 @@ export default function ContactBlock({
             inputs[bad].focus();
             return;
           }
+          if (!consentInput.checked) {
+            consentInput.focus();
+            return;
+          }
           showThanks();
         });
         close.addEventListener("click", () => {
           inputs.forEach((i) => (i.value = ""));
+          consentInput.checked = false;
           showForm();
         });
       });

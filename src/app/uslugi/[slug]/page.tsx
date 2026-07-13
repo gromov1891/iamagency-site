@@ -18,9 +18,19 @@ export async function generateMetadata({
   const { slug } = await params;
   const u = getUsluga(slug);
   if (!u) return {};
+  const path = `/uslugi/${u.slug}`;
   return {
-    title: u.metaTitle,
+    title: { absolute: u.metaTitle },
     description: u.metaDescription,
+    alternates: { canonical: path },
+    openGraph: {
+      title: u.metaTitle,
+      description: u.metaDescription,
+      url: path,
+      siteName: "I AM AGENCY",
+      locale: "ru_RU",
+      type: "website",
+    },
     robots: { index: true, follow: true },
   };
 }
@@ -34,8 +44,19 @@ export default async function UslugaPage({
   const u = getUsluga(slug);
   if (!u) notFound();
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Главная", item: "https://iamagency.su/" },
+      { "@type": "ListItem", position: 2, name: "Услуги", item: "https://iamagency.su/#uslugi" },
+      { "@type": "ListItem", position: 3, name: u.name, item: `https://iamagency.su/uslugi/${u.slug}` },
+    ],
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <div className="header-spacer" style={{ background: "#1C1C1C" }} />
       <BuilderBlock html={u.html} h={u.height} />
     </>

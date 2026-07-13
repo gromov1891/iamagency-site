@@ -18,9 +18,19 @@ export async function generateMetadata({
   const { slug } = await params;
   const t = getTarif(slug);
   if (!t) return {};
+  const path = `/tarify/${t.slug}`;
   return {
-    title: t.metaTitle,
+    title: { absolute: t.metaTitle },
     description: t.metaDescription,
+    alternates: { canonical: path },
+    openGraph: {
+      title: t.metaTitle,
+      description: t.metaDescription,
+      url: path,
+      siteName: "I AM AGENCY",
+      locale: "ru_RU",
+      type: "website",
+    },
     robots: { index: true, follow: true },
   };
 }
@@ -34,8 +44,19 @@ export default async function TarifPage({
   const t = getTarif(slug);
   if (!t) notFound();
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Главная", item: "https://iamagency.su/" },
+      { "@type": "ListItem", position: 2, name: "Тарифы", item: "https://iamagency.su/#tarify" },
+      { "@type": "ListItem", position: 3, name: t.name, item: `https://iamagency.su/tarify/${t.slug}` },
+    ],
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <div className="header-spacer" style={{ background: "#1C1C1C" }} />
       <BuilderBlock html={t.html} h={t.height} />
     </>

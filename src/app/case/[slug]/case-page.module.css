@@ -171,7 +171,7 @@
     text-decoration: none;
   }
 
-  .responsiveCanvas h1 {
+  .responsiveCanvas h2 {
     margin: 0 0 28px;
     font-family: Coolvetica, Inter, sans-serif;
     font-size: clamp(50px, 10vw, 78px);
@@ -229,7 +229,7 @@
     padding-inline: 16px;
   }
 
-  .responsiveCanvas h1 {
+  .responsiveCanvas h2 {
     font-size: clamp(44px, 13vw, 58px);
   }
 

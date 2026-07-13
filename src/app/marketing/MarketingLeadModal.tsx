@@ -103,6 +103,12 @@ export default function MarketingLeadModal() {
                 <label>Телефон<input name="phone" type="tel" autoComplete="tel" required /></label>
                 <label>Сайт / соцсети проекта<input name="project" /></label>
                 <label>Бюджет<input name="budget" /></label>
+                <label className={styles.consent}>
+                  <input name="consent" type="checkbox" required />
+                  <span>
+                    Я согласен с <a href="/privacy-consent" target="_blank">обработкой персональных данных</a>
+                  </span>
+                </label>
                 <button className={styles.submit} type="submit">Отправить</button>
               </form>
             )}

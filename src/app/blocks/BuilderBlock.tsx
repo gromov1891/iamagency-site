@@ -1,7 +1,3 @@
-"use client";
-
-import { useEffect, useMemo, useRef, useState } from "react";
-
 /* Универсальная обёртка для блоков из Builder.io (Figma→HTML).
    Нативный холст w×h (по умолчанию 1440×1024) масштабируется под ширину контейнера.
    Для планшета передаём w=768, для мобайла w=375. */
@@ -16,25 +12,16 @@ export default function BuilderBlock({
   h?: number;
   overflow?: "hidden" | "visible";
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(0);
-  const optimizedHtml = useMemo(
-    () => html.replace(/<img(?![^>]*\bloading=)/g, '<img loading="lazy" decoding="async"'),
-    [html]
+  const optimizedHtml = html.replace(
+    /<img(?![^>]*\bloading=)/g,
+    '<img loading="lazy" decoding="async"'
   );
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const update = () => setScale(el.clientWidth / w);
-    update();
-    const ro = new ResizeObserver(update);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [w]);
-
   return (
-    <div ref={ref} className="relative w-full" style={{ aspectRatio: `${w} / ${h}`, overflow }}>
+    <div
+      className="relative w-full"
+      style={{ aspectRatio: `${w} / ${h}`, overflow, containerType: "inline-size" }}
+    >
       <div
         style={{
           width: w,
@@ -43,8 +30,7 @@ export default function BuilderBlock({
           top: 0,
           left: 0,
           transformOrigin: "top left",
-          transform: `scale(${scale})`,
-          visibility: scale ? "visible" : "hidden",
+          transform: `scale(calc(100cqw / ${w}px))`,
         }}
         dangerouslySetInnerHTML={{ __html: optimizedHtml }}
       />

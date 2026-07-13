@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CASES } from "../case/cases";
+import { DIRECTIONS } from "../marketing/directions";
+import { TARIFY } from "../tarify/tarify";
+import { USLUGI } from "../uslugi/uslugi";
 
 export const metadata: Metadata = {
   title: "Карта сайта",
+  description: "Карта сайта I AM AGENCY: главная, услуги, тарифы, кейсы, школа SMM, маркетинговые направления и юридические документы агентства.",
+  alternates: { canonical: "/sitemap" },
   robots: { index: true, follow: true },
 };
 
@@ -14,10 +20,7 @@ const TREE: { title: string; href: string; children?: { title: string; href: str
     href: "/",
     children: [
       { title: "Услуги", href: "/#uslugi" },
-      { title: "Брендбук и SMM-стратегия", href: "/uslugi/brendbuk-i-smm-strategiya" },
-      { title: "Ведение соцсетей", href: "/uslugi/vedenie-sotssetey" },
-      { title: "Маркетинг и продвижение", href: "/uslugi/marketing-i-prodvizhenie" },
-      { title: "Контент / Съёмки", href: "/uslugi/kontent-syomki" },
+      ...USLUGI.map((item) => ({ title: item.name, href: `/uslugi/${item.slug}` })),
       { title: "Портфолио / Кейсы", href: "/keisy" },
       { title: "Школа SMM", href: "/shkola-smm" },
       { title: "Блог", href: "/#blog" },
@@ -27,20 +30,22 @@ const TREE: { title: string; href: string; children?: { title: string; href: str
   {
     title: "Кейсы",
     href: "/keisy",
-    children: [
-      { title: "Beauty", href: "/case/beauty" },
-      { title: "Fashion", href: "/case/fashion" },
-      { title: "Sport & Education", href: "/case/sport" },
-      { title: "Experts", href: "/case/experts" },
-      { title: "Недвижимость", href: "/case/real-estate" },
-      { title: "Tourism", href: "/case/tourism" },
-      { title: "Cars & equipment", href: "/case/cars" },
-      { title: "HoReCa", href: "/case/horeca" },
-      { title: "Product", href: "/case/product" },
-      { title: "Events", href: "/case/events" },
-    ],
+    children: CASES.map((item) => ({ title: item.name, href: `/case/${item.slug}` })),
   },
-  { title: "Маркетинг", href: "/marketing" },
+  {
+    title: "Маркетинг",
+    href: "/marketing",
+    children: DIRECTIONS.filter((item) => item.status === "ready").map((item) => ({
+      title: item.name,
+      href: `/marketing/${item.slug}`,
+    })),
+  },
+  {
+    title: "Тарифы",
+    href: "/#tarify",
+    children: TARIFY.map((item) => ({ title: item.name, href: `/tarify/${item.slug}` })),
+  },
+  { title: "Согласие на обработку персональных данных", href: "/privacy-consent" },
   { title: "Политика конфиденциальности", href: "/privacy-policy" },
 ];
 

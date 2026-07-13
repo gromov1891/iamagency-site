@@ -19,10 +19,20 @@ export async function generateMetadata({
   const { slug } = await params;
   const d = getDirection(slug);
   if (!d) return {};
+  const path = `/marketing/${d.slug}`;
   return {
-    title: d.metaTitle || `${d.name} | I AM AGENCY`,
+    title: { absolute: d.metaTitle || `${d.name} | I AM AGENCY` },
     description: d.metaDescription || d.subtitle,
     keywords: d.keywords,
+    alternates: { canonical: path },
+    openGraph: {
+      title: d.metaTitle || `${d.name} | I AM AGENCY`,
+      description: d.metaDescription || d.subtitle,
+      url: path,
+      siteName: "I AM AGENCY",
+      locale: "ru_RU",
+      type: "website",
+    },
     robots: { index: true, follow: true },
   };
 }
@@ -42,8 +52,32 @@ export default async function DirectionPage({
   const d = getDirection(slug);
   if (!d || d.status !== "ready") notFound();
 
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Главная", item: "https://iamagency.su/" },
+        { "@type": "ListItem", position: 2, name: "Маркетинг", item: "https://iamagency.su/marketing" },
+        { "@type": "ListItem", position: 3, name: d.name, item: `https://iamagency.su/marketing/${d.slug}` },
+      ],
+    },
+    ...(d.faq?.length
+      ? [{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: d.faq.map((item) => ({
+            "@type": "Question",
+            name: item.q,
+            acceptedAnswer: { "@type": "Answer", text: item.a },
+          })),
+        }]
+      : []),
+  ];
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <div className="header-spacer" />
       <main
         style={{

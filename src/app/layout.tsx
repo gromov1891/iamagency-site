@@ -3,7 +3,6 @@ import "./globals.css";
 import SocialLinks from "./blocks/SocialLinks";
 import FooterLinks from "./blocks/FooterLinks";
 import FloatFigures from "./blocks/FloatFigures";
-import Preloader from "./blocks/Preloader";
 import Header from "./blocks/Header";
 import ServicesDropdown from "./blocks/ServicesDropdown";
 
@@ -24,6 +23,26 @@ export const metadata: Metadata = {
     locale: "ru_RU",
     type: "website",
   },
+  robots: { index: true, follow: true },
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://iamagency.su/#organization",
+  name: "I AM AGENCY",
+  url: "https://iamagency.su",
+  logo: "https://iamagency.su/apple-icon.png",
+  email: "iamagency.su@gmail.com",
+  legalName: "ИП Громова Мария Андреевна",
+  taxID: "420545021010",
+  sameAs: [
+    "https://t.me/iam_smmagency",
+    "https://www.instagram.com/iamagency.smm",
+    "https://vk.ru/imagencysmm",
+    "https://dzen.ru/iamagency",
+    "https://www.youtube.com/@iamagency",
+  ],
 };
 
 export default function RootLayout({
@@ -40,7 +59,10 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Preloader />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <Header />
         <ServicesDropdown />
         <div className="site-shell">{children}</div>

@@ -8,6 +8,18 @@
   font-style: normal;
   font-display: swap;
 }
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
 @font-face {
   font-family: "Coolvetica";
   src: url("/fonts/coolvetica-italic.otf") format("opentype");
@@ -31,7 +43,7 @@
 /* Контейнер страницы — тянется на всю ширину десктопа (макет 1440 масштабируется
    пропорционально), потолок 2560px чтобы на сверхшироких мониторах не раздувало.
    Так пропадают боковые поля и фигуры по краям показываются как в Figma. */
-.site-shell { width: 100%; max-width: 2560px; margin-inline: auto; }
+.site-shell { width: 100%; max-width: 2560px; margin-inline: auto; overflow-x: clip; }
 /* высота липкого хедера (масштабируется как макет 1440) */
 :root { --header-h: clamp(54px, 5.6vw, 150px); }
 [id] { scroll-margin-top: var(--header-h); }

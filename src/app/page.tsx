@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Partners from "./blocks/Partners";
 import BuilderBlock from "./blocks/BuilderBlock";
 import ResponsiveBlock from "./blocks/ResponsiveBlock";
@@ -44,12 +45,22 @@ import { futerTabletHtml, futerTabletH } from "./blocks/gen/futerTabletHtml";
 import { futerMobileHtml, futerMobileH } from "./blocks/gen/futerMobileHtml";
 import { caseLinks } from "./case/cases";
 
+export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: { absolute: "SMM-агентство полного цикла | I AM AGENCY" },
+  description:
+    "SMM-агентство I AM AGENCY: стратегия, ведение соцсетей, контент, съёмки и performance-маркетинг под ключ. 7 лет в нише и 450+ клиентов.",
+  alternates: { canonical: "/" },
+};
+
 /* Главная 1:1 из экспортов Builder.io. Между Hero и УТП — лента Партнёров.
    Блок «Маркетинг» — тизер: по кнопке «Узнать больше» ведёт на /marketing
    (там Направления, Кейсы, Создание, Q&A, Процесс, Скидка). */
 export default function Home() {
   return (
     <>
+      <h1 className="sr-only">SMM-агентство полного цикла I AM AGENCY</h1>
       <div className="relative z-20">
         <ResponsiveBlock
           desktopHtml={heroHtml}

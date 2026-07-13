@@ -96,7 +96,7 @@ export default async function CasePage({
             <Link href="/keisy">Кейсы</Link><span>→</span>
             <span>{c.name}</span>
           </nav>
-          <h1 id="case-responsive-title">{h1}</h1>
+          <h2 id="case-responsive-title">{h1}</h2>
           {c.intro?.[0] ? <p className={styles.lead}>{c.intro[0]}</p> : null}
           {caseImages.length ? (
             <div className={styles.gallery} aria-label={`Работы в направлении ${c.name}`}>

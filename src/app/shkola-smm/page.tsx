@@ -16,7 +16,7 @@ const SITE = "https://iamagency.su";
 export const metadata: Metadata = {
   title: { absolute: "Школа SMM — обучение SMM с нуля до профессии | I AM AGENCY" },
   description:
-    "Школа SMM от агентства I AM AGENCY: обучение SMM с нуля — запуск проекта, Instagram, Reels, работа с блогерами, Telegram, ВКонтакте, маркетинг. Мастермайнды, практика и онлайн-выпускной.",
+    "Школа SMM I AM AGENCY: обучение с нуля, Instagram, Reels, блогеры, Telegram, ВКонтакте и маркетинг. Практика, мастермайнды и онлайн-выпускной.",
   alternates: { canonical: "/shkola-smm" },
   openGraph: {
     title: "Школа SMM — обучение SMM с нуля до профессии",

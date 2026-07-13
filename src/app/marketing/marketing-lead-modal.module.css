@@ -92,6 +92,27 @@
   border-bottom-color: #8992e4;
 }
 
+.modal .consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.modal .consent input {
+  flex: 0 0 auto;
+  width: 18px;
+  min-height: 18px;
+  margin: 0;
+  accent-color: #8992e4;
+}
+
+.consent a {
+  color: inherit;
+  text-underline-offset: 2px;
+}
+
 .submit,
 .thanks button {
   min-height: 44px;

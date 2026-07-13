@@ -58,8 +58,10 @@ export default function NotFound() {
 
       {/* объёмная 404 */}
       <img
-        src="/blk/404.png"
+        src="/blk/404.webp"
         alt="404"
+        loading="lazy"
+        decoding="async"
         style={{ width: "clamp(260px, 56vw, 540px)", height: "auto", margin: "8px 0 4px" }}
       />
 

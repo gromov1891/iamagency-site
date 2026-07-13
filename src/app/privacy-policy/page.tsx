@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Политика конфиденциальности",
+  description: "Политика обработки и защиты персональных данных пользователей сайта I AM AGENCY.",
+  alternates: { canonical: "/privacy-policy" },
   robots: { index: true, follow: true },
 };
 

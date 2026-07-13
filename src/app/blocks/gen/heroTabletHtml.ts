@@ -3,7 +3,7 @@
 export const heroTabletH = 1024;
 export const heroTabletHtml = `<div style="position:absolute;left:0;top:0;width:768px;height:1024px;background:#FFF;overflow:visible"><div style="width:780px;height:968px;position:absolute;left:39px;top:40px"><div style="width:776px;height:964px;border-radius:28px;border:2px solid #1C1C1C;box-shadow:0 4px 4px 0 rgba(0, 0, 0, 0.25) inset;position:absolute;left:0px;top:0px"></div><div style="width:772px;height:960px;border-radius:26px;background:#FFF;position:absolute;left:2px;top:2px"></div></div>
 
-<img src="/blk/hero/blue_full2.webp" style="width:880px;height:792px;object-fit:contain;position:absolute;left:153px;top:509px" alt="" />
+<img src="/blk/hero/blue_full2.webp" loading="eager" decoding="async" fetchpriority="high" style="width:880px;height:792px;object-fit:contain;position:absolute;left:153px;top:509px" alt="" />
 <img src="/blk/hero/hero-speckled.webp" class="hero-float-stone" style="width:261px;height:236px;object-fit:contain;position:absolute;left:-104px;top:194px" alt="" />
 <img src="/blk/hero/hero-egg.webp" class="hero-float-egg" style="width:206px;height:173px;object-fit:contain;position:absolute;left:561px;top:89px" alt="" />
 

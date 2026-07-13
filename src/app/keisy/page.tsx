@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   title: "Кейсы — портфолио SMM-агентства",
   description:
     "Кейсы I AM AGENCY в разных нишах: beauty, fashion, sport & education, эксперты, недвижимость, туризм, авто, HoReCa, товарный бизнес и события. Результаты продвижения в соцсетях.",
+  alternates: { canonical: "/keisy" },
   robots: { index: true, follow: true },
 };
 
@@ -68,6 +69,7 @@ const stripCrumb = (html: string) =>
 export default function KeisyPage() {
   return (
     <>
+      <h1 className="sr-only">Кейсы и портфолио SMM-агентства I AM AGENCY</h1>
       <div className="header-spacer" style={{ background: "#FFFFFF" }} />
       {/* плашки: клик = прокрутка к секции; крошка «Главная → Кейсы» внутри холста */}
       <FloatChips
