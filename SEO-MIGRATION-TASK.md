@@ -23,6 +23,14 @@ Source snapshot: the 22 URLs from the legacy Tilda sitemap on 2026-07-13.
 - Lighthouse SEO: 100/100.
 - Homepage transport: Brotli enabled; the blocking preloader was removed and the LCP hero image is eager/high priority.
 
+## Domain cutover
+
+The apex domain is attached to the Vercel project. DNS remains intentionally on Tilda until the cutover is approved.
+
+- Current: `A iamagency.su 176.57.65.208` (Tilda), TTL about 900 seconds.
+- Target: `A iamagency.su 76.76.21.21` (Vercel).
+- `www.iamagency.su` is a CNAME to `iamagency.su`, so it follows the apex record.
+
 ## Legacy redirect map
 
 | Legacy path | New canonical destination |
