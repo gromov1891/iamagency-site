@@ -6,6 +6,7 @@ import ServicesAccordion from "./blocks/ServicesAccordion";
 import MarqueeBlock from "./blocks/MarqueeBlock";
 import ContactBlock from "./blocks/ContactBlock";
 import FloatChips from "./blocks/FloatChips";
+import BlogCardsLinker from "./blocks/BlogCardsLinker";
 import { heroHtml, heroH } from "./blocks/gen/heroHtml";
 import { heroTabletHtml, heroTabletH } from "./blocks/gen/heroTabletHtml";
 import { heroMobileHtml, heroMobileH } from "./blocks/gen/heroMobileHtml";
@@ -151,14 +152,16 @@ export default function Home() {
         />
       </div>
       <div id="blog">
-        <ResponsiveBlock
-          desktopHtml={blogHtml}
-          desktopH={blogH}
-          tabletHtml={blogTabletHtml}
-          tabletH={blogTabletH}
-          mobileHtml={blogMobileHtml}
-          mobileH={blogMobileH}
-        />
+        <BlogCardsLinker>
+          <ResponsiveBlock
+            desktopHtml={blogHtml}
+            desktopH={blogH}
+            tabletHtml={blogTabletHtml}
+            tabletH={blogTabletH}
+            mobileHtml={blogMobileHtml}
+            mobileH={blogMobileH}
+          />
+        </BlogCardsLinker>
       </div>
       <div id="kontakty">
         <ContactBlock

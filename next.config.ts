@@ -9,7 +9,6 @@ const nextConfig: NextConfig = {
     return [
       { source: "/imagency", destination: "/", permanent: true },
       { source: "/schoolsmm", destination: "/shkola-smm", permanent: true },
-      { source: "/blog", destination: "/#blog", permanent: true },
       { source: "/smm_bisnes", destination: "/uslugi/vedenie-sotssetey", permanent: true },
       { source: "/cases", destination: "/keisy", permanent: true },
       { source: "/services", destination: "/#uslugi", permanent: true },

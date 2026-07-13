@@ -4,6 +4,7 @@ import { CASES } from "../case/cases";
 import { DIRECTIONS } from "../marketing/directions";
 import { TARIFY } from "../tarify/tarify";
 import { USLUGI } from "../uslugi/uslugi";
+import { BLOG_ARTICLES } from "../blog/articles";
 
 export const metadata: Metadata = {
   title: "Карта сайта",
@@ -23,7 +24,7 @@ const TREE: { title: string; href: string; children?: { title: string; href: str
       ...USLUGI.map((item) => ({ title: item.name, href: `/uslugi/${item.slug}` })),
       { title: "Портфолио / Кейсы", href: "/keisy" },
       { title: "Школа SMM", href: "/shkola-smm" },
-      { title: "Блог", href: "/#blog" },
+      { title: "Блог", href: "/blog" },
       { title: "Контакты", href: "/#kontakty" },
     ],
   },
@@ -44,6 +45,11 @@ const TREE: { title: string; href: string; children?: { title: string; href: str
     title: "Тарифы",
     href: "/#tarify",
     children: TARIFY.map((item) => ({ title: item.name, href: `/tarify/${item.slug}` })),
+  },
+  {
+    title: "Блог",
+    href: "/blog",
+    children: BLOG_ARTICLES.map((item) => ({ title: item.title, href: `/blog/${item.slug}` })),
   },
   { title: "Согласие на обработку персональных данных", href: "/privacy-consent" },
   { title: "Политика конфиденциальности", href: "/privacy-policy" },

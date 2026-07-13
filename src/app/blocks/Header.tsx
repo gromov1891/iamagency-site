@@ -13,7 +13,7 @@ const LINKS = [
   { label: "ПОРТФОЛИО", href: "/keisy", left: 483 },
   { label: "МАРКЕТИНГ", href: "/marketing", left: 698 },
   { label: "ШКОЛА SMM", href: "/shkola-smm", left: 905 },
-  { label: "БЛОГ", href: "/#blog", left: 1121 },
+  { label: "БЛОГ", href: "/blog", left: 1121 },
   { label: "КОНТАКТЫ", href: "/#kontakty", left: 1252 },
 ];
 const CANVAS_H = 80;
@@ -51,6 +51,9 @@ export default function Header() {
         if (link.textContent?.trim().toLocaleLowerCase("ru-RU") === "услуги") {
           link.setAttribute("href", "/#uslugi");
         }
+      });
+      document.querySelectorAll<HTMLAnchorElement>('a[href="/#blog"]').forEach((link) => {
+        link.setAttribute("href", "/blog");
       });
     };
     updateLegacyServiceLinks();
