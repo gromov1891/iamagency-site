@@ -138,6 +138,13 @@ div[layer-name="🤵🏼‍♂️"] span {
   background: #1c1c1c;
 }
 
+/* The interactive accordion replaces the static rows exported from Figma.
+   Keep the artwork and CTA, but remove the duplicated rows underneath it. */
+.services-accordion-root .rb-mobile .mobile-services,
+.services-accordion-root .rb-tablet [style*="width:730px"][style*="height:58px"] {
+  display: none !important;
+}
+
 .services-live-overlay {
   position: absolute;
   inset: 0;

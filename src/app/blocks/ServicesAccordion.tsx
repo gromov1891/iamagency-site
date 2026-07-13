@@ -119,8 +119,8 @@ export default function ServicesAccordion(props: Props) {
       style={{ "--services-mobile-extra": open === null ? "0px" : "100px" } as CSSProperties}
     >
       <ResponsiveBlock {...props} />
-      <div className="rb-desktop services-live-overlay"><ServiceList variant="desktop" open={open} setOpen={setOpen} /></div>
-      <div className="rb-tablet services-live-overlay"><ServiceList variant="tablet" open={open} setOpen={setOpen} /></div>
+      <div className="rb-desktop rb-has-tablet services-live-overlay"><ServiceList variant="desktop" open={open} setOpen={setOpen} /></div>
+      <div className="rb-tablet rb-has-mobile services-live-overlay"><ServiceList variant="tablet" open={open} setOpen={setOpen} /></div>
       <div className="rb-mobile services-live-overlay"><ServiceList variant="mobile" open={open} setOpen={setOpen} /></div>
     </div>
   );

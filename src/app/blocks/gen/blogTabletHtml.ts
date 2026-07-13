@@ -15,11 +15,11 @@ const card = (x: number, y: number, img: string, text: string, textH = 91) => `
   <div style="color:#FFF;font-family:Inter;font-size:12px;font-weight:600;line-height:86%;letter-spacing:-0.5px;position:absolute;left:13.3px;top:25px;width:29.42px;height:13.57px;white-space:nowrap">iam</div>
 </div>`;
 
-const chip = (x: number, y: number, w: number, text: string, textW: number) => `
+const chip = (x: number, y: number, w: number, text: string, textW: number, accent: string) => `
 <div style="width:${w}px;height:31.19px;position:absolute;left:${x}px;top:${y}px">
   <div style="width:${w}px;height:31.19px;border-radius:38.18px;background:#1C1C1C;position:absolute;left:0;top:0"></div>
   <div style="color:#FFF;font-family:Inter;font-size:21.501px;font-weight:400;line-height:86%;letter-spacing:-1.075px;text-transform:uppercase;position:absolute;left:11.18px;top:6.17px;width:${textW}px;height:18px;white-space:nowrap"><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:21.5px;color:#FFF">${text}</span></div>
-  <div style="width:25.07px;height:25.07px;border-radius:50%;background:#FFF;position:absolute;left:${w - 28.22}px;top:2.97px"></div>
+  <div style="width:25.07px;height:25.07px;border-radius:50%;background:#FFF;box-shadow:inset 0 0 0 2px ${accent};position:absolute;left:${w - 28.22}px;top:2.97px"></div>
   <div style="color:#1C1C1C;font-family:Inter;font-size:21.501px;font-weight:400;line-height:86%;letter-spacing:-1.075px;text-transform:uppercase;position:absolute;left:${w - 22.82}px;top:4.9px;width:15px;height:18px;white-space:nowrap"><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:21.5px;color:#1C1C1C">+</span></div>
 </div>`;
 
@@ -31,10 +31,10 @@ ${card(40, 194, "/blk/blog/96fe8ff810d3.webp", "Claude для бизнеса п�
 ${card(401.15, 194, "/blk/blog/e7fa50c7bae4.webp", "Instagram больше не хочет, чтобы вы росли по старым правилам<br/>За последние месяцы многие бизнесы начали...", 104)}
 ${card(401.15, 436.73, "/blk/blog/f41a088987f8.webp", "4 сервиса для создания визуала<br/>Хороший визуал больше не требует сложного продакшена...")}
 <div layer-name="Категории" style="color:#9A9895;text-align:justify;font-family:Inter;font-size:20px;font-weight:400;line-height:86%;letter-spacing:-1px;text-transform:uppercase;position:absolute;left:40px;top:702px;width:111px;height:17px;white-space:nowrap"><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:20px;color:#9A9895">Категории</span></div>
-${chip(40, 751, 98.02, "смм", 52)}
-${chip(40, 794.81, 170.06, "маркетинг", 124)}
-${chip(289, 838.37, 170.06, "нейросети", 125)}
-${chip(289, 751, 125.5, "визуал", 81)}
-${chip(289, 794.56, 251, "социальные сети", 210)}
-${chip(40, 838.63, 205.7, "продвижение", 160)}
+${chip(40, 751, 98.02, "смм", 52, "#8992E4")}
+${chip(40, 794.81, 170.06, "маркетинг", 124, "#FFAD19")}
+${chip(289, 838.37, 170.06, "нейросети", 125, "#FFAD19")}
+${chip(289, 751, 125.5, "визуал", 81, "#8992E4")}
+${chip(289, 794.56, 251, "социальные сети", 210, "#FF6B3D")}
+${chip(40, 838.63, 205.7, "продвижение", 160, "#90BEE9")}
 </div>`;
