@@ -6,6 +6,7 @@ import FloatFigures from "./blocks/FloatFigures";
 import Header from "./blocks/Header";
 import ServicesDropdown from "./blocks/ServicesDropdown";
 import LeadModal from "./blocks/LeadModal";
+import Analytics from "./blocks/Analytics";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://iamagency.su"),
@@ -109,6 +110,16 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <Analytics />
+        <noscript>
+          <div>
+            <img
+              src="https://mc.yandex.ru/watch/99802137"
+              style={{ position: "absolute", left: "-9999px" }}
+              alt=""
+            />
+          </div>
+        </noscript>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}

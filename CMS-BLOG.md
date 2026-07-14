@@ -1,6 +1,6 @@
 # CMS блога I AM AGENCY
 
-Админка: `https://iamagency-site.vercel.app/admin`
+Админка: `https://iamagency.su/admin`
 
 ## Возможности
 
@@ -15,13 +15,16 @@
 
 ## Хранение и доступ
 
-Статьи и изображения хранятся в Vercel Blob `iamagency-blog-cms`. Изменения записываются как неизменяемые версии, поэтому быстрое сохранение или удаление не зависит от CDN-кэша.
+В production статьи и изображения хранятся в публичном Timeweb S3-бакете. Изменения записываются как неизменяемые версии, поэтому быстрое сохранение или удаление не зависит от CDN-кэша. До завершения миграции код сохраняет совместимость с Vercel Blob как резервным источником.
 
-Доступ защищён подписанной `HttpOnly`-сессией. Учётные данные находятся только в переменных окружения Vercel:
+Доступ защищён подписанной `HttpOnly`-сессией. Учётные данные и ключи хранятся только в переменных окружения App Platform:
 
 - `CMS_ADMIN_USER`;
 - `CMS_ADMIN_PASSWORD`;
 - `CMS_SESSION_SECRET`;
-- `BLOB_READ_WRITE_TOKEN`.
+- `S3_BUCKET`;
+- `S3_ACCESS_KEY_ID`;
+- `S3_SECRET_ACCESS_KEY`;
+- `S3_PUBLIC_URL`.
 
-Для смены пароля обновите `CMS_ADMIN_PASSWORD` в настройках проекта Vercel и выполните новый production deployment.
+Для смены пароля обновите `CMS_ADMIN_PASSWORD` в настройках Timeweb Cloud App Platform и перезапустите deployment.

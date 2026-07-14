@@ -3,6 +3,7 @@
 import { FormEvent, KeyboardEvent as ReactKeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import styles from "./lead-modal.module.css";
+import { trackAnalyticsGoal } from "@/lib/analytics";
 
 const normalizeText = (value: string | null | undefined) =>
   (value || "")
@@ -225,6 +226,7 @@ export default function LeadModal() {
       const result = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(result.error || "Не удалось отправить заявку");
       form.reset();
+      trackAnalyticsGoal("lead_sent", { kind, source, tariff: tariff || undefined });
       setSent(true);
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "Не удалось отправить заявку");

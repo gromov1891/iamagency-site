@@ -1,6 +1,7 @@
-import { put } from "@vercel/blob";
+import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { getCmsSession, isSameOrigin } from "@/lib/cms-auth";
+import { putPublicFile } from "@/lib/object-storage";
 
 export const runtime = "nodejs";
 
@@ -25,12 +26,8 @@ export async function POST(request: Request) {
     .slice(0, 60) || "article-image";
   const extension = file.type === "image/webp" ? "webp" : file.type === "image/png" ? "png" : "jpg";
   const yearMonth = new Date().toISOString().slice(0, 7);
-  const blob = await put(`cms/media/${yearMonth}/${baseName}.${extension}`, file, {
-    access: "public",
-    addRandomSuffix: true,
-    contentType: file.type,
-    cacheControlMaxAge: 31_536_000,
-  });
+  const key = `cms/media/${yearMonth}/${baseName}-${randomUUID().slice(0, 8)}.${extension}`;
+  const blob = await putPublicFile(key, new Uint8Array(await file.arrayBuffer()), file.type);
 
   return NextResponse.json({ url: blob.url, pathname: blob.pathname });
 }

@@ -10,6 +10,14 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "*.public.blob.vercel-storage.com",
       },
+      {
+        protocol: "https",
+        hostname: "*.s3.twcstorage.ru",
+      },
+      {
+        protocol: "https",
+        hostname: "*.s3.timeweb.cloud",
+      },
     ],
   },
   async headers() {

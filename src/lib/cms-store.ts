@@ -1,9 +1,9 @@
 import "server-only";
 
 import { randomUUID } from "node:crypto";
-import { get, list, put } from "@vercel/blob";
 import { unstable_noStore as noStore } from "next/cache";
 import { BLOG_ARTICLES, BLOG_TAGS, getRelatedArticles, type ArticleSection, type BlogArticle, type BlogTag } from "@/app/blog/articles";
+import { getJsonObject, getStorageBackend, listStoredObjects, putJsonObject } from "@/lib/object-storage";
 
 const CMS_RECORDS_PREFIX = "cms/records/";
 
@@ -103,32 +103,23 @@ export function sanitizeCmsArticle(value: unknown, existing?: CmsArticle): CmsAr
 
 export async function getCmsArticles(): Promise<CmsArticle[]> {
   noStore();
-  if (!process.env.BLOB_READ_WRITE_TOKEN) return [];
+  if (getStorageBackend() === "none") return [];
 
   try {
-    const blobs: Awaited<ReturnType<typeof list>>["blobs"] = [];
-    let cursor: string | undefined;
-    do {
-      const page = await list({ prefix: CMS_RECORDS_PREFIX, limit: 1000, cursor });
-      blobs.push(...page.blobs);
-      cursor = page.hasMore ? page.cursor : undefined;
-    } while (cursor);
+    const objects = await listStoredObjects(CMS_RECORDS_PREFIX);
+    const latestBySlug = new Map<string, (typeof objects)[number]>();
 
-    const latestBySlug = new Map<string, (typeof blobs)[number]>();
-
-    for (const blob of blobs) {
-      const parts = blob.pathname.split("/");
+    for (const object of objects) {
+      const parts = object.key.split("/");
       const slug = parts[2];
       if (!slug) continue;
       const current = latestBySlug.get(slug);
-      if (!current || blob.pathname.localeCompare(current.pathname) > 0) latestBySlug.set(slug, blob);
+      if (!current || object.key.localeCompare(current.key) > 0) latestBySlug.set(slug, object);
     }
 
-    const records = await Promise.all([...latestBySlug.values()].map(async (blob) => {
-      const result = await get(blob.pathname, { access: "public", useCache: false });
-      if (!result || result.statusCode !== 200) return null;
-      return await new Response(result.stream).json() as CmsRecord;
-    }));
+    const records = await Promise.all(
+      [...latestBySlug.values()].map((object) => getJsonObject<CmsRecord>(object.key)),
+    );
 
     return records
       .filter((record): record is Extract<CmsRecord, { kind: "article" }> => record?.kind === "article")
@@ -144,11 +135,7 @@ function recordPath(slug: string) {
 }
 
 async function saveRecord(slug: string, record: CmsRecord) {
-  await put(recordPath(slug), JSON.stringify(record), {
-    access: "public",
-    contentType: "application/json; charset=utf-8",
-    cacheControlMaxAge: 31_536_000,
-  });
+  await putJsonObject(recordPath(slug), record);
 }
 
 export async function upsertCmsArticle(article: CmsArticle) {

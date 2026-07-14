@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import BuilderBlock from "./BuilderBlock";
+import { trackAnalyticsGoal } from "@/lib/analytics";
 
 /* Блок «Свяжитесь с нами» (переработан по Figma to Code).
    Статичный HTML рисует заголовок, фигуру, подписи полей, линии, кнопки и модалку (#kf-modal, скрыта).
@@ -187,6 +188,7 @@ export default function ContactBlock({
             });
             const result = await response.json().catch(() => ({}));
             if (!response.ok) throw new Error(result.error || "Не удалось отправить заявку");
+            trackAnalyticsGoal("lead_sent", { kind: "business", source: `contact_${variant || "desktop"}` });
             showThanks();
           } catch (submitError) {
             status.textContent = submitError instanceof Error ? submitError.message : "Не удалось отправить заявку";
