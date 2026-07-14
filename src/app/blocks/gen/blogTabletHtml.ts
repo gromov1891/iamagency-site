@@ -25,7 +25,7 @@ const chip = (x: number, y: number, w: number, text: string, textW: number, acce
 
 export const blogTabletHtml = `<div style="position:absolute;left:0;top:0;width:768px;height:941px;background:#FFF;overflow:visible">
 <div layer-name="Блог" style="color:#1C1C1C;font-family:Coolvetica;font-size:55.402px;font-weight:400;line-height:86%;text-transform:uppercase;position:absolute;left:40px;top:90px;width:128px;height:48px;white-space:nowrap"><span style="font-family:Coolvetica, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:55px;color:#1C1C1C">Блог</span></div>
-<img layer-name="30Файл  1" style="width:377.49px;height:377.49px;position:absolute;left:540px;top:550px;object-fit:contain" src="/blk/blog/orange_flower.png" alt="" />
+<img layer-name="30Файл  1" style="width:377.49px;height:377.49px;position:absolute;left:540px;top:550px;object-fit:contain" src="/blk/blog/orange_flower.webp" alt="" />
 ${card(40, 440.4, "/blk/blog/0b713db08b53.webp", "Что реально влияет на продажи в 2026<br/>В 2026 продажи больше не зависят только от продукта. Сильный продукт...")}
 ${card(40, 194, "/blk/blog/96fe8ff810d3.webp", "Claude для бизнеса простым языком<br/>ИИ перестаёт быть просто «чатом для вопросов». В 2026 году такие...")}
 ${card(401.15, 194, "/blk/blog/e7fa50c7bae4.webp", "Instagram больше не хочет, чтобы вы росли по старым правилам<br/>За последние месяцы многие бизнесы начали...", 104)}

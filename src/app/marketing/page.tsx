@@ -16,6 +16,9 @@ import { sozdanieHtml } from "../blocks/gen/sozdanieHtml";
 import { qaHtml, qaH } from "../blocks/gen/qaHtml";
 import { skidkaHtml, skidkaH } from "../blocks/gen/skidkaHtml";
 import { futerHtml, futerH } from "../blocks/gen/futerHtml";
+import { futerMobileHtml, futerMobileH } from "../blocks/gen/futerMobileHtml";
+import { MARKETING_MOBILE_FRAMES } from "./marketingMobile";
+import styles from "./marketing-page.module.css";
 
 export const metadata: Metadata = {
   title: { absolute: "Маркетинговое агентство полного цикла | I AM AGENCY" },
@@ -25,9 +28,24 @@ export const metadata: Metadata = {
 };
 
 const EXTRA_SITES = [
-  { title: "UPPERCUTS", subtitle: "музыкальная академия", mark: "UC", href: "https://uppercuts.academy/" },
-  { title: "PRIVATE TRAVEL", subtitle: "travel & concierge", mark: "PT", href: "https://private-travel-club.com/" },
+  {
+    title: "UPPERCUTS",
+    subtitle: "музыкальная академия",
+    logo: "/blk/sozdanie/uppercuts-logo.png",
+    href: "https://uppercuts.academy/",
+  },
+  {
+    title: "PRIVATE TRAVEL",
+    subtitle: "travel & concierge",
+    logo: "/blk/sozdanie/private-travel-logo.svg",
+    href: "https://private-travel-club.com/",
+  },
 ];
+
+const SITE_LINKS = {
+  "КЕТОРОЛ": "https://ketorolgel.ru/",
+  "TAU.PLACE": "https://tau.place/",
+};
 
 /* Отдельная посадочная «Маркетинг» — открывается по кнопке «Узнать больше»
    с блока Маркетинг на главной. Здесь вся подробная инфа про направления. */
@@ -37,6 +55,7 @@ export default function MarketingPage() {
       <h1 className="sr-only">Маркетинговое агентство полного цикла</h1>
       {/* отступ под липкий хедер */}
       <div className="header-spacer" />
+      <div className={styles.desktopPage}>
       {/* Hero «Маркетинг» — резиновый, на всю ширину, вписан в первый экран */}
       <HeroBlock leftHtml={marketingHeroLeftHtml} rightHtml={marketingHeroRightHtml} />
       <AppearBlock html={napravleniyaHtml} targets={["Класс"]} />
@@ -49,11 +68,28 @@ export default function MarketingPage() {
       {/* Процесс без Reveal: blur резал бы жгут на стыке с мем-блоком (одна фигура на два блока) */}
       <BuilderBlock html={processHtml} h={processH} />
       {/* секции ниже плавно появляются из размытия при входе в экран на 30% */}
-      <Reveal><MarqueeBlock html={sozdanieHtml} rowTop={660} rowHeight={192} clipLeft={75} clipWidth={1290} extraCards={EXTRA_SITES} /></Reveal>
+      <Reveal>
+        <MarqueeBlock
+          html={sozdanieHtml}
+          rowTop={660}
+          rowHeight={192}
+          clipLeft={75}
+          clipWidth={1290}
+          extraCards={EXTRA_SITES}
+          siteLinks={SITE_LINKS}
+        />
+      </Reveal>
       {/* Q&A без Reveal: фигуры (слиток, airship) выходят за блок, blur бы их резал */}
       <BuilderBlock html={qaHtml} h={qaH} />
       <Reveal><SkidkaCountdown html={skidkaHtml} h={skidkaH} /></Reveal>
       <Reveal><BuilderBlock html={futerHtml} h={futerH} overflow="hidden" /></Reveal>
+      </div>
+      <div className={styles.mobilePage}>
+        {MARKETING_MOBILE_FRAMES.map((frame, index) => (
+          <BuilderBlock key={index} html={frame.html} w={375} h={frame.height} overflow="hidden" />
+        ))}
+        <BuilderBlock html={futerMobileHtml} w={375} h={futerMobileH} overflow="hidden" />
+      </div>
     </>
   );
 }

@@ -7,6 +7,7 @@ import { futerHtml, futerH } from "../../blocks/gen/futerHtml";
 import { futerTabletHtml, futerTabletH } from "../../blocks/gen/futerTabletHtml";
 import { futerMobileHtml, futerMobileH } from "../../blocks/gen/futerMobileHtml";
 import { CASES, getCase } from "../cases";
+import { getCaseMobile } from "../caseMobile";
 import styles from "./case-page.module.css";
 
 /* Посадочная одного направления кейсов — /case/<slug>. Сверху холст 1:1 из Figma
@@ -52,6 +53,7 @@ export default async function CasePage({
   const { slug } = await params;
   const c = getCase(slug);
   if (!c) notFound();
+  const mobile = getCaseMobile(slug);
 
   const h1 = c.h1 || `Кейсы SMM: ${c.name}`;
   const caseImages = Array.from(c.html.matchAll(/<img\b[^>]*\bsrc=["']([^"']+)["']/gi))
@@ -68,6 +70,17 @@ export default async function CasePage({
         { "@type": "ListItem", position: 2, name: "Кейсы", item: `${SITE}/keisy` },
         { "@type": "ListItem", position: 3, name: c.name, item: `${SITE}/case/${c.slug}` },
       ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: h1,
+      description: c.metaDescription,
+      mainEntityOfPage: `${SITE}/case/${c.slug}`,
+      inLanguage: "ru-RU",
+      about: c.name,
+      author: { "@id": `${SITE}/#organization` },
+      publisher: { "@id": `${SITE}/#organization` },
     },
   ];
   if (c.faq?.length) {
@@ -113,6 +126,12 @@ export default async function CasePage({
           ) : null}
         </div>
       </section>
+
+      {mobile ? (
+        <div className={styles.mobileCanvas}>
+          <BuilderBlock html={mobile.html} w={375} h={mobile.height} overflow="hidden" />
+        </div>
+      ) : null}
 
       {/* SEO-блок: заголовок, текст, FAQ, перелинковка */}
       <section className={styles.seo}>

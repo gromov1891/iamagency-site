@@ -1,19 +1,11 @@
 // Hero - mobile version from Figma file 197KqVv6GjBDHHypLH55K9, frame "Hero" #365:3356 (Mobile page).
 // Canvas 375x874. Images reuse existing exports from the same Figma imageRefs.
-export const heroMobileH = 874;
-export const heroMobileHtml = `<div style="position:absolute;left:0;top:0;width:375px;height:874px;background:#FFF;overflow:visible">
+export const heroMobileH = 816;
+export const heroMobileHtml = `<div style="position:absolute;left:0;top:-58px;width:375px;height:874px;background:#FFF;overflow:visible">
 <div style="width:384px;height:757px;border-radius:20px;border:1px solid #1C1C1C;position:absolute;left:20px;top:80px"></div>
 <div style="width:374px;height:248px;border-radius:19px;background:#FFF;position:absolute;left:22px;top:81px"></div>
 <div style="width:390px;height:38px;background:#FFF;position:absolute;left:17px;top:804px"></div>
 <div style="width:49px;height:18px;background:#FFF;position:absolute;left:355px;top:72px"></div>
-
-<div style="display:flex;width:48.07px;height:10.01px;align-items:center;justify-content:center;border-radius:14.84px;border:0.39px solid #90BEE9;background:linear-gradient(90deg,#90BEE9 0%,#8992E4 100%);position:absolute;left:20px;top:62px"><div style="font-family:Inter,-apple-system,Roboto,Helvetica,sans-serif;font-weight:400;font-size:5.86px;line-height:0.86em;letter-spacing:-0.293px;text-transform:uppercase;color:#FFF;white-space:nowrap">I am agency</div></div>
-<div style="position:absolute;left:88.34px;top:64.25px;font-family:Inter,-apple-system,Roboto,Helvetica,sans-serif;font-weight:500;font-size:5.86px;line-height:0.86em;letter-spacing:-0.293px;text-transform:uppercase;color:#1C1C1C;white-space:nowrap"><a href="/#uslugi" style="color:inherit;text-decoration:none">Услуги</a></div>
-<div style="position:absolute;left:130.9px;top:64.25px;font-family:Inter,-apple-system,Roboto,Helvetica,sans-serif;font-weight:500;font-size:5.86px;line-height:0.86em;letter-spacing:-0.293px;text-transform:uppercase;color:#1C1C1C;white-space:nowrap"><a href="/keisy" style="color:inherit;text-decoration:none">Портфолио</a></div>
-<div style="position:absolute;left:184.73px;top:64.25px;font-family:Inter,-apple-system,Roboto,Helvetica,sans-serif;font-weight:500;font-size:5.86px;line-height:0.86em;letter-spacing:-0.293px;text-transform:uppercase;color:#1C1C1C;white-space:nowrap"><a href="/marketing" style="color:inherit;text-decoration:none">Маркетинг</a></div>
-<div style="position:absolute;left:236.55px;top:64.5px;font-family:Inter,-apple-system,Roboto,Helvetica,sans-serif;font-weight:500;font-size:5.86px;line-height:0.86em;letter-spacing:-0.293px;text-transform:uppercase;color:#1C1C1C;white-space:nowrap"><a href="/shkola-smm" style="color:inherit;text-decoration:none">Школа SMM</a></div>
-<div style="position:absolute;left:290.62px;top:64.5px;font-family:Inter,-apple-system,Roboto,Helvetica,sans-serif;font-weight:500;font-size:5.86px;line-height:0.86em;letter-spacing:-0.293px;text-transform:uppercase;color:#1C1C1C;white-space:nowrap"><a href="/#blog" style="color:inherit;text-decoration:none">Блог</a></div>
-<div style="position:absolute;left:323.42px;top:64.5px;font-family:Inter,-apple-system,Roboto,Helvetica,sans-serif;font-weight:500;font-size:5.86px;line-height:0.86em;letter-spacing:-0.293px;text-transform:uppercase;color:#1C1C1C;white-space:nowrap"><a href="/#kontakty" style="color:inherit;text-decoration:none">Контакты</a></div>
 
 <div style="position:absolute;left:36px;top:116px;width:229px;font-family:Inter,-apple-system,Roboto,Helvetica,sans-serif;font-weight:400;font-size:14.17px;line-height:1em;letter-spacing:-0.708px;text-transform:uppercase;color:#1C1C1C"><span>Стратегия&nbsp; <span style="color:#9A9895">/</span>&nbsp; Брендинг<br>Ведение соцсетей&nbsp; <span style="color:#9A9895">/</span>&nbsp; Контент<br>и съёмки&nbsp; <span style="color:#9A9895">/</span>&nbsp; Продвижение</span></div>
 <img src="/blk/hero/hero-egg.webp" style="width:145px;height:125px;object-fit:contain;position:absolute;left:245px;top:104px" alt="" />

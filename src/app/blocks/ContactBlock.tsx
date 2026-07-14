@@ -5,8 +5,7 @@ import BuilderBlock from "./BuilderBlock";
 
 /* Блок «Свяжитесь с нами» (переработан по Figma to Code).
    Статичный HTML рисует заголовок, фигуру, подписи полей, линии, кнопки и модалку (#kf-modal, скрыта).
-   Здесь кладём настоящие input'ы на линии полей, по «Отправить» (#kf-submit) показываем «Спасибо!»,
-   по «Закрыть» (#kf-close) возвращаем форму и чистим. */
+   Здесь кладём настоящие input'ы на линии полей и отправляем данные через единый API заявок. */
 const FIELDS = [
   { name: "Имя", line: 389, ph: "Ваше имя" },
   { name: "Телефон", line: 514, ph: "+7 ___ ___ __ __" },
@@ -22,10 +21,10 @@ const TABLET_FIELDS = [
 ];
 
 const MOBILE_FIELDS = [
-  { name: "РРјСЏ", line: 380.84, ph: "Р’Р°С€Рµ РёРјСЏ" },
-  { name: "РўРµР»РµС„РѕРЅ", line: 455.62, ph: "+7 ___ ___ __ __" },
-  { name: "РЎР°Р№С‚", line: 530.4, ph: "РЎР°Р№С‚ / СЃРѕС†СЃРµС‚Рё РїСЂРѕРµРєС‚Р°" },
-  { name: "Р‘СЋРґР¶РµС‚", line: 605.17, ph: "Р‘СЋРґР¶РµС‚" },
+  { name: "Имя", line: 380.84, ph: "Ваше имя" },
+  { name: "Телефон", line: 455.62, ph: "+7 ___ ___ __ __" },
+  { name: "Сайт", line: 530.4, ph: "Сайт / соцсети проекта" },
+  { name: "Бюджет", line: 605.17, ph: "Бюджет" },
 ];
 
 export default function ContactBlock({
@@ -69,9 +68,11 @@ export default function ContactBlock({
         const fontSize = isMobile ? 13 : isTablet ? 13.45 : 26.9;
 
         const inputs: HTMLInputElement[] = [];
-        for (const f of fields) {
+        for (const [fieldIndex, f] of fields.entries()) {
           const inp = document.createElement("input");
-          inp.type = "text";
+          inp.type = fieldIndex === 1 ? "tel" : "text";
+          inp.name = ["name", "phone", "project", "budget"][fieldIndex];
+          if (fieldIndex < 2) inp.required = true;
           inp.placeholder = f.ph;
           inp.setAttribute("aria-label", f.name);
           if (isMobile) {
@@ -120,11 +121,30 @@ export default function ContactBlock({
         canvas.appendChild(consent);
         const consentInput = consent.querySelector("input") as HTMLInputElement;
 
+        const status = document.createElement("div");
+        status.setAttribute("role", "status");
+        status.setAttribute("aria-live", "polite");
+        status.style.cssText = [
+          "position:absolute",
+          `left:${left}px`,
+          `top:${Math.max(0, submit.offsetTop - (isMobile ? 19 : 30))}px`,
+          `width:${width}px`,
+          "font-family:Inter,sans-serif",
+          `font-size:${isMobile ? 8.5 : isTablet ? 10 : 13}px`,
+          "line-height:1.2",
+          "color:#B52A18",
+          "display:none",
+        ].join(";");
+        canvas.appendChild(status);
+
         const showForm = () => {
           modal.style.display = "none";
           inputs.forEach((i) => (i.style.display = ""));
           consent.style.display = "flex";
           submit.style.display = "flex";
+          submit.style.pointerEvents = "";
+          submit.style.opacity = "";
+          status.style.display = "none";
         };
         const showThanks = () => {
           inputs.forEach((i) => (i.style.display = "none"));
@@ -134,7 +154,8 @@ export default function ContactBlock({
         };
         showForm();
 
-        submit.addEventListener("click", () => {
+        submit.addEventListener("click", async () => {
+          if (submit.dataset.sending === "1") return;
           const name = inputs[0].value.trim();
           const phone = inputs[1].value.trim();
           if (!name || !phone) {
@@ -146,7 +167,35 @@ export default function ContactBlock({
             consentInput.focus();
             return;
           }
-          showThanks();
+          submit.dataset.sending = "1";
+          submit.style.pointerEvents = "none";
+          submit.style.opacity = "0.6";
+          status.style.display = "none";
+          try {
+            const response = await fetch("/api/leads", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                kind: "business",
+                source: `Главная · форма контактов · ${variant || "desktop"}`,
+                page: window.location.pathname,
+                name,
+                phone,
+                project: inputs[2].value.trim(),
+                budget: inputs[3].value.trim(),
+              }),
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(result.error || "Не удалось отправить заявку");
+            showThanks();
+          } catch (submitError) {
+            status.textContent = submitError instanceof Error ? submitError.message : "Не удалось отправить заявку";
+            status.style.display = "block";
+            submit.style.pointerEvents = "";
+            submit.style.opacity = "";
+          } finally {
+            delete submit.dataset.sending;
+          }
         });
         close.addEventListener("click", () => {
           inputs.forEach((i) => (i.value = ""));

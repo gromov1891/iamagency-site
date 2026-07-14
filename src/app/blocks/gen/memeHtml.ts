@@ -1,7 +1,7 @@
-// Мем-блок «наведи мышкой» (Figma 78:1000 default / 78:1013 hover).
+// Мем-блок «наведи мышкой» (актуальный Figma-блок 355:8275).
 // Две карточки. При наведении на карточку заголовок меняется (прическа→агентство)
 // и появляется облачко (I AM AGENCY / МАРКЕТИНГ СВОИМИ СИЛАМИ). Чистый CSS-hover.
-// Эмодзи и декор-фигура — картинки-оригиналы из Figma. Холст 1440×595.
+// Персонаж экспортирован напрямую из Figma TEXT-узла 355:8281 в масштабе 4x.
 export const memeH = 595;
 export const memeHtml = `<div style="position:absolute;left:0;top:0;width:1440px;height:595px;background:#FFF;overflow:visible">
 <style>
@@ -18,7 +18,7 @@ export const memeHtml = `<div style="position:absolute;left:0;top:0;width:1440px
 <div class="meme-card" style="position:absolute;left:152px;top:111px;width:573px;height:413px">
   <div style="position:absolute;left:8px;top:89px;width:555px;height:311px;border-radius:27px;background:linear-gradient(180deg,#1C1C1C 0%,#F55D1C 100%)"></div>
   <img src="/blk/meme/temple.webp?v=2" alt="" style="position:absolute;left:75px;top:172px;width:177px;height:152px;object-fit:contain"/>
-  <img src="/blk/meme/person.webp?v=2" alt="" style="position:absolute;left:322px;top:172px;width:246px;height:211px;object-fit:contain"/>
+  <img src="/blk/meme/person-figma.png" alt="SMM-специалист I AM Agency" style="position:absolute;left:322px;top:172px;width:246px;height:246px;object-fit:contain" />
   <div class="meme-h" style="position:absolute;left:57px;top:131px;width:212px;height:86px;background:#FFF;border-radius:62px;box-shadow:0 4px 10px rgba(0,0,0,0.2);display:flex;align-items:center;justify-content:center;z-index:5"><span style="color:#1C1C1C;font-family:Inter;font-size:25px;letter-spacing:-0.05em">I AM AGENCY</span></div>
   <div class="meme-d" style="position:absolute;left:8px;top:19px;width:555px;text-align:center;color:#1C1C1C;font-family:Inter;font-weight:600;font-size:29px;line-height:86%;letter-spacing:-0.05em;text-transform:uppercase">Прическа, которая нравится девушкам</div>
   <div class="meme-h" style="position:absolute;left:8px;top:19px;width:555px;text-align:center;color:#1C1C1C;font-family:Inter;font-weight:600;font-size:29px;line-height:86%;letter-spacing:-0.05em;text-transform:uppercase">Агентство, которое приносит клиентов</div>
@@ -27,7 +27,7 @@ export const memeHtml = `<div style="position:absolute;left:0;top:0;width:1440px
 <div class="meme-card" style="position:absolute;left:725px;top:111px;width:564px;height:413px">
   <div style="position:absolute;left:0px;top:89px;width:555px;height:311px;border-radius:27px;background:linear-gradient(180deg,#F0F0F0 0%,#1C1C1C 100%)"></div>
   <img src="/blk/meme/house.webp?v=2" alt="" style="position:absolute;left:84px;top:172px;width:177px;height:152px;object-fit:contain"/>
-  <img src="/blk/meme/person.webp?v=2" alt="" style="position:absolute;left:319px;top:172px;width:246px;height:211px;object-fit:contain"/>
+  <img src="/blk/meme/person-figma.png" alt="Предприниматель ведёт маркетинг самостоятельно" style="position:absolute;left:319px;top:172px;width:246px;height:246px;object-fit:contain" />
   <div class="meme-h" style="position:absolute;left:70px;top:131px;width:212px;height:86px;background:#1C1C1C;border-radius:62px;box-shadow:0 4px 10px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;z-index:5"><span style="color:#FFF;font-family:Inter;font-size:13px;letter-spacing:-0.05em">МАРКЕТИНГ СВОИМИ СИЛАМИ</span></div>
   <div class="meme-d" style="position:absolute;left:5px;top:21px;width:555px;text-align:center;color:#1C1C1C;font-family:Inter;font-weight:600;font-size:29px;line-height:86%;letter-spacing:-0.05em;text-transform:uppercase">Прическа, которая не нравится девушкам</div>
   <div class="meme-h" style="position:absolute;left:5px;top:21px;width:555px;text-align:center;color:#1C1C1C;font-family:Inter;font-weight:600;font-size:29px;line-height:86%;letter-spacing:-0.05em;text-transform:uppercase">Агентство, которое сливает бюджет</div>

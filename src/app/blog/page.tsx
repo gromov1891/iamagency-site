@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: { absolute: "Блог о SMM, маркетинге и визуале | I AM AGENCY" },
   description:
-    "Статьи I AM AGENCY о SMM, продвижении, маркетинге, визуале, социальных сетях, нейросетях и трендах для бизнеса.",
+    "Практический блог I AM AGENCY о SMM, продвижении в социальных сетях, digital-маркетинге, визуале, нейросетях и контенте для бизнеса с примерами.",
   alternates: { canonical: "/blog" },
   openGraph: {
     title: "Блог I AM AGENCY",

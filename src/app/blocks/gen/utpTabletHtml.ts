@@ -4,7 +4,7 @@
 // под ширину планшетной карточки (314.94/643 = 0.489798). Координаты карточек/картинок/кнопки — из tablet-фрейма.
 export const utpTabletH = 589;
 export const utpTabletHtml = `<div style="position:absolute;left:0;top:0;width:768px;height:589px;background:#FFF;overflow:visible">
-<img layer-name="71 3" style="width:880.39px;height:791.57px;object-fit:contain;position:absolute;left:153px;top:-625px" src="/blk/futer/277ccc8df321.png" alt="" />
+<img layer-name="71 3" style="width:880.39px;height:791.57px;object-fit:contain;position:absolute;left:153px;top:-625px" src="/blk/futer/277ccc8df321.webp" alt="" />
 
 <div style="position:absolute;left:63px;top:69px;width:643px;height:369px;transform:scale(0.489798);transform-origin:top left"><div style="width:643px;height:369px;border-radius:42px;border:2px solid #1C1C1C;background:#1C1C1C;position:absolute;left:0px;top:0px"></div><div style="color:#FFF;-webkit-text-stroke-width:5.46px;-webkit-text-stroke-color:#1C1C1C;font-family:Coolvetica;font-size:203.62px;font-weight:400;line-height:86%;text-transform:uppercase;position:absolute;left:46px;top:25px;width:399px;height:175px;white-space:nowrap"><span style="font-family:Coolvetica, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:204px;color:rgba(255,255,255,1)">450+</span></div><div style="width:311px;color:#FFF;-webkit-text-stroke-width:1.15px;-webkit-text-stroke-color:#1C1C1C;font-family:Inter;font-size:38.88px;font-weight:400;line-height:86%;letter-spacing:-0.05em;position:absolute;left:46px;top:243px;height:66px"><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:39px;color:rgba(255,255,255,1)">довольных клиентов</span></div></div>
 

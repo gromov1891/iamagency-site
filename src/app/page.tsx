@@ -46,12 +46,10 @@ import { futerTabletHtml, futerTabletH } from "./blocks/gen/futerTabletHtml";
 import { futerMobileHtml, futerMobileH } from "./blocks/gen/futerMobileHtml";
 import { caseLinks } from "./case/cases";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: { absolute: "SMM-агентство полного цикла | I AM AGENCY" },
   description:
-    "SMM-агентство I AM AGENCY: стратегия, ведение соцсетей, контент, съёмки и performance-маркетинг под ключ. 7 лет в нише и 450+ клиентов.",
+    "SMM-агентство I AM AGENCY: стратегия, ведение и продвижение соцсетей, контент, съёмки и performance-маркетинг под ключ. 7 лет в нише, 450+ клиентов.",
   alternates: { canonical: "/" },
 };
 

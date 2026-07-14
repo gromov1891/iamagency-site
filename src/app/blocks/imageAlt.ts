@@ -12,10 +12,10 @@ const CASE_LABELS: Record<string, string> = {
 };
 
 const BLOG_ALTS: Record<string, string> = {
-  "96fe8ff810d3.webp": "Обложка статьи «Claude для бизнеса простым языком» в блоге SMM-агентства I AM AGENCY",
-  "0b713db08b53.webp": "Обложка статьи «Что реально влияет на продажи в 2026» в блоге SMM-агентства I AM AGENCY",
-  "e7fa50c7bae4.webp": "Обложка статьи об изменениях Instagram в блоге SMM-агентства I AM AGENCY",
-  "f41a088987f8.webp": "Обложка статьи «4 сервиса для создания визуала» в блоге SMM-агентства I AM AGENCY",
+  "96fe8ff810d3.webp": "Обложка статьи «Claude для бизнеса простым языком» в блоге I AM AGENCY",
+  "0b713db08b53.webp": "Обложка статьи «Что реально влияет на продажи в 2026» в блоге I AM AGENCY",
+  "e7fa50c7bae4.webp": "Обложка статьи об изменениях Instagram и продвижении бизнеса в социальных сетях",
+  "f41a088987f8.webp": "Обложка статьи «4 сервиса для создания визуала» в блоге I AM AGENCY",
 };
 
 const AVATAR_ALTS: Record<string, string> = {
@@ -28,13 +28,14 @@ const AVATAR_ALTS: Record<string, string> = {
 };
 
 const STATIC_ALTS: Record<string, string> = {
-  "/partners/logos.png": "Клиенты SMM-агентства I AM AGENCY: Сбер, ВТБ, MANUL, Villo, ESKQ Bar, ROOF и Dr. Reddy's",
-  "/blk/tarify/dvizhenie-panel.svg": "Тариф «Движение» на ведение социальных сетей от SMM-агентства I AM AGENCY",
-  "/blk/tarify/proryv-panel.svg": "Тариф «Прорыв» на ведение и продвижение социальных сетей от I AM AGENCY",
-  "/blk/tarify/triumf-panel.svg": "Тариф «Триумф»: маркетинговая команда под ключ от I AM AGENCY",
-  "/blk/futer/mobile-footer-figma-v2.png": "Навигация и контакты SMM-агентства I AM AGENCY",
+  "/partners/logos.png": "Клиенты I AM AGENCY: Сбер, ВТБ, MANUL, Villo, ESKQ Bar, ROOF и Dr. Reddy's",
+  "/blk/tarify/dvizhenie-panel.svg": "Тариф «Движение» на ведение социальных сетей",
+  "/blk/tarify/proryv-panel.svg": "Тариф «Прорыв» на ведение и продвижение социальных сетей",
+  "/blk/tarify/triumf-panel.svg": "Тариф «Триумф»: маркетинговая команда под ключ",
   "/blk/kontakty/wm_agency.png": "Логотип SMM-агентства I AM AGENCY",
   "/blk/figma-mobile/mobile-contact-logo.svg": "Логотип SMM-агентства I AM AGENCY",
+  "/blk/sozdanie/uppercuts-logo.png": "Логотип сайта Uppercuts Academy, разработанного I AM AGENCY",
+  "/blk/sozdanie/private-travel-logo.svg": "Логотип сайта Private Travel Club, разработанного I AM AGENCY",
 };
 
 const escapeAttribute = (value: string) =>

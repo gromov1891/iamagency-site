@@ -6,6 +6,10 @@
   display: none;
 }
 
+.mobileCanvas {
+  display: none;
+}
+
 .seo {
   margin: 0;
   padding: 0;
@@ -224,7 +228,13 @@
   }
 }
 
+@media (max-width: 767px) {
+  .responsiveCanvas { display: none; }
+  .mobileCanvas { display: block; }
+}
+
 @media (max-width: 560px) {
+
   .responsiveCanvas {
     padding-inline: 16px;
   }

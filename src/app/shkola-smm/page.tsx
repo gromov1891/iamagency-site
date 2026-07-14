@@ -14,9 +14,9 @@ import { shkolaPageMobileHtml, shkolaPageMobileH } from "../shkola/gen/shkolaPag
 const SITE = "https://iamagency.su";
 
 export const metadata: Metadata = {
-  title: { absolute: "Школа SMM — обучение SMM с нуля до профессии | I AM AGENCY" },
+  title: { absolute: "Курс SMM с нуля до профессии | I AM AGENCY" },
   description:
-    "Школа SMM I AM AGENCY: обучение с нуля, Instagram, Reels, блогеры, Telegram, ВКонтакте и маркетинг. Практика, мастермайнды и онлайн-выпускной.",
+    "Курс SMM с нуля от I AM AGENCY: стратегия, контент, Reels, блогеры, Telegram, ВКонтакте и маркетинг. Практика, мастермайнды и поддержка команды.",
   alternates: { canonical: "/shkola-smm" },
   openGraph: {
     title: "Школа SMM — обучение SMM с нуля до профессии",

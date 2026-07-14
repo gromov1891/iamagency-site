@@ -14,7 +14,8 @@ type MarqueeCanvasProps = {
   clipWidth?: number;
   clipRadius?: number;
   clip?: boolean;
-  extraCards?: Array<{ title: string; subtitle: string; mark: string; href: string }>;
+  extraCards?: Array<{ title: string; subtitle: string; mark?: string; logo?: string; href: string }>;
+  siteLinks?: Record<string, string>;
 };
 
 function MarqueeCanvas({
@@ -29,6 +30,7 @@ function MarqueeCanvas({
   clipRadius = 24,
   clip = false,
   extraCards = [],
+  siteLinks = {},
 }: MarqueeCanvasProps) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -48,6 +50,17 @@ function MarqueeCanvas({
       const canvas = cards[0].parentElement;
       if (!canvas) return;
 
+      for (const card of cards) {
+        const text = (card.textContent || "").replace(/\s+/g, " ").trim().toLocaleUpperCase("ru-RU");
+        const match = Object.entries(siteLinks).find(([title]) => text.includes(title.toLocaleUpperCase("ru-RU")));
+        if (!match) continue;
+        card.dataset.siteHref = match[1];
+        card.setAttribute("role", "link");
+        card.setAttribute("tabindex", "0");
+        card.setAttribute("aria-label", `${match[0]}: открыть сайт`);
+        card.style.cursor = "pointer";
+      }
+
       let nextLeft = Math.max(...cards.map((card) => parseFloat(card.style.left || "0") + parseFloat(card.style.width || "0"))) + 5;
       for (const item of extraCards) {
         const card = document.createElement("a");
@@ -56,7 +69,10 @@ function MarqueeCanvas({
         card.rel = "noreferrer";
         card.setAttribute("aria-label", `${item.title}: открыть сайт`);
         card.style.cssText = `display:block;width:254px;height:192px;position:absolute;left:${nextLeft}px;top:${rowTop}px;border-radius:15.462px;background:#1C1C1C;box-shadow:0 1.995px 1.995px rgba(0,0,0,.25) inset;color:#fff;text-decoration:none`;
-        card.innerHTML = `<div style="position:absolute;left:89px;top:28px;width:76px;height:66px;border:2px solid #90BEE9;border-radius:50%;display:grid;place-items:center;color:#90BEE9;font:600 22px Inter,sans-serif">${item.mark}</div><div style="position:absolute;left:12px;right:12px;top:120px;text-align:center;color:#fff;font:400 30px/86% Coolvetica,Inter,sans-serif;text-transform:uppercase;white-space:nowrap">${item.title}</div><div style="position:absolute;left:12px;right:12px;top:151px;text-align:center;color:#9A9895;font:400 15px/1 Inter,sans-serif;white-space:nowrap">${item.subtitle}</div>`;
+        const visual = item.logo
+          ? `<img src="${item.logo}" alt="" style="position:absolute;left:77px;top:20px;width:100px;height:82px;object-fit:contain${item.title === "UPPERCUTS" ? ";filter:invert(1)" : ""}"/>`
+          : `<div style="position:absolute;left:89px;top:28px;width:76px;height:66px;border:2px solid #90BEE9;border-radius:50%;display:grid;place-items:center;color:#90BEE9;font:600 22px Inter,sans-serif">${item.mark || ""}</div>`;
+        card.innerHTML = `${visual}<div style="position:absolute;left:12px;right:12px;top:120px;text-align:center;color:#fff;font:400 30px/86% Coolvetica,Inter,sans-serif;text-transform:uppercase;white-space:nowrap">${item.title}</div><div style="position:absolute;left:12px;right:12px;top:151px;text-align:center;color:#9A9895;font:400 15px/1 Inter,sans-serif;white-space:nowrap">${item.subtitle}</div>`;
         canvas.appendChild(card);
         cards.push(card);
         nextLeft += 259;
@@ -70,7 +86,7 @@ function MarqueeCanvas({
         maxRight = Math.max(maxRight, left + width);
         minLeft = Math.min(minLeft, left);
       }
-      const gap = 32;
+      const gap = 5;
       const period = maxRight - minLeft + gap;
 
       const shouldClip = clip && clipLeft != null && clipWidth != null;
@@ -109,11 +125,22 @@ function MarqueeCanvas({
 
       const pause = () => anim.pause();
       const play = () => anim.play();
+      const openSite = (event: MouseEvent | KeyboardEvent) => {
+        if (event instanceof KeyboardEvent && event.key !== "Enter" && event.key !== " ") return;
+        const element = event.target instanceof Element ? event.target.closest<HTMLElement>("[data-site-href]") : null;
+        if (!element?.dataset.siteHref) return;
+        event.preventDefault();
+        window.open(element.dataset.siteHref, "_blank", "noopener,noreferrer");
+      };
       track.addEventListener("mouseenter", pause);
       track.addEventListener("mouseleave", play);
+      track.addEventListener("click", openSite);
+      track.addEventListener("keydown", openSite);
       cleanup = () => {
         track.removeEventListener("mouseenter", pause);
         track.removeEventListener("mouseleave", play);
+        track.removeEventListener("click", openSite);
+        track.removeEventListener("keydown", openSite);
         anim.cancel();
         track.remove();
       };
@@ -123,7 +150,7 @@ function MarqueeCanvas({
       clearTimeout(t);
       cleanup();
     };
-  }, [rowTop, rowHeight, speed, clip, clipLeft, clipWidth, clipRadius, extraCards]);
+  }, [rowTop, rowHeight, speed, clip, clipLeft, clipWidth, clipRadius, extraCards, siteLinks]);
 
   return (
     <div ref={ref} style={{ overflow: "hidden" }}>
@@ -143,6 +170,7 @@ export default function MarqueeBlock({
   clipRadius = 24,
   clip = false,
   extraCards = [],
+  siteLinks = {},
   tabletHtml,
   tabletH,
   tabletRowTop,
@@ -177,6 +205,7 @@ export default function MarqueeBlock({
       clipRadius={clipRadius}
       clip={clip}
       extraCards={extraCards}
+      siteLinks={siteLinks}
     />
   );
 

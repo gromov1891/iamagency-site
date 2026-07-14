@@ -9,6 +9,7 @@ export default function ResponsiveBlock({
   desktopH,
   tabletHtml,
   tabletH,
+  tabletW = 768,
   mobileHtml,
   mobileH,
   overflow = "visible",
@@ -17,6 +18,7 @@ export default function ResponsiveBlock({
   desktopH: number;
   tabletHtml: string;
   tabletH: number;
+  tabletW?: number;
   mobileHtml?: string;
   mobileH?: number;
   overflow?: "hidden" | "visible";
@@ -27,7 +29,7 @@ export default function ResponsiveBlock({
         <BuilderBlock html={desktopHtml} w={1440} h={desktopH} overflow={overflow} />
       </div>
       <div className={mobileHtml ? "rb-tablet rb-has-mobile" : "rb-tablet"}>
-        <BuilderBlock html={tabletHtml} w={768} h={tabletH} overflow={overflow} />
+        <BuilderBlock html={tabletHtml} w={tabletW} h={tabletH} overflow={overflow} />
       </div>
       {mobileHtml ? (
         <div className="rb-mobile">

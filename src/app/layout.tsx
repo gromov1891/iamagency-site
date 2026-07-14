@@ -14,7 +14,13 @@ export const metadata: Metadata = {
     template: "%s — I am Agency",
   },
   description:
-    "SMM-агентство I am Agency: ведение соцсетей, таргет, контент и продакшн под ключ. 7 лет в нише, 450+ довольных клиентов.",
+    "SMM-агентство I AM AGENCY: стратегия, ведение и продвижение соцсетей, контент, съёмки и performance-маркетинг под ключ. 7 лет в нише, 450+ клиентов.",
+  applicationName: "I AM AGENCY",
+  authors: [{ name: "I AM AGENCY", url: "https://iamagency.su" }],
+  creator: "I AM AGENCY",
+  publisher: "I AM AGENCY",
+  category: "SMM и digital-маркетинг",
+  alternates: { canonical: "/" },
   openGraph: {
     title: "I am Agency — SMM-агентство полного цикла",
     description:
@@ -24,25 +30,68 @@ export const metadata: Metadata = {
     locale: "ru_RU",
     type: "website",
   },
-  robots: { index: true, follow: true },
+  twitter: {
+    card: "summary_large_image",
+    title: "I AM AGENCY - SMM-агентство полного цикла",
+    description: "Стратегия, ведение и продвижение соцсетей, контент и performance-маркетинг под ключ.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
-const organizationJsonLd = {
+const siteJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "@id": "https://iamagency.su/#organization",
-  name: "I AM AGENCY",
-  url: "https://iamagency.su",
-  logo: "https://iamagency.su/apple-icon.png",
-  email: "iamagency.su@gmail.com",
-  legalName: "ИП Громова Мария Андреевна",
-  taxID: "420545021010",
-  sameAs: [
-    "https://t.me/iam_smmagency",
-    "https://www.instagram.com/iamagency.smm",
-    "https://vk.ru/imagencysmm",
-    "https://dzen.ru/iamagency",
-    "https://www.youtube.com/@iamagency",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://iamagency.su/#organization",
+      name: "I AM AGENCY",
+      url: "https://iamagency.su",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://iamagency.su/apple-icon.png",
+        width: 288,
+        height: 288,
+      },
+      description: "SMM-агентство полного цикла: стратегия, ведение и продвижение социальных сетей, контент, съёмки и digital-маркетинг.",
+      foundingDate: "2019",
+      email: "iamagency.su@gmail.com",
+      legalName: "ИП Громова Мария Андреевна",
+      taxID: "420545021010",
+      areaServed: { "@type": "Country", name: "Россия" },
+      knowsAbout: [
+        "SMM",
+        "продвижение в социальных сетях",
+        "ведение социальных сетей",
+        "SMM-стратегия",
+        "контент-маркетинг",
+        "performance-маркетинг",
+      ],
+      sameAs: [
+        "https://t.me/iam_smmagency",
+        "https://www.instagram.com/iamagency.smm",
+        "https://vk.ru/imagencysmm",
+        "https://dzen.ru/iamagency",
+        "https://www.youtube.com/@iamagency",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://iamagency.su/#website",
+      url: "https://iamagency.su",
+      name: "I AM AGENCY",
+      inLanguage: "ru-RU",
+      publisher: { "@id": "https://iamagency.su/#organization" },
+    },
   ],
 };
 
@@ -62,7 +111,7 @@ export default function RootLayout({
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
         />
         <Header />
         <ServicesDropdown />

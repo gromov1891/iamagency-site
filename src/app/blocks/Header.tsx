@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { SERVICE_CATALOG } from "../uslugi/serviceCatalog";
+import styles from "./Header.module.css";
 
 /* Липкий хедер — ТОЧНАЯ КОПИЯ родного меню из hero: тот же холст 1440,
    те же позиции пунктов, тот же шрифт (Inter 23.42px / 500 / -1.171px).
@@ -35,6 +37,9 @@ export default function Header() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const innerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0);
 
@@ -44,6 +49,33 @@ export default function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+    setServicesOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     const updateLegacyServiceLinks = () => {
@@ -72,10 +104,11 @@ export default function Header() {
     return () => ro.disconnect();
   }, []);
 
-  const solid = !isHome || scrolled;
+  const solid = isMobile || !isHome || scrolled;
 
   return (
     <header
+      className={styles.header}
       style={{
         position: "fixed",
         top: 0,
@@ -92,6 +125,7 @@ export default function Header() {
     >
       <div
         ref={innerRef}
+        className={styles.desktopInner}
         style={{ maxWidth: 2560, margin: "0 auto", position: "relative", height: "100%", overflow: "hidden" }}
       >
         <div
@@ -142,6 +176,59 @@ export default function Header() {
           ))}
         </div>
       </div>
+
+      <div className={styles.mobileBar}>
+        <Link href="/" className={styles.mobileLogo} onClick={() => setMenuOpen(false)}>
+          I AM AGENCY
+        </Link>
+        <button
+          type="button"
+          className={`${styles.menuButton} ${menuOpen ? styles.menuButtonOpen : ""}`}
+          aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-site-menu"
+          onClick={() => setMenuOpen((value) => !value)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+      </div>
+
+      <nav
+        id="mobile-site-menu"
+        className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuOpen : ""}`}
+        aria-label="Мобильное меню"
+      >
+        <div className={styles.mobileMenuScroll}>
+          <div className={styles.mobileMenuRow}>
+            <Link href="/#uslugi" onClick={() => setMenuOpen(false)}>Услуги</Link>
+            <button
+              type="button"
+              aria-label={servicesOpen ? "Скрыть направления услуг" : "Показать направления услуг"}
+              aria-expanded={servicesOpen}
+              onClick={() => setServicesOpen((value) => !value)}
+            >
+              {servicesOpen ? "−" : "+"}
+            </button>
+          </div>
+          <div className={`${styles.mobileServices} ${servicesOpen ? styles.mobileServicesOpen : ""}`}>
+            {SERVICE_CATALOG.map((service) => (
+              <Link key={service.id} href={service.href} onClick={() => setMenuOpen(false)}>
+                <span>{service.number}</span>
+                <span>{service.title}</span>
+                <span aria-hidden="true">↗</span>
+              </Link>
+            ))}
+          </div>
+          {LINKS.slice(1).map((link) => (
+            <Link key={link.label} href={link.href} className={styles.mobileMainLink} onClick={() => setMenuOpen(false)}>
+              {link.label}
+              <span aria-hidden="true">↗</span>
+            </Link>
+          ))}
+        </div>
+      </nav>
     </header>
   );
 }

@@ -69,7 +69,7 @@ export default function BlogIndex({ articles }: { articles: BlogArticle[] }) {
         </section>
       </div>
       <Image
-        src="/blk/blog/orange_flower.png"
+        src="/blk/blog/orange_flower.webp"
         alt=""
         width={439}
         height={399}

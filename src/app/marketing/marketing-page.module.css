@@ -1,0 +1,6 @@
+.mobilePage { display: none; }
+
+@media (max-width: 767px) {
+  .desktopPage { display: none; }
+  .mobilePage { display: block; background: #fff; }
+}

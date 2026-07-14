@@ -6,7 +6,7 @@
 // спирали и двух кнопок — из tablet-фрейма. Спираль — тот же imageRef, что и в Тарифах (twisted_spiral.png).
 export const uslugiTabletH = 1024;
 export const uslugiTabletHtml = `<div style="position:absolute;left:0;top:0;width:768px;height:1024px;background:#1C1C1C;overflow:visible">
-<img layer-name="twisted-side-1 1" style="width:1047px;height:1047px;object-fit:contain;position:absolute;left:-453px;top:378px" src="/blk/tarify/twisted_spiral.png" alt="" />
+<img layer-name="twisted-side-1 1" style="width:1047px;height:1047px;object-fit:contain;position:absolute;left:-453px;top:378px" src="/blk/tarify/twisted_spiral.webp" alt="" />
 
 <div layer-name="УСЛУГИ" style="position:absolute;left:40px;top:90px;width:200px;font-family:Coolvetica;font-size:55.402px;line-height:86%;text-transform:uppercase;color:#FFF;white-space:nowrap"><span style="font-family:Coolvetica, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:55px;color:rgba(255,255,255,1)">УСЛУГИ</span></div>
 

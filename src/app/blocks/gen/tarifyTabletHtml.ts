@@ -6,8 +6,8 @@
 // чтобы карточка заполняла слот целиком, а не оставляла пустой низ. Ссылки → /tarify/dvizhenie|proryv|triumf.
 export const tarifyTabletH = 801;
 export const tarifyTabletHtml = `<div style="position:absolute;left:0;top:0;width:768px;height:801px;background:#1C1C1C;overflow:visible">
-<img layer-name="twisted-side-1 2" style="width:1047px;height:1047px;object-fit:contain;position:absolute;left:-453px;top:-651px" src="/blk/tarify/twisted_spiral.png" alt="" />
-<img layer-name="46 2" style="width:133px;height:124.99px;object-fit:contain;position:absolute;left:693px;top:413px" src="/blk/tarify/cf166417adcf.png" alt="" />
+<img layer-name="twisted-side-1 2" style="width:1047px;height:1047px;object-fit:contain;position:absolute;left:-453px;top:-651px" src="/blk/tarify/twisted_spiral.webp" alt="" />
+<img layer-name="46 2" style="width:133px;height:124.99px;object-fit:contain;position:absolute;left:693px;top:413px" src="/blk/tarify/cf166417adcf.webp" alt="" />
 
 <div layer-name="от анализа до результатов" style="position:absolute;left:502px;top:37px;width:225.95px;text-align:justify;font-family:Inter;font-size:16px;line-height:86%;letter-spacing:-0.05em;color:#FFF"><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:600;font-size:16px;color:rgba(255,255,255,1)">от   анализа   до   результатов:</span><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:16px;color:rgba(255,255,255,1)"> все, что необходимо на запуске проекта  и при его масштабировании</span></div>
 

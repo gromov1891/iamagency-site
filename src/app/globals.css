@@ -51,6 +51,7 @@
 /* На широких экранах блоки масштабируются, высоты выходят дробными и между ними
    просвечивает фон тонкой полоской. Перекрываем соседние блоки на 1px — швы исчезают. */
 .site-shell > * { margin-bottom: -1px; }
+.case-hub-mobile-canvas { display: none; }
 
 html { scroll-behavior: smooth; }
 body {
@@ -126,10 +127,21 @@ div[layer-name="🤵🏼‍♂️"] span {
 }
 
 @media (max-width: 767px) {
+  :root { --header-h: 64px; }
+  .site-shell { padding-top: var(--header-h); }
+  .header-spacer { height: 0; }
+  .case-hub-desktop-canvas { display: none; }
+  .case-hub-mobile-canvas { display: block; }
+
   .services-accordion-root {
     padding-bottom: var(--services-mobile-extra, 0px);
     transition: padding-bottom 0.25s ease;
   }
+}
+
+/* Keep the original Figma donut above the desktop UTP cards. */
+.rb-desktop img[layer-name="21 1"][src="/blk/utp/orange-donut-full.webp"] {
+  z-index: 30 !important;
 }
 
 .services-accordion-root {
@@ -246,13 +258,6 @@ div[layer-name="🤵🏼‍♂️"] span {
 .services-live-list-mobile .services-live-panel a { font-size: 2.13cqw; }
 .services-live-list-mobile .services-live-panel a { margin-top: 1.6cqw; }
 @media (max-width: 767px) {
-  .rb-tablet.rb-has-mobile { display: none; }
-  .rb-mobile { display: block; }
-}
-
-/* A narrow desktop browser can report a wider CSS viewport because of zoom/scaling.
-   Show the mobile canvas there, while touch tablets keep the dedicated tablet layout. */
-@media (min-width: 768px) and (max-width: 900px) and (pointer: fine) {
   .rb-tablet.rb-has-mobile { display: none; }
   .rb-mobile { display: block; }
 }
