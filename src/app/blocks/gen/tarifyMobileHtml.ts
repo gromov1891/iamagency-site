@@ -8,7 +8,7 @@ const moreText = "position:absolute;font-family:Inter,-apple-system,Roboto,Helve
 const mutedText = "font-family:Inter,-apple-system,Roboto,Helvetica,sans-serif;font-size:6.34px;line-height:.86em;letter-spacing:-.317px;color:#C5C5C5";
 
 export const tarifyMobileHtml = `<div style="position:absolute;left:0;top:0;width:375px;height:333px;background:#1C1C1C;overflow:visible">
-<img style="width:64.2px;height:60.4px;object-fit:contain;position:absolute;left:335px;top:130px" src="/blk/tarify/cf166417adcf.webp" alt="" />
+<img style="width:64.2px;height:60.4px;object-fit:contain;position:absolute;left:335px;top:130px" src="/blk/tarify/cf166417adcf-mobile.avif" alt="" />
 
 <div style="${cardBase};left:20px;top:0"></div>
 <div style="${capBase};left:22.5px;top:2.92px;background:linear-gradient(180deg,#FFAD19 0%,#90BEE9 87.02%)"></div>

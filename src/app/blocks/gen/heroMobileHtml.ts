@@ -8,10 +8,10 @@ export const heroMobileHtml = `<div style="position:absolute;left:0;top:-58px;wi
 <div style="width:49px;height:18px;background:#FFF;position:absolute;left:355px;top:72px"></div>
 
 <div style="position:absolute;left:36px;top:116px;width:229px;font-family:Inter,-apple-system,Roboto,Helvetica,sans-serif;font-weight:400;font-size:14.17px;line-height:1em;letter-spacing:-0.708px;text-transform:uppercase;color:#1C1C1C"><span>Стратегия&nbsp; <span style="color:#9A9895">/</span>&nbsp; Брендинг<br>Ведение соцсетей&nbsp; <span style="color:#9A9895">/</span>&nbsp; Контент<br>и съёмки&nbsp; <span style="color:#9A9895">/</span>&nbsp; Продвижение</span></div>
-<img src="/blk/hero/hero-egg-mobile.webp" style="width:145px;height:125px;object-fit:contain;position:absolute;left:245px;top:104px" alt="" />
+<img src="/blk/hero/hero-egg-mobile.avif" style="width:145px;height:125px;object-fit:contain;position:absolute;left:245px;top:104px" alt="" />
 
 <div style="position:absolute;left:36px;top:252px;width:287px;font-family:Coolvetica,-apple-system,Roboto,Helvetica,sans-serif;font-weight:400;font-size:54.93px;line-height:0.9em;text-transform:uppercase;color:#1C1C1C">SMM-<br>агентство<br>полного<br>цикла</div>
-<img src="/blk/hero/hero-speckled-mobile.webp" class="hero-float-egg" style="width:115px;height:104px;object-fit:contain;position:absolute;left:20px;top:603px;z-index:2" alt="" />
+<img src="/blk/hero/hero-speckled-mobile.avif" class="hero-float-egg" style="width:115px;height:104px;object-fit:contain;position:absolute;left:20px;top:603px;z-index:2" alt="" />
 <div style="position:absolute;left:36px;top:542px;width:191px;text-align:justify;font-family:Inter,-apple-system,Roboto,Helvetica,sans-serif;font-weight:400;font-size:14px;line-height:0.86em;letter-spacing:-0.7px;color:#6A6A6A">Одна команда на все задачи — превращаем ваши соцсети<br>в источник клиентов</div>
 
 <picture><source media="(max-width: 767px)" srcset="/blk/hero/blue-full-mobile.avif" type="image/avif" /><source media="(max-width: 767px)" srcset="/blk/hero/blue-full-mobile.webp" type="image/webp" /><img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" loading="eager" decoding="async" fetchpriority="high" style="width:647.12px;height:581.83px;max-width:none;object-fit:contain;position:absolute;left:33px;top:460px" alt="" /></picture>
