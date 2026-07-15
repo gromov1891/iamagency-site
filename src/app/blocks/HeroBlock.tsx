@@ -54,11 +54,13 @@ export default function HeroBlock({
       >
         {/* левая группа — координаты как в Figma на холсте 1440 */}
         <div dangerouslySetInnerHTML={{ __html: leftHtml }} />
-        {/* правая группа — сдвинута на 780px вправо (вписана в правый край холста) */}
-        <div
-          style={{ position: "absolute", top: 0, left: 780, width: 660, height: H }}
-          dangerouslySetInnerHTML={{ __html: rightHtml }}
-        />
+        {/* Не создаём прозрачный слой, если правая группа уже встроена в leftHtml. */}
+        {rightHtml.trim() ? (
+          <div
+            style={{ position: "absolute", top: 0, left: 780, width: 660, height: H }}
+            dangerouslySetInnerHTML={{ __html: rightHtml }}
+          />
+        ) : null}
       </div>
     </div>
   );
