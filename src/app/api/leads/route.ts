@@ -133,6 +133,28 @@ export async function POST(request: Request) {
       ...visibleLabels.map(([label, value]) => `<b>${escapeHtml(label)}:</b> ${escapeHtml(value)}`),
     ].join("\n");
 
+    const deliveryWebhookUrl = process.env.LEADS_DELIVERY_WEBHOOK_URL?.trim();
+    const deliveryWebhookSecret = process.env.LEADS_DELIVERY_WEBHOOK_SECRET?.trim();
+
+    if (deliveryWebhookUrl && deliveryWebhookSecret) {
+      const relayResponse = await fetch(deliveryWebhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-IAM-Lead-Secret": deliveryWebhookSecret,
+        },
+        body: JSON.stringify({
+          emailSubject: `[I AM AGENCY] ${lead.source} · ${lead.name}`,
+          emailText,
+          emailHtml,
+          telegramTextPlain: visibleLabels.map(([label, value]) => `${label}: ${value}`).join("\n"),
+        }),
+      });
+
+      if (!relayResponse.ok) throw new Error(`Lead relay ${relayResponse.status}`);
+      return NextResponse.json({ ok: true, id });
+    }
+
     await Promise.all([
       transporter.sendMail({
         from: process.env.LEADS_SMTP_FROM || `I AM AGENCY <${smtpUser}>`,
