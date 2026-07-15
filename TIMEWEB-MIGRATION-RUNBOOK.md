@@ -3,11 +3,24 @@
 ## Confirmed current state
 
 - Production domain: `iamagency.su`.
-- Registrar: Tilda (`TILDA-SU`).
-- DNS servers: `ns1.tildadns.com`, `ns2.tildadns.com`.
+- Registrar: Tilda (`TILDA-SU`), registration valid through 18 September 2026.
+- Nameserver cutover requested on 15 July 2026 from Tilda DNS to Timeweb DNS:
+  `ns1.timeweb.ru`, `ns2.timeweb.ru`, `ns3.timeweb.org`, `ns4.timeweb.org`.
 - Current Yandex Metrika counter: `99802137`.
 - Google Search Console and Yandex Webmaster verification TXT records already exist.
 - The application requires Next.js SSR, API routes, CMS storage and outbound SMTP/Telegram access.
+
+## Deployed production resources
+
+- Timeweb project: `2631745`.
+- App Platform application: `iamagency-prod` (ID `223197`).
+- Application IP: `186.246.6.14`.
+- Technical domain: `supportn8n-iamagency-site-c22c.twc1.net`.
+- Deployed commit: `2b764114a688438ae51027332c016349bb83b3cb`.
+- Runtime: Node.js 22, Next.js SSR, build `npm run build`, start `npm start`.
+- CMS storage: public Timeweb S3 bucket `iamagency-cms-zt123528`.
+- The technical domain, `/api/health`, main routes, `robots.txt` and `sitemap.xml` returned HTTP 200 before cutover.
+- The custom domain is attached to `iamagency-prod`; public validation remains pending until the authoritative NS change has propagated and DDoS-Guard routes the hostname to Timeweb.
 
 The Optimo shared-hosting plan is not used as the application runtime. Production runs in Timeweb Cloud App Platform with SSR enabled. CMS records and uploaded images use a public Timeweb S3 bucket.
 
@@ -47,15 +60,9 @@ The first command is a dry run. The second copies missing `cms/records/*` and `c
 - Legacy Tilda URLs redirect only once to a valid destination.
 - Yandex Metrika counter `99802137` receives a test visit and `lead_sent` goal.
 
-## 4. Domain ownership action in Tilda
+## 4. Domain ownership
 
-1. In Tilda open Domains, select `iamagency.su` and choose transfer to another registrar.
-2. Request the AUTHINFO code.
-3. Confirm the request using the code sent to the domain administrator email.
-4. Save the AUTHINFO code; Tilda displays it only once.
-5. Start the `.su` transfer in Timeweb Domains using this code.
-
-The registrar transfer may run in parallel with hosting validation. Do not change production DNS before the technical Timeweb domain passes the checklist.
+The registrar remains Tilda for now. A registrar transfer is not required to host the application in Timeweb. Domain delegation is changed in the Tilda registrar panel, while the DNS zone and application run in Timeweb Cloud.
 
 ## 5. DNS cutover
 
@@ -66,7 +73,15 @@ Before switching, copy all existing records into Timeweb DNS, especially:
 - any future MX/SPF/DKIM records;
 - apex and `www` records supplied by App Platform.
 
-Set TTL to 300 at least one day before the cutover if Tilda DNS allows it. Connect both `iamagency.su` and `www.iamagency.su` in App Platform, wait for SSL, then switch nameservers or DNS records to Timeweb.
+The Timeweb zone prepared before the switch contains:
+
+- apex A `186.246.6.14`, bound to `iamagency-prod`;
+- `www` CNAME to `iamagency.su`;
+- the existing Google Search Console verification TXT;
+- the existing Yandex Webmaster verification TXT;
+- Timeweb MX, SPF and DMARC defaults.
+
+At cutover, Tilda accepted all four Timeweb nameservers and reported that propagation can take up to 24 hours. The previous Tilda NS records had a 7200-second cache TTL, so recursive resolvers can continue returning the old site during the first hours without indicating a fault.
 
 ## 6. Post-migration checks
 
@@ -80,4 +95,4 @@ Set TTL to 300 at least one day before the cutover if Tilda DNS allows it. Conne
 
 ## Rollback
 
-Do not delete the Tilda project, Vercel Blob data or old DNS records for at least 14 days. If a critical issue appears, restore the previous Tilda nameservers or A record, confirm the old site opens, and fix Timeweb on the technical domain before trying the switch again.
+Do not delete the Tilda project, Vercel Blob data, the previous Timeweb app or old DNS information for at least 14 days. If a critical issue appears, restore `ns1.tildadns.com` and `ns2.tildadns.com` in the Tilda domain panel, confirm the old site opens after DNS propagation, and fix Timeweb on the technical domain before trying the switch again.
