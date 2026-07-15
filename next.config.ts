@@ -23,11 +23,11 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: "/:assetPath(blk|hero|partners|utp)/:file*",
+        source: "/:assetPath(blk|fonts|hero|partners|utp)/:file*",
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=86400, s-maxage=31536000, stale-while-revalidate=604800",
+            value: "public, max-age=31536000, immutable",
           },
         ],
       },

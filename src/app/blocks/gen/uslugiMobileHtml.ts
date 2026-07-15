@@ -13,7 +13,7 @@ const service = (num: string, title: string, text: string, href: string) => `
 
 export const uslugiMobileHtml = `<div style="position:absolute;left:0;top:0;width:375px;height:541px;background:#1C1C1C;overflow:visible">
 <style>.mobile-services summary::-webkit-details-marker{display:none}.mobile-services details[open] summary{padding-top:2px}</style>
-<img layer-name="twisted-side-1 1" style="width:400px;height:400px;object-fit:contain;position:absolute;left:-151px;top:238px" src="/blk/figma-mobile/mobile-twister.webp" alt="" />
+<img layer-name="twisted-side-1 1" style="width:400px;height:400px;object-fit:contain;position:absolute;left:-151px;top:238px" src="/blk/figma-mobile/mobile-twister-opt.webp" alt="" />
 
 <div style="position:absolute;left:20px;top:49px;font-family:Coolvetica,-apple-system,Roboto,Helvetica,sans-serif;font-size:26.88px;line-height:86%;text-transform:uppercase;color:#FFF">УСЛУГИ</div>
 
