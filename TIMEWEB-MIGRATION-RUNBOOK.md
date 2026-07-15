@@ -13,14 +13,17 @@
 ## Deployed production resources
 
 - Timeweb project: `2631745`.
-- App Platform application: `iamagency-prod` (ID `223197`).
-- Application IP: `186.246.6.14`.
-- Technical domain: `supportn8n-iamagency-site-c22c.twc1.net`.
-- Deployed commit: `2b764114a688438ae51027332c016349bb83b3cb`.
+- Production App Platform application: `iamagency-prod-final` (ID `223353`).
+- Application IP: `186.246.13.203`.
+- Technical domain: `gromov1891-iamagency-site-3752.twc1.net`.
+- Repository: `https://github.com/gromov1891/iamagency-site`, branch `main`.
+- Deployed commit: `259ed7d` (`redirect www to canonical domain`).
 - Runtime: Node.js 22, Next.js SSR, build `npm run build`, start `npm start`.
 - CMS storage: public Timeweb S3 bucket `iamagency-cms-zt123528`.
-- The technical domain, `/api/health`, main routes, `robots.txt` and `sitemap.xml` returned HTTP 200 before cutover.
-- The custom domain is attached to `iamagency-prod`; public validation remains pending until the authoritative NS change has propagated and DDoS-Guard routes the hostname to Timeweb.
+- The custom domain `iamagency.su` is attached to `iamagency-prod-final` and has a valid automatically managed SSL certificate.
+- The technical domain and public domain passed checks for `/api/health`, the main routes, `/admin`, `robots.txt` and `sitemap.xml`.
+- A production-origin lead was accepted by `/api/leads` and delivered through the HTTPS relay to email and the marketing Telegram chat.
+- The former application `iamagency-prod` (ID `223197`, IP `186.246.6.14`) is retained temporarily for rollback only.
 
 The Optimo shared-hosting plan is not used as the application runtime. Production runs in Timeweb Cloud App Platform with SSR enabled. CMS records and uploaded images use a public Timeweb S3 bucket.
 
@@ -31,7 +34,7 @@ The Optimo shared-hosting plan is not used as the application runtime. Productio
 3. Store it in the user-level `TIMEWEB_CLOUD_TOKEN` environment variable and restart Codex.
 4. Run `npm run timeweb:preflight`. It only reads the account state and tariff list; it never creates or deletes resources and redacts credentials in its output.
 5. Create a public S3 bucket, for example `iamagency-cms`, in region `ru-1`.
-6. Create an App Platform application from the public repository `https://github.com/supportn8n/iamagency-site.git` and branch `main`.
+6. Create an App Platform application from the public repository `https://github.com/gromov1891/iamagency-site.git` and branch `main`.
 7. Choose Next.js and enable SSR during creation. SSR cannot be enabled later for an existing static app.
 8. Use Node.js 22, build command `npm run build`, start command `npm start` and port `3000`.
 9. Set health check path to `/api/health`.
@@ -75,13 +78,15 @@ Before switching, copy all existing records into Timeweb DNS, especially:
 
 The Timeweb zone prepared before the switch contains:
 
-- apex A `186.246.6.14`, bound to `iamagency-prod`;
-- `www` CNAME to `iamagency.su`;
+- apex A `186.246.13.203`, bound to `iamagency-prod-final`;
+- `www` A `186.246.13.203`, bound to `iamagency-prod-final`;
 - the existing Google Search Console verification TXT;
 - the existing Yandex Webmaster verification TXT;
 - Timeweb MX, SPF and DMARC defaults.
 
-At cutover, Tilda accepted all four Timeweb nameservers and reported that propagation can take up to 24 hours. The previous Tilda NS records had a 7200-second cache TTL, so recursive resolvers can continue returning the old site during the first hours without indicating a fault.
+At cutover, Tilda accepted all four Timeweb nameservers. All four Timeweb authoritative servers return `186.246.13.203` for the apex domain. The previous Tilda NS records had a 7200-second cache TTL, so recursive resolvers could temporarily return the old site during the first hours without indicating a fault.
+
+Cutover completed on 15 July 2026. The Tilda registrar account remains the place where the domain registration is renewed; Timeweb is now the DNS and application host.
 
 ## 6. Post-migration checks
 
@@ -93,6 +98,18 @@ At cutover, Tilda accepted all four Timeweb nameservers and reported that propag
 - Server logs have no repeated 4xx/5xx errors.
 - Lighthouse is checked on desktop and mobile after caches warm up.
 
+### Completed on 15 July 2026
+
+- The apex domain and `www` resolve publicly to `186.246.13.203`.
+- Separate Let's Encrypt certificates are active for `iamagency.su` and `www.iamagency.su`.
+- `www` returns permanent `308` redirects to the same path and query string on `https://iamagency.su`.
+- Home, marketing, school, cases, blog, admin, robots, sitemap and health endpoints return HTTP 200.
+- The sitemap contains 45 canonical URLs.
+- The existing Yandex Metrika counter is present in production HTML.
+- Google Search Console and Yandex Webmaster TXT verification records resolve publicly.
+- A public-origin lead submission was accepted and delivered to email and the marketing Telegram chat.
+- Temporary API tokens created for the migration were revoked after validation.
+
 ## Rollback
 
-Do not delete the Tilda project, Vercel Blob data, the previous Timeweb app or old DNS information for at least 14 days. If a critical issue appears, restore `ns1.tildadns.com` and `ns2.tildadns.com` in the Tilda domain panel, confirm the old site opens after DNS propagation, and fix Timeweb on the technical domain before trying the switch again.
+Do not delete the Tilda project, Vercel Blob data, former Timeweb application `223197` or old DNS information before 29 July 2026. If a critical issue appears, the fastest Timeweb rollback is to bind the apex A record back to application `223197` at `186.246.6.14`. A full DNS rollback is to restore `ns1.tildadns.com` and `ns2.tildadns.com` in the Tilda domain panel, then confirm the old site after propagation.
