@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import {
   FiChevronDown,
   FiChevronUp,
+  FiDownload,
   FiEdit3,
   FiExternalLink,
   FiFileText,
@@ -217,6 +218,7 @@ export default function CmsEditor({ user }: { user: string }) {
           <div><strong>CMS блога</strong><span>Менеджер: {user}</span></div>
         </div>
         <div className={styles.topbarActions}>
+          <a href="/api/admin/leads/export" className={styles.iconTextButton}><FiDownload />Валидные лиды</a>
           <a href="/blog" target="_blank" rel="noreferrer" className={styles.iconTextButton}><FiExternalLink />Открыть блог</a>
           <button type="button" className={styles.iconButton} onClick={logout} title="Выйти"><FiLogOut /><span className="sr-only">Выйти</span></button>
         </div>

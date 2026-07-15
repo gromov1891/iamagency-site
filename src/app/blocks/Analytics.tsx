@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
+import { captureLeadAttribution } from "@/lib/lead-attribution";
 
 const metrikaId = Number(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID || "99802137");
 const gaId = process.env.NEXT_PUBLIC_GA_ID?.trim();
@@ -14,6 +15,8 @@ export default function Analytics() {
   const started = useRef(false);
 
   useEffect(() => {
+    captureLeadAttribution();
+
     const startAnalytics = () => {
       if (started.current) return;
       started.current = true;
@@ -66,6 +69,7 @@ export default function Analytics() {
 
   useEffect(() => {
     if (pathname === initialPath.current) return;
+    captureLeadAttribution();
     window.ym?.(metrikaId, "hit", pathname);
     if (gaId) window.gtag?.("config", gaId, { page_path: pathname });
   }, [pathname]);

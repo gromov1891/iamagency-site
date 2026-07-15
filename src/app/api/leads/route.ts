@@ -1,6 +1,12 @@
 import { randomUUID } from "node:crypto";
 import nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
+import {
+  buildLeadValidationUrl,
+  saveLeadRecord,
+  type StoredLeadAttribution,
+  type StoredLeadAttributionTouch,
+} from "@/lib/lead-store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -19,12 +25,39 @@ type LeadPayload = {
   goal?: unknown;
   message?: unknown;
   website?: unknown;
+  attribution?: unknown;
 };
+
+const ATTRIBUTION_KEYS = [
+  "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term",
+  "gclid", "gbraid", "wbraid", "yclid", "ymclid", "fbclid", "vk_click_id",
+] as const;
 
 const rateLimit = new Map<string, number[]>();
 
 function clean(value: unknown, max = 500) {
   return typeof value === "string" ? value.trim().slice(0, max) : "";
+}
+
+function cleanAttributionTouch(value: unknown): StoredLeadAttributionTouch | null {
+  const raw = value && typeof value === "object" ? value as Record<string, unknown> : {};
+  const touch: StoredLeadAttributionTouch = {
+    landingPage: clean(raw.landingPage, 1000),
+    referrer: clean(raw.referrer, 1000),
+    capturedAt: clean(raw.capturedAt, 80),
+  };
+  for (const key of ATTRIBUTION_KEYS) {
+    const field = clean(raw[key], 500);
+    if (field) touch[key] = field;
+  }
+  return touch.landingPage || touch.referrer || ATTRIBUTION_KEYS.some((key) => Boolean(touch[key])) ? touch : null;
+}
+
+function cleanAttribution(value: unknown): StoredLeadAttribution | null {
+  const raw = value && typeof value === "object" ? value as Record<string, unknown> : {};
+  const firstTouch = cleanAttributionTouch(raw.firstTouch);
+  const lastTouch = cleanAttributionTouch(raw.lastTouch);
+  return firstTouch && lastTouch ? { firstTouch, lastTouch } : null;
 }
 
 function escapeHtml(value: string) {
@@ -92,11 +125,13 @@ export async function POST(request: Request) {
       goal: clean(raw.goal, 1200),
       message: clean(raw.message, 1200),
     };
+    const attribution = cleanAttribution(raw.attribution);
 
     if (lead.name.length < 2) return NextResponse.json({ error: "Укажите имя" }, { status: 400 });
     if (lead.phone.length < 5) return NextResponse.json({ error: "Укажите телефон" }, { status: 400 });
 
     const id = randomUUID().slice(0, 8).toUpperCase();
+    const createdAtIso = new Date().toISOString();
     const createdAt = new Intl.DateTimeFormat("ru-RU", {
       dateStyle: "medium",
       timeStyle: "medium",
@@ -118,7 +153,26 @@ export async function POST(request: Request) {
       ["Время", `${createdAt} МСК`],
       ["ID", id],
     ];
+    const touch = attribution?.lastTouch;
+    const clickId = touch?.gclid || touch?.gbraid || touch?.wbraid || touch?.yclid || touch?.ymclid || touch?.vk_click_id || touch?.fbclid || "";
+    labels.splice(2, 0,
+      ["UTM source / medium", [touch?.utm_source, touch?.utm_medium].filter(Boolean).join(" / ")],
+      ["UTM campaign", touch?.utm_campaign || ""],
+      ["UTM content", touch?.utm_content || ""],
+      ["UTM term", touch?.utm_term || ""],
+      ["Click ID", clickId],
+      ["Первая посадочная", attribution?.firstTouch.landingPage || ""],
+      ["Referrer", attribution?.firstTouch.referrer || ""],
+    );
+    const validationUrl = buildLeadValidationUrl(id);
+    labels.push(["✅ Валидный лид", validationUrl]);
     const visibleLabels = labels.filter(([, value]) => Boolean(value));
+
+    try {
+      await saveLeadRecord({ id, status: "new", createdAt: createdAtIso, lead, attribution });
+    } catch (storageError) {
+      console.error("Unable to store lead", storageError instanceof Error ? storageError.message : storageError);
+    }
 
     const smtpPort = Number(process.env.LEADS_SMTP_PORT || 465);
     const smtpUser = requiredEnv("LEADS_SMTP_USER");
@@ -150,6 +204,10 @@ export async function POST(request: Request) {
           "X-IAM-Lead-Secret": deliveryWebhookSecret,
         },
         body: JSON.stringify({
+          leadId: id,
+          lead,
+          attribution,
+          validationUrl,
           emailSubject: `[I AM AGENCY] ${lead.source} · ${lead.name}`,
           emailText,
           emailHtml,

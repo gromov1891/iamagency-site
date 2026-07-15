@@ -4,6 +4,7 @@ import { FormEvent, KeyboardEvent as ReactKeyboardEvent, useCallback, useEffect,
 import { usePathname } from "next/navigation";
 import styles from "./lead-modal.module.css";
 import { trackAnalyticsGoal } from "@/lib/analytics";
+import { getLeadAttribution } from "@/lib/lead-attribution";
 
 const normalizeText = (value: string | null | undefined) =>
   (value || "")
@@ -221,6 +222,7 @@ export default function LeadModal() {
           source,
           tariff,
           page: `${window.location.pathname}${window.location.search}`,
+          attribution: getLeadAttribution(),
         }),
       });
       const result = await response.json().catch(() => ({}));

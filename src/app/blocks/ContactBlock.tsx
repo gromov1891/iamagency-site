@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import BuilderBlock from "./BuilderBlock";
 import { trackAnalyticsGoal } from "@/lib/analytics";
+import { getLeadAttribution } from "@/lib/lead-attribution";
 
 /* Блок «Свяжитесь с нами» (переработан по Figma to Code).
    Статичный HTML рисует заголовок, фигуру, подписи полей, линии, кнопки и модалку (#kf-modal, скрыта).
@@ -179,11 +180,12 @@ export default function ContactBlock({
               body: JSON.stringify({
                 kind: "business",
                 source: `Главная · форма контактов · ${variant || "desktop"}`,
-                page: window.location.pathname,
+                page: `${window.location.pathname}${window.location.search}`,
                 name,
                 phone,
                 project: inputs[2].value.trim(),
                 budget: inputs[3].value.trim(),
+                attribution: getLeadAttribution(),
               }),
             });
             const result = await response.json().catch(() => ({}));
