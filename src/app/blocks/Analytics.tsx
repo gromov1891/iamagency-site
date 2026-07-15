@@ -1,15 +1,68 @@
 "use client";
 
-import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 const metrikaId = Number(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID || "99802137");
 const gaId = process.env.NEXT_PUBLIC_GA_ID?.trim();
+type QueuedMetrika = NonNullable<Window["ym"]> & { a?: unknown[][]; l?: number };
+type AnalyticsWindow = Window & { dataLayer?: unknown[][] };
 
 export default function Analytics() {
   const pathname = usePathname();
   const initialPath = useRef(pathname);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const startAnalytics = () => {
+      if (started.current) return;
+      started.current = true;
+
+      const queuedMetrika = (window.ym as QueuedMetrika | undefined) ||
+        (function (...args: unknown[]) {
+          (queuedMetrika.a = queuedMetrika.a || []).push(args);
+        } as QueuedMetrika);
+      queuedMetrika.l = Date.now();
+      window.ym = queuedMetrika;
+
+      const metrika = document.createElement("script");
+      metrika.async = true;
+      metrika.src = "https://mc.yandex.ru/metrika/tag.js";
+      document.head.appendChild(metrika);
+      window.ym(metrikaId, "init", {
+        clickmap: true,
+        trackLinks: true,
+        accurateTrackBounce: true,
+        webvisor: true,
+      });
+
+      if (gaId) {
+        const analyticsWindow = window as AnalyticsWindow;
+        analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
+        window.gtag =
+          window.gtag ||
+          function (...args: unknown[]) {
+            analyticsWindow.dataLayer!.push(args);
+          };
+        window.gtag("js", new Date());
+        window.gtag("config", gaId);
+
+        const analytics = document.createElement("script");
+        analytics.async = true;
+        analytics.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+        document.head.appendChild(analytics);
+      }
+    };
+
+    const events: Array<keyof WindowEventMap> = ["pointerdown", "touchstart", "keydown", "scroll"];
+    events.forEach((event) => window.addEventListener(event, startAnalytics, { once: true, passive: true }));
+    const fallback = window.setTimeout(startAnalytics, 8000);
+
+    return () => {
+      window.clearTimeout(fallback);
+      events.forEach((event) => window.removeEventListener(event, startAnalytics));
+    };
+  }, []);
 
   useEffect(() => {
     if (pathname === initialPath.current) return;
@@ -17,33 +70,5 @@ export default function Analytics() {
     if (gaId) window.gtag?.("config", gaId, { page_path: pathname });
   }, [pathname]);
 
-  return (
-    <>
-      <Script
-        id="yandex-metrika"
-        strategy="lazyOnload"
-        dangerouslySetInnerHTML={{
-          __html: `
-            (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
-            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-            (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
-            ym(${metrikaId},"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
-          `,
-        }}
-      />
-      {gaId ? (
-        <>
-          <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" />
-          <Script
-            id="google-analytics"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)};window.gtag=gtag;gtag('js',new Date());gtag('config','${gaId}');`,
-            }}
-          />
-        </>
-      ) : null}
-    </>
-  );
+  return null;
 }
