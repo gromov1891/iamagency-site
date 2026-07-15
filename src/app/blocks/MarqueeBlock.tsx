@@ -86,7 +86,22 @@ function MarqueeCanvas({
         maxRight = Math.max(maxRight, left + width);
         minLeft = Math.min(minLeft, left);
       }
-      const gap = 5;
+      const sortedCards = [...cards].sort(
+        (a, b) => parseFloat(a.style.left || "0") - parseFloat(b.style.left || "0")
+      );
+      const measuredGaps = sortedCards.slice(1).map((card, index) => {
+        const previous = sortedCards[index];
+        return (
+          parseFloat(card.style.left || "0") -
+          (parseFloat(previous.style.left || "0") + parseFloat(previous.style.width || "0"))
+        );
+      });
+      // Keep the same spacing where the last card meets the cloned first card.
+      // The old fixed 5px value made that single pair look glued together.
+      const positiveGaps = measuredGaps.filter((value) => Number.isFinite(value) && value > 0);
+      const gap = positiveGaps.length
+        ? positiveGaps.sort((a, b) => a - b)[Math.floor(positiveGaps.length / 2)]
+        : 5;
       const period = maxRight - minLeft + gap;
 
       const shouldClip = clip && clipLeft != null && clipWidth != null;
