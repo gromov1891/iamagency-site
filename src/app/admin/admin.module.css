@@ -411,3 +411,44 @@
   .saveBar { padding-inline: 10px; }
   .secondaryButton, .publishButton { padding-inline: 9px; font-size: 12px; }
 }
+
+.leadsPage { min-height: 100vh; }
+.leadsContent { width: min(1480px, 100%); margin: 0 auto; padding: 30px clamp(16px, 3vw, 44px) 70px; }
+.leadStats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.leadStats article { min-height: 118px; border: 1px solid #d8dadd; border-radius: 8px; background: #fff; padding: 20px; }
+.leadStats span { display: block; color: #6d727a; font-size: 13px; }
+.leadStats strong { display: block; margin-top: 18px; font-size: 36px; line-height: 1; }
+.leadsOverview { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.leadsOverview > div { border: 1px solid #d8dadd; border-radius: 8px; background: #fff; padding: 20px; }
+.leadsOverview h2 { margin: 0 0 16px; font-size: 17px; }
+.leadsOverview p { display: flex; justify-content: space-between; gap: 20px; margin: 9px 0; font-size: 14px; }
+.leadsHint { max-width: 650px; color: #666b73; line-height: 1.5; }
+.leadToolbar { display: flex; gap: 10px; margin: 22px 0 12px; }
+.leadToolbar label { display: grid; min-height: 42px; flex: 1; grid-template-columns: 20px 1fr; align-items: center; gap: 8px; border: 1px solid #cfd2d7; border-radius: 6px; background: #fff; padding: 0 12px; }
+.leadToolbar input, .leadToolbar select { border: 0; outline: 0; background: transparent; font: 14px Inter, sans-serif; }
+.leadToolbar select { min-width: 170px; border: 1px solid #cfd2d7; border-radius: 6px; background: #fff; padding: 0 12px; }
+.leadsTableWrap { overflow-x: auto; border: 1px solid #d8dadd; border-radius: 8px; background: #fff; }
+.leadsTable { width: 100%; min-width: 1120px; border-collapse: collapse; font-size: 13px; }
+.leadsTable th { background: #f0f1f3; color: #666b73; padding: 12px; text-align: left; }
+.leadsTable td { max-width: 230px; border-top: 1px solid #e2e4e8; padding: 14px 12px; vertical-align: top; }
+.leadsTable td strong, .leadsTable td small { display: block; }
+.leadsTable td small { overflow: hidden; margin-top: 5px; color: #7d828a; text-overflow: ellipsis; white-space: nowrap; }
+.idCell { overflow: hidden; color: #686e77; font-family: monospace; text-overflow: ellipsis; white-space: nowrap; }
+.statusValid, .qualifyButton { display: inline-flex; min-height: 30px; align-items: center; border-radius: 999px; padding: 0 10px; font-size: 11px; font-weight: 700; }
+.statusValid { background: #dcebd0; color: #365d1d; }
+.qualifyButton { border: 1px solid #c8ccd2; background: #fff; color: #202124; cursor: pointer; }
+.qualifyButton:hover { border-color: #202124; }
+
+@media (max-width: 800px) {
+  .leadStats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .leadsOverview { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+  .leadStats { grid-template-columns: 1fr 1fr; }
+  .leadStats article { min-height: 96px; padding: 15px; }
+  .leadStats strong { margin-top: 12px; font-size: 28px; }
+  .leadToolbar { align-items: stretch; flex-wrap: wrap; }
+  .leadToolbar label { flex-basis: 100%; }
+  .leadToolbar select { flex: 1; }
+}

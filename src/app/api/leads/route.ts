@@ -29,6 +29,7 @@ type LeadPayload = {
 };
 
 const ATTRIBUTION_KEYS = [
+  "client_id",
   "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term",
   "gclid", "gbraid", "wbraid", "yclid", "ymclid", "fbclid", "vk_click_id",
 ] as const;
@@ -175,6 +176,7 @@ export async function POST(request: Request) {
     const touch = attribution?.lastTouch;
     const clickId = touch?.gclid || touch?.gbraid || touch?.wbraid || touch?.yclid || touch?.ymclid || touch?.vk_click_id || touch?.fbclid || "";
     labels.splice(2, 0,
+      ["Metrika Client ID", touch?.client_id || ""],
       ["UTM source / medium", [touch?.utm_source, touch?.utm_medium].filter(Boolean).join(" / ")],
       ["UTM campaign", touch?.utm_campaign || ""],
       ["UTM content", touch?.utm_content || ""],

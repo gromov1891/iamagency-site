@@ -9,6 +9,7 @@ export type StoredLeadAttributionTouch = {
   landingPage: string;
   referrer: string;
   capturedAt: string;
+  client_id?: string;
   utm_source?: string;
   utm_medium?: string;
   utm_campaign?: string;
@@ -36,6 +37,12 @@ export type StoredLead = {
   validationSignature?: string;
   lead: Record<string, string>;
   attribution: StoredLeadAttribution | null;
+  offlineConversion?: {
+    status: "sent" | "skipped" | "error";
+    updatedAt: string;
+    uploadId?: string;
+    message?: string;
+  };
 };
 
 function leadPrefix(id: string) {

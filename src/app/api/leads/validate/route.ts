@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import {
   getLeadRecord,
-  validateLead,
   verifyLeadValidation,
   verifyStoredLeadValidation,
 } from "@/lib/lead-store";
+import { qualifyLead } from "@/lib/lead-qualification";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -30,7 +30,7 @@ export async function GET(request: Request) {
     if (!isValidSignature) {
       return responsePage("Ссылка устарела", "Эта заявка была создана до переноса системы. Новые ссылки уже защищены от смены сервера.", 403);
     }
-    const lead = await validateLead(id);
+    const lead = await qualifyLead(id);
     if (!lead) return responsePage("Заявка не найдена", `Заявка ${id} отсутствует в журнале.`, 404);
     return responsePage("Качественный лид сохранён", `Заявка ${id} отмечена как ценная конверсия и добавлена в журнал для рекламной аналитики.`);
   } catch (error) {

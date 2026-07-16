@@ -3,6 +3,7 @@
 const STORAGE_KEY = "iamagency_lead_attribution_v1";
 
 const ATTRIBUTION_KEYS = [
+  "client_id",
   "utm_source",
   "utm_medium",
   "utm_campaign",
@@ -46,6 +47,12 @@ function currentTouch(): LeadAttributionTouch {
     const value = clean(params.get(key), 500);
     if (value) touch[key] = value;
   }
+  const metrikaClientId = document.cookie
+    .split(";")
+    .map((part) => part.trim())
+    .find((part) => part.startsWith("_ym_uid="))
+    ?.slice("_ym_uid=".length);
+  if (metrikaClientId) touch.client_id = clean(decodeURIComponent(metrikaClientId), 120);
   return touch;
 }
 
