@@ -10,6 +10,15 @@ import Analytics from "./blocks/Analytics";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://iamagency.su"),
+  icons: {
+    icon: [
+      { url: "/favicon-96.png", sizes: "96x96", type: "image/png" },
+      { url: "/favicon.ico", type: "image/x-icon" },
+      { url: "/apple-icon.png", sizes: "288x288", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [{ url: "/apple-icon.png", sizes: "288x288", type: "image/png" }],
+  },
   title: {
     default: "I am Agency — SMM-агентство полного цикла",
     template: "%s — I am Agency",
