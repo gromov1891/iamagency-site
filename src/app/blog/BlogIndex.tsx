@@ -18,7 +18,8 @@ export default function BlogIndex({ articles }: { articles: BlogArticle[] }) {
   }, []);
 
   const visibleArticles = useMemo(() => {
-    return articles.filter((article) => !activeTag || article.tags.includes(activeTag));
+    const matching = articles.filter((article) => !activeTag || article.tags.includes(activeTag));
+    return activeTag ? matching.slice(0, 4) : matching;
   }, [activeTag, articles]);
 
   function selectTag(tag: BlogTag) {

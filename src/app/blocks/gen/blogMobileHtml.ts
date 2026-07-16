@@ -15,13 +15,13 @@ const card = (x: number, y: number, img: string, text: string, textH = 63) => `
   <div style="color:#FFF;font-family:Inter;font-size:8.37px;font-weight:600;line-height:86%;letter-spacing:-0.35px;position:absolute;left:9.28px;top:17.44px;width:20.52px;height:9.46px;white-space:nowrap">iam</div>
 </div>`;
 
-const chip = (x: number, y: number, w: number, text: string, textW: number, accent: string) => `
-<div style="width:${w}px;height:20.9px;position:absolute;left:${x}px;top:${y}px">
+const chip = (x: number, y: number, w: number, text: string, textW: number, accent: string, tag: string) => `
+<a href="/blog?tag=${encodeURIComponent(tag)}" aria-label="Открыть статьи: ${tag}" style="width:${w}px;height:20.9px;position:absolute;left:${x}px;top:${y}px;display:block;text-decoration:none">
   <div style="width:${w}px;height:20.9px;border-radius:25.57px;background:#1C1C1C;position:absolute;left:0;top:0"></div>
   <div style="color:#FFF;font-family:Inter;font-size:14.4px;font-weight:400;line-height:86%;letter-spacing:-0.72px;text-transform:uppercase;position:absolute;left:7.49px;top:4.13px;width:${textW}px;height:12px;white-space:nowrap"><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:14.4px;color:#FFF">${text}</span></div>
   <div style="width:16.8px;height:16.8px;border-radius:50%;background:#FFF;box-shadow:inset 0 0 0 1.35px ${accent};position:absolute;left:${w - 18.91}px;top:1.99px"></div>
   <div style="color:#1C1C1C;font-family:Inter;font-size:14.4px;font-weight:400;line-height:86%;letter-spacing:-0.72px;text-transform:uppercase;position:absolute;left:${w - 15.29}px;top:3.28px;width:10px;height:12px;white-space:nowrap"><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:14.4px;color:#1C1C1C">+</span></div>
-</div>`;
+</a>`;
 
 export const blogMobileHtml = `<div style="position:absolute;left:0;top:0;width:375px;height:913px;background:#FFF;overflow:visible">
 <div layer-name="Блог" style="color:#1C1C1C;font-family:Coolvetica;font-size:27.091px;font-weight:400;line-height:86%;text-transform:uppercase;position:absolute;left:20px;top:49px;width:62px;height:23px;white-space:nowrap"><span style="font-family:Coolvetica, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:27.091px;color:#1C1C1C">Блог</span></div>
@@ -32,10 +32,10 @@ ${card(127, 565, "/blk/blog/f41a088987f8.webp", "4 сервиса для соз�
 <img layer-name="30Файл 1" style="width:183px;height:183px;object-fit:contain;position:absolute;left:278px;top:425px" src="/blk/blog/0b27b0cd1873.webp" alt="" />
 <img layer-name="Abstract 3D Shapes TG@Jam_Mockup51 1" style="width:199.54px;height:199.54px;object-fit:contain;position:absolute;left:-74px;top:190px" src="/blk/blog/7e8e72962934.webp" alt="" />
 <div layer-name="Категории" style="color:#9A9895;text-align:justify;font-family:Inter;font-size:13px;font-weight:400;line-height:86%;letter-spacing:-0.65px;text-transform:uppercase;position:absolute;left:20px;top:731px;width:75px;height:12px;white-space:nowrap"><span style="font-family:Inter, -apple-system, Roboto, Helvetica, sans-serif;font-weight:400;font-size:13px;color:#9A9895">Категории</span></div>
-${chip(20, 763.83, 65.68, "смм", 35, "#8992E4")}
-${chip(20, 793.18, 113.94, "маркетинг", 83, "#FFAD19")}
-${chip(186.83, 822.37, 113.94, "нейросети", 84, "#FFAD19")}
-${chip(186.83, 763.83, 84.09, "визуал", 54, "#8992E4")}
-${chip(186.83, 793.01, 168.17, "социальные сети", 141, "#FF6B3D")}
-${chip(20, 822.54, 137.82, "продвижение", 107, "#90BEE9")}
+${chip(20, 763.83, 65.68, "смм", 35, "#8992E4", "SMM")}
+${chip(20, 793.18, 113.94, "маркетинг", 83, "#FFAD19", "Маркетинг")}
+${chip(186.83, 822.37, 113.94, "нейросети", 84, "#FFAD19", "Нейросети")}
+${chip(186.83, 763.83, 84.09, "визуал", 54, "#8992E4", "Визуал")}
+${chip(186.83, 793.01, 168.17, "социальные сети", 141, "#FF6B3D", "Социальные сети")}
+${chip(20, 822.54, 137.82, "продвижение", 107, "#90BEE9", "Продвижение")}
 </div>`;
