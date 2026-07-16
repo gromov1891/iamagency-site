@@ -4,7 +4,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { captureLeadAttribution } from "@/lib/lead-attribution";
 
-const metrikaId = Number(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID || "99802137");
+const metrikaId = Number(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID || "98432843");
+const courseMetrikaId = Number(process.env.NEXT_PUBLIC_YANDEX_COURSE_METRIKA_ID || "98572678");
 const gaId = process.env.NEXT_PUBLIC_GA_ID?.trim();
 type QueuedMetrika = NonNullable<Window["ym"]> & { a?: unknown[][]; l?: number };
 type AnalyticsWindow = Window & { dataLayer?: unknown[][] };
@@ -13,6 +14,9 @@ export default function Analytics() {
   const pathname = usePathname();
   const initialPath = useRef(pathname);
   const started = useRef(false);
+  const courseStarted = useRef(false);
+
+  const isCoursePage = pathname.startsWith("/shkola-smm") || pathname.startsWith("/schoolsmm");
 
   useEffect(() => {
     captureLeadAttribution();
@@ -38,6 +42,16 @@ export default function Analytics() {
         accurateTrackBounce: true,
         webvisor: true,
       });
+
+      if (isCoursePage && Number.isFinite(courseMetrikaId)) {
+        window.ym(courseMetrikaId, "init", {
+          clickmap: true,
+          trackLinks: true,
+          accurateTrackBounce: true,
+          webvisor: true,
+        });
+        courseStarted.current = true;
+      }
 
       if (gaId) {
         const analyticsWindow = window as AnalyticsWindow;
@@ -71,8 +85,20 @@ export default function Analytics() {
     if (pathname === initialPath.current) return;
     captureLeadAttribution();
     window.ym?.(metrikaId, "hit", pathname);
+    if (isCoursePage && Number.isFinite(courseMetrikaId)) {
+      if (!courseStarted.current) {
+        window.ym?.(courseMetrikaId, "init", {
+          clickmap: true,
+          trackLinks: true,
+          accurateTrackBounce: true,
+          webvisor: true,
+        });
+        courseStarted.current = true;
+      }
+      window.ym?.(courseMetrikaId, "hit", pathname);
+    }
     if (gaId) window.gtag?.("config", gaId, { page_path: pathname });
-  }, [pathname]);
+  }, [pathname, isCoursePage]);
 
   return null;
 }
