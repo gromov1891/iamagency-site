@@ -320,7 +320,7 @@
 .slugField input { min-width: 0; border: 0; box-shadow: none !important; }
 
 .coverEditor { display: grid; grid-template-columns: minmax(260px, 360px) minmax(260px, 1fr); gap: 24px; align-items: start; }
-.uploadArea { position: relative; display: grid !important; min-height: 220px; place-items: center; align-content: center; gap: 8px !important; overflow: hidden; border: 1px dashed #aeb4bc; border-radius: 8px; background: #f8f9fa; cursor: pointer; text-align: center; }
+.uploadArea { position: relative; display: grid !important; width: min(100%, 360px); aspect-ratio: 4 / 5; place-items: center; align-content: center; gap: 8px !important; overflow: hidden; border: 1px dashed #aeb4bc; border-radius: 29px; background: #f8f9fa; cursor: pointer; text-align: center; }
 .uploadArea:hover { border-color: #3d8fc7; background: #f2f8fc; }
 .uploadArea > svg { font-size: 28px; }
 .uploadArea > span { color: #7c828a; font-size: 12px; font-weight: 400; }

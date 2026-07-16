@@ -67,14 +67,20 @@ function slugify(value: string) {
 async function prepareImage(file: File) {
   if (!file.type.startsWith("image/")) throw new Error("Выберите изображение");
   const bitmap = await createImageBitmap(file);
-  const maxSide = 2000;
-  const scale = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height));
+  const targetWidth = 1080;
+  const targetHeight = 1350;
+  const sourceRatio = bitmap.width / bitmap.height;
+  const targetRatio = targetWidth / targetHeight;
+  const cropWidth = sourceRatio > targetRatio ? bitmap.height * targetRatio : bitmap.width;
+  const cropHeight = sourceRatio > targetRatio ? bitmap.height : bitmap.width / targetRatio;
+  const sourceX = (bitmap.width - cropWidth) / 2;
+  const sourceY = (bitmap.height - cropHeight) / 2;
   const canvas = document.createElement("canvas");
-  canvas.width = Math.round(bitmap.width * scale);
-  canvas.height = Math.round(bitmap.height * scale);
+  canvas.width = targetWidth;
+  canvas.height = targetHeight;
   const context = canvas.getContext("2d");
   if (!context) throw new Error("Не удалось обработать изображение");
-  context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  context.drawImage(bitmap, sourceX, sourceY, cropWidth, cropHeight, 0, 0, targetWidth, targetHeight);
   bitmap.close();
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/webp", 0.84));
   if (!blob) throw new Error("Не удалось конвертировать изображение");
@@ -277,7 +283,7 @@ export default function CmsEditor({ user }: { user: string }) {
             </section>
 
             <section className={styles.formSection}>
-              <div className={styles.formSectionTitle}><FiImage /><div><h2>Обложка</h2><p>Автоматически уменьшим и переведём в WebP</p></div></div>
+              <div className={styles.formSectionTitle}><FiImage /><div><h2>Обложка</h2><p>Автоматически кадрируем в 1080×1350 (4:5) и переведём в WebP</p></div></div>
               <div className={styles.coverEditor}>
                 <label className={styles.uploadArea}>
                   {form.image ? <Image src={form.image} alt="Предпросмотр обложки" fill sizes="320px" /> : <><FiUploadCloud /><strong>Загрузить обложку</strong><span>JPG, PNG или WebP</span></>}

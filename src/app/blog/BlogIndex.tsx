@@ -21,6 +21,13 @@ export default function BlogIndex({ articles }: { articles: BlogArticle[] }) {
     return articles.filter((article) => !activeTag || article.tags.includes(activeTag));
   }, [activeTag, articles]);
 
+  function selectTag(tag: BlogTag) {
+    const nextTag = activeTag === tag ? null : tag;
+    setActiveTag(nextTag);
+    const url = nextTag ? `/blog?tag=${encodeURIComponent(nextTag)}` : "/blog";
+    window.history.replaceState(null, "", url);
+  }
+
   return (
     <main className={styles.blogPage}>
       <div className={styles.blogLayout}>
@@ -36,7 +43,7 @@ export default function BlogIndex({ articles }: { articles: BlogArticle[] }) {
                     key={tag}
                     type="button"
                     className={`${styles.filter} ${active ? styles.filterActive : ""}`}
-                    onClick={() => setActiveTag(active ? null : tag)}
+                    onClick={() => selectTag(tag)}
                     aria-pressed={active}
                   >
                     <span>{tag}</span>
