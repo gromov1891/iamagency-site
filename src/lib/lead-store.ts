@@ -33,6 +33,7 @@ export type StoredLead = {
   status: "new" | "valid";
   createdAt: string;
   validatedAt?: string;
+  validationSignature?: string;
   lead: Record<string, string>;
   attribution: StoredLeadAttribution | null;
 };
@@ -56,17 +57,29 @@ export function signLeadValidation(id: string) {
 }
 
 export function verifyLeadValidation(id: string, suppliedSignature: string) {
-  const expected = Buffer.from(signLeadValidation(id));
-  const supplied = Buffer.from(suppliedSignature);
-  return expected.length === supplied.length && timingSafeEqual(expected, supplied);
+  try {
+    const expected = Buffer.from(signLeadValidation(id));
+    const supplied = Buffer.from(suppliedSignature);
+    return expected.length === supplied.length && timingSafeEqual(expected, supplied);
+  } catch {
+    return false;
+  }
 }
 
-export function buildLeadValidationUrl(id: string) {
+export function createLeadValidation(id: string) {
+  const signature = signLeadValidation(id);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://iamagency.su";
   const url = new URL("/api/leads/validate", siteUrl);
   url.searchParams.set("id", id);
-  url.searchParams.set("signature", signLeadValidation(id));
-  return url.toString();
+  url.searchParams.set("signature", signature);
+  return { signature, url: url.toString() };
+}
+
+export function verifyStoredLeadValidation(record: StoredLead, suppliedSignature: string) {
+  if (!record.validationSignature) return false;
+  const expected = Buffer.from(record.validationSignature);
+  const supplied = Buffer.from(suppliedSignature);
+  return expected.length === supplied.length && timingSafeEqual(expected, supplied);
 }
 
 export async function saveLeadRecord(record: StoredLead) {

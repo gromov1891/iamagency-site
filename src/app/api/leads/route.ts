@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
 import {
-  buildLeadValidationUrl,
+  createLeadValidation,
   saveLeadRecord,
   type StoredLeadAttribution,
   type StoredLeadAttributionTouch,
@@ -68,6 +68,25 @@ function escapeHtml(value: string) {
     '"': "&quot;",
     "'": "&#039;",
   })[char] || char);
+}
+
+function compactLandingPage(value: string) {
+  if (!value) return "";
+  try {
+    const url = new URL(value, "https://iamagency.su");
+    return `${url.pathname}${url.hash}`;
+  } catch {
+    return value.split("?")[0];
+  }
+}
+
+function compactReferrer(value: string) {
+  if (!value) return "";
+  try {
+    return new URL(value).hostname.replace(/^www\./, "");
+  } catch {
+    return value;
+  }
 }
 
 function isSameOrigin(request: Request) {
@@ -164,12 +183,20 @@ export async function POST(request: Request) {
       ["Первая посадочная", attribution?.firstTouch.landingPage || ""],
       ["Referrer", attribution?.firstTouch.referrer || ""],
     );
-    const validationUrl = buildLeadValidationUrl(id);
+    const validation = createLeadValidation(id);
+    const validationUrl = validation.url;
     labels.push(["✅ Валидный лид", validationUrl]);
     const visibleLabels = labels.filter(([, value]) => Boolean(value));
 
     try {
-      await saveLeadRecord({ id, status: "new", createdAt: createdAtIso, lead, attribution });
+      await saveLeadRecord({
+        id,
+        status: "new",
+        createdAt: createdAtIso,
+        validationSignature: validation.signature,
+        lead,
+        attribution,
+      });
     } catch (storageError) {
       console.error("Unable to store lead", storageError instanceof Error ? storageError.message : storageError);
     }
@@ -188,9 +215,50 @@ export async function POST(request: Request) {
     const emailText = visibleLabels.map(([label, value]) => `${label}: ${value}`).join("\n");
     const emailHtml = `<div style="font-family:Arial,sans-serif;color:#1c1c1c"><h2 style="margin:0 0 18px">Новая заявка · ${escapeHtml(lead.source)}</h2><table cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%;max-width:720px">${visibleLabels.map(([label, value]) => `<tr><td style="border-bottom:1px solid #ddd;color:#777;width:180px">${escapeHtml(label)}</td><td style="border-bottom:1px solid #ddd"><strong>${escapeHtml(value)}</strong></td></tr>`).join("")}</table></div>`;
 
+    const typeLabel = lead.kind === "course" ? "Обучение" : lead.kind === "tariff" ? "Тариф" : "Услуги агентства";
+    const contactLines = [
+      `👤 ${lead.name}`,
+      `📞 ${lead.phone}`,
+      lead.contact ? `💬 ${lead.contact}` : "",
+    ].filter(Boolean);
+    const detailLines = [
+      `📌 ${typeLabel}${lead.tariff ? ` · ${lead.tariff}` : ""}`,
+      `Источник формы: ${lead.source}`,
+      lead.project ? `Проект: ${lead.project}` : "",
+      lead.budget ? `Бюджет: ${lead.budget}` : "",
+      lead.experience ? `Уровень в SMM: ${lead.experience}` : "",
+      lead.goal ? `Цель: ${lead.goal}` : "",
+      lead.message ? `Комментарий: ${lead.message}` : "",
+    ].filter(Boolean);
+    const attributionLines = [
+      `📊 Реклама`,
+      touch?.utm_source || touch?.utm_medium ? `UTM: ${[touch?.utm_source, touch?.utm_medium].filter(Boolean).join(" / ")}` : "Органический или прямой переход",
+      touch?.utm_campaign ? `Кампания: ${touch.utm_campaign}` : "",
+      clickId ? `Click ID: ${clickId}` : "",
+      attribution?.firstTouch.landingPage ? `Первая страница: ${compactLandingPage(attribution.firstTouch.landingPage)}` : "",
+      attribution?.firstTouch.referrer ? `Реферер: ${compactReferrer(attribution.firstTouch.referrer)}` : "",
+    ].filter(Boolean);
+    const telegramLines = [
+      `✨ Новая заявка · I AM AGENCY`,
+      ``,
+      ...contactLines,
+      ``,
+      ...detailLines,
+      ``,
+      ...attributionLines,
+      ``,
+      `🕒 ${createdAt} МСК · ID ${id}`,
+    ];
+    const telegramTextPlain = [
+      ...telegramLines,
+      ``,
+      `✅ Отметить как качественный лид:`,
+      validationUrl,
+    ].join("\n");
     const telegramText = [
-      `<b>Новая заявка · I AM AGENCY</b>`,
-      ...visibleLabels.map(([label, value]) => `<b>${escapeHtml(label)}:</b> ${escapeHtml(value)}`),
+      ...telegramLines.map((line, index) => index === 0 ? `<b>${escapeHtml(line)}</b>` : escapeHtml(line)),
+      ``,
+      `<a href="${escapeHtml(validationUrl)}">✅ Отметить как качественный лид</a>`,
     ].join("\n");
 
     const deliveryWebhookUrl = process.env.LEADS_DELIVERY_WEBHOOK_URL?.trim();
@@ -211,7 +279,9 @@ export async function POST(request: Request) {
           emailSubject: `[I AM AGENCY] ${lead.source} · ${lead.name}`,
           emailText,
           emailHtml,
-          telegramTextPlain: visibleLabels.map(([label, value]) => `${label}: ${value}`).join("\n"),
+          telegramTextPlain,
+          telegramTextHtml: telegramText,
+          telegramValidationUrl: validationUrl,
         }),
       });
 
