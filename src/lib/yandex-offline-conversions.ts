@@ -11,7 +11,7 @@ function csv(value: string) {
 export async function uploadQualifiedLead(record: StoredLead): Promise<SyncResult> {
   const updatedAt = new Date().toISOString();
   const token = process.env.YANDEX_METRIKA_OAUTH_TOKEN?.trim();
-  const counterId = process.env.YANDEX_METRIKA_COUNTER_ID?.trim() || "98432843";
+  const counterId = process.env.YANDEX_METRIKA_COUNTER_ID?.trim() || "99802137";
   const target = process.env.YANDEX_METRIKA_QUALIFIED_LEAD_GOAL?.trim() || "qualified_lead";
   const touch = record.attribution?.lastTouch;
   const clientId = touch?.client_id || "";
