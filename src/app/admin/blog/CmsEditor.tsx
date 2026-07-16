@@ -69,6 +69,10 @@ async function prepareImage(file: File) {
   const bitmap = await createImageBitmap(file);
   const targetWidth = 1080;
   const targetHeight = 1350;
+  if (bitmap.width < targetWidth || bitmap.height < targetHeight) {
+    bitmap.close();
+    throw new Error("Обложка слишком маленькая. Загрузите изображение не меньше 1080×1350 px.");
+  }
   const sourceRatio = bitmap.width / bitmap.height;
   const targetRatio = targetWidth / targetHeight;
   const cropWidth = sourceRatio > targetRatio ? bitmap.height * targetRatio : bitmap.width;
@@ -82,7 +86,7 @@ async function prepareImage(file: File) {
   if (!context) throw new Error("Не удалось обработать изображение");
   context.drawImage(bitmap, sourceX, sourceY, cropWidth, cropHeight, 0, 0, targetWidth, targetHeight);
   bitmap.close();
-  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/webp", 0.84));
+  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/webp", 0.92));
   if (!blob) throw new Error("Не удалось конвертировать изображение");
   return new File([blob], `${file.name.replace(/\.[^.]+$/, "")}.webp`, { type: "image/webp" });
 }
@@ -283,7 +287,7 @@ export default function CmsEditor({ user }: { user: string }) {
             </section>
 
             <section className={styles.formSection}>
-              <div className={styles.formSectionTitle}><FiImage /><div><h2>Обложка</h2><p>Автоматически кадрируем в 1080×1350 (4:5) и переведём в WebP</p></div></div>
+              <div className={styles.formSectionTitle}><FiImage /><div><h2>Обложка</h2><p>Минимум 1080×1350 px. Кадрируем в 4:5 и сохраняем в WebP высокого качества</p></div></div>
               <div className={styles.coverEditor}>
                 <label className={styles.uploadArea}>
                   {form.image ? <Image src={form.image} alt="Предпросмотр обложки" fill sizes="320px" /> : <><FiUploadCloud /><strong>Загрузить обложку</strong><span>JPG, PNG или WebP</span></>}
