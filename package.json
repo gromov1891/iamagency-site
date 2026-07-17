@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -H 0.0.0.0",
     "lint": "eslint",
     "migrate:cms:s3": "node tools/migrate-cms-to-s3.mjs",
     "timeweb:preflight": "node tools/timeweb-cloud-preflight.mjs"
