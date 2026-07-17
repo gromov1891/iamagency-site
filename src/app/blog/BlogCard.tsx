@@ -34,7 +34,8 @@ export default function BlogCard({ article, compact = false }: BlogCardProps) {
             src={article.image}
             alt={article.imageAlt}
             fill
-            sizes={compact ? "(max-width: 767px) 100vw, 33vw" : "(max-width: 767px) 100vw, 35vw"}
+            sizes={compact ? "(max-width: 767px) 100vw, 480px" : "(max-width: 767px) 100vw, 560px"}
+            unoptimized={article.image.startsWith("/")}
             className={styles.cardImage}
           />
         </div>
