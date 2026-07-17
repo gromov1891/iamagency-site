@@ -3,6 +3,9 @@ import path from "path";
 
 const nextConfig: NextConfig = {
   images: {
+    // Timeweb App Platform mounts the application directory read-only at runtime.
+    // Assets are already exported at display quality, so avoid Next's disk cache.
+    unoptimized: true,
     formats: ["image/webp"],
     minimumCacheTTL: 604800,
     remotePatterns: [
