@@ -7,6 +7,7 @@ import MarqueeBlock from "./blocks/MarqueeBlock";
 import ContactBlock from "./blocks/ContactBlock";
 import FloatChips from "./blocks/FloatChips";
 import BlogCardsLinker from "./blocks/BlogCardsLinker";
+import Preloader from "./blocks/Preloader";
 import { heroHtml, heroH } from "./blocks/gen/heroHtml";
 import { heroTabletHtml, heroTabletH } from "./blocks/gen/heroTabletHtml";
 import { heroMobileHtml, heroMobileH } from "./blocks/gen/heroMobileHtml";
@@ -59,6 +60,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
+      <Preloader />
       <h1 className="sr-only">SMM-агентство полного цикла I AM AGENCY</h1>
       <div className="relative z-20">
         <ResponsiveBlock
