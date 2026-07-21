@@ -11,9 +11,12 @@ import Analytics from "./blocks/Analytics";
 export const metadata: Metadata = {
   metadataBase: new URL("https://iamagency.su"),
   icons: {
-    icon: [{ url: "/favicon-96.png", sizes: "96x96", type: "image/png" }],
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon-96.png", sizes: "96x96", type: "image/png" },
+    ],
     shortcut: "/favicon-96.png",
-    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+    apple: [{ url: "/apple-icon.png", sizes: "288x288", type: "image/png" }],
   },
   title: {
     default: "I am Agency — SMM-агентство полного цикла",
@@ -65,8 +68,8 @@ const siteJsonLd = {
       logo: {
         "@type": "ImageObject",
         url: "https://iamagency.su/apple-icon.png",
-        width: 180,
-        height: 180,
+        width: 288,
+        height: 288,
       },
       description: "SMM-агентство полного цикла: стратегия, ведение и продвижение социальных сетей, контент, съёмки и digital-маркетинг.",
       foundingDate: "2019",
