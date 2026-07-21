@@ -129,6 +129,13 @@ export default function RootLayout({
         <ServicesDropdown />
         <LeadModal />
         <div className="site-shell">{children}</div>
+        <div className="tantal-credit" aria-label="Разработка сайта Tantal">
+          <a href="https://tantal.ai" target="_blank" rel="noopener noreferrer">
+            <span>СДЕЛАНО BY</span>
+            <i aria-hidden="true" />
+            <strong>TANTAL</strong>
+          </a>
+        </div>
         <SocialLinks />
         <FooterLinks />
         <FloatFigures />

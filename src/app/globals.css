@@ -85,6 +85,42 @@
 /* На широких экранах блоки масштабируются, высоты выходят дробными и между ними
    просвечивает фон тонкой полоской. Перекрываем соседние блоки на 1px — швы исчезают. */
 .site-shell > * { margin-bottom: -1px; }
+
+.tantal-credit {
+  width: 100%;
+  max-width: 2560px;
+  margin: -1px auto 0;
+  padding: 10px 22px 12px;
+  background: #1c1c1c;
+  text-align: center;
+}
+
+.tantal-credit a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: rgba(255, 255, 255, 0.25);
+  font: 500 10px/1 Inter, sans-serif;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.tantal-credit i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #90bee9, #8992e4 48%, #f55d1c);
+  opacity: 0.65;
+}
+
+.tantal-credit strong {
+  font-weight: 600;
+}
+
+.tantal-credit a:hover,
+.tantal-credit a:focus-visible {
+  color: rgba(255, 255, 255, 0.52);
+}
 .case-hub-mobile-canvas { display: none; }
 
 html { scroll-behavior: smooth; }
