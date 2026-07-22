@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCmsSession, isSameOrigin } from "@/lib/cms-auth";
-import { listLeadRecords } from "@/lib/lead-store";
+import { isTestLeadRecord, listLeadRecords } from "@/lib/lead-store";
 import { qualifyLead } from "@/lib/lead-qualification";
 
 export const runtime = "nodejs";
@@ -8,7 +8,9 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   if (!(await getCmsSession())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  const records = (await listLeadRecords()).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  const records = (await listLeadRecords())
+    .filter((record) => !isTestLeadRecord(record))
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   return NextResponse.json({ records }, { headers: { "Cache-Control": "no-store" } });
 }
 

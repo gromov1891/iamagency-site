@@ -45,6 +45,28 @@ export type StoredLead = {
   };
 };
 
+export function isTestLeadRecord(record: StoredLead) {
+  const touch = record.attribution?.lastTouch;
+  if (touch?.utm_source?.toLowerCase() === "codex_qa") return true;
+  if (record.lead.page?.includes("integration-test=")) return true;
+
+  const markerText = [
+    record.lead.name,
+    record.lead.source,
+    record.lead.project,
+    record.lead.message,
+    record.lead.goal,
+  ].filter(Boolean).join(" ").toLowerCase();
+  const phone = (record.lead.phone || "").replace(/\D/g, "");
+
+  return markerText.includes("codex qa") ||
+    markerText.includes("integration test") ||
+    markerText.includes("test-noreply") ||
+    markerText.includes("служебный тест") ||
+    markerText.includes("тест формы") ||
+    /^700000\d{5}$/.test(phone);
+}
+
 function leadPrefix(id: string) {
   return `${LEAD_RECORDS_PREFIX}${id}/`;
 }

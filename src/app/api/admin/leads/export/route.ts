@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCmsSession } from "@/lib/cms-auth";
-import { listLeadRecords, type StoredLead } from "@/lib/lead-store";
+import { isTestLeadRecord, listLeadRecords, type StoredLead } from "@/lib/lead-store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -87,7 +87,7 @@ function row(record: StoredLead) {
 export async function GET() {
   if (!(await getCmsSession())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const records = (await listLeadRecords())
-    .filter((record) => record.status === "valid")
+    .filter((record) => record.status === "valid" && !isTestLeadRecord(record))
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   const csv = [HEADERS, ...records.map(row)].map((values) => values.map(csvCell).join(",")).join("\r\n");
   return new NextResponse(`\uFEFF${csv}`, {
