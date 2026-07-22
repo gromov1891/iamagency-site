@@ -64,7 +64,8 @@ export function isTestLeadRecord(record: StoredLead) {
     markerText.includes("test-noreply") ||
     markerText.includes("служебный тест") ||
     markerText.includes("тест формы") ||
-    /^700000\d{5}$/.test(phone);
+    /^700000\d{5}$/.test(phone) ||
+    /^7?9{9,10}$/.test(phone);
 }
 
 function leadPrefix(id: string) {
