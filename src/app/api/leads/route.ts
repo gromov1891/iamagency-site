@@ -184,21 +184,6 @@ export async function POST(request: Request) {
     labels.push(["✅ Валидный лид", validationUrl]);
     const visibleLabels = labels.filter(([, value]) => Boolean(value));
 
-    let stored = false;
-    try {
-      await saveLeadRecord({
-        id,
-        status: "new",
-        createdAt: createdAtIso,
-        validationSignature: validation.signature,
-        lead,
-        attribution,
-      });
-      stored = true;
-    } catch (storageError) {
-      console.error("Unable to store lead", storageError instanceof Error ? storageError.message : storageError);
-    }
-
     const emailText = visibleLabels.map(([label, value]) => `${label}: ${value}`).join("\n");
     const emailHtml = `<div style="font-family:Arial,sans-serif;color:#1c1c1c"><h2 style="margin:0 0 18px">Новая заявка · ${escapeHtml(lead.source)}</h2><table cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%;max-width:720px">${visibleLabels.map(([label, value]) => `<tr><td style="border-bottom:1px solid #ddd;color:#777;width:180px">${escapeHtml(label)}</td><td style="border-bottom:1px solid #ddd"><strong>${escapeHtml(value)}</strong></td></tr>`).join("")}</table></div>`;
 
@@ -250,10 +235,35 @@ export async function POST(request: Request) {
 
     const deliveryWebhookUrl = process.env.LEADS_DELIVERY_WEBHOOK_URL?.trim();
     const deliveryWebhookSecret = process.env.LEADS_DELIVERY_WEBHOOK_SECRET?.trim();
+    const attempts: Array<{ name: string; promise: Promise<unknown> }> = [{
+      name: "storage",
+      promise: saveLeadRecord({
+        id,
+        status: "new",
+        createdAt: createdAtIso,
+        validationSignature: validation.signature,
+        lead,
+        attribution,
+      }),
+    }];
+
+    function trackedAttempt({ name, promise }: (typeof attempts)[number]) {
+      return promise.then(
+        () => name,
+        (error) => {
+          console.error(
+            `Lead ${name} failed`,
+            error instanceof Error ? error.message : error,
+          );
+          throw error;
+        },
+      );
+    }
 
     if (deliveryWebhookUrl && deliveryWebhookSecret) {
-      try {
-        const relayResponse = await fetch(deliveryWebhookUrl, {
+      attempts.push({
+        name: "relay",
+        promise: fetch(deliveryWebhookUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -271,20 +281,18 @@ export async function POST(request: Request) {
             telegramTextHtml: telegramText,
             telegramValidationUrl: validationUrl,
           }),
-        });
+        }).then(async (response) => {
+          if (!response.ok) throw new Error(`Lead relay ${response.status}`);
+        }),
+      });
 
-        if (!relayResponse.ok) throw new Error(`Lead relay ${relayResponse.status}`);
-        return NextResponse.json({ ok: true, id, delivery: "sent" });
-      } catch (relayError) {
-        console.error("Lead relay failed", relayError instanceof Error ? relayError.message : relayError);
-        if (stored) {
-          return NextResponse.json({ ok: true, id, delivery: "stored" }, { status: 202 });
-        }
-        throw relayError;
-      }
+      const acceptedBy = await Promise.any(attempts.map(trackedAttempt));
+      return NextResponse.json(
+        { ok: true, id, delivery: acceptedBy === "storage" ? "stored" : "sent" },
+        { status: acceptedBy === "storage" ? 202 : 200 },
+      );
     }
 
-    const deliveries: Array<{ name: string; promise: Promise<unknown> }> = [];
     const smtpHost = process.env.LEADS_SMTP_HOST?.trim();
     const smtpUser = process.env.LEADS_SMTP_USER?.trim();
     const smtpPassword = process.env.LEADS_SMTP_PASSWORD?.trim();
@@ -296,8 +304,11 @@ export async function POST(request: Request) {
         port: smtpPort,
         secure: smtpPort === 465,
         auth: { user: smtpUser, pass: smtpPassword },
+        connectionTimeout: 8_000,
+        greetingTimeout: 8_000,
+        socketTimeout: 12_000,
       });
-      deliveries.push({
+      attempts.push({
         name: "email",
         promise: transporter.sendMail({
           from: process.env.LEADS_SMTP_FROM || `I AM AGENCY <${smtpUser}>`,
@@ -314,7 +325,7 @@ export async function POST(request: Request) {
     const telegramToken = process.env.LEADS_TELEGRAM_BOT_TOKEN?.trim();
     const telegramChatId = process.env.LEADS_TELEGRAM_CHAT_ID?.trim();
     if (telegramToken && telegramChatId) {
-      deliveries.push({
+      attempts.push({
         name: "telegram",
         promise: fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
           method: "POST",
@@ -333,21 +344,11 @@ export async function POST(request: Request) {
       console.error("Lead Telegram delivery is not configured");
     }
 
-    const deliveryResults = await Promise.allSettled(deliveries.map(({ promise }) => promise));
-    deliveryResults.forEach((result, index) => {
-      if (result.status === "rejected") {
-        console.error(
-          `Lead ${deliveries[index].name} delivery failed`,
-          result.reason instanceof Error ? result.reason.message : result.reason,
-        );
-      }
-    });
-    const delivered = deliveryResults.some((result) => result.status === "fulfilled");
-    if (!stored && !delivered) throw new Error("Lead could not be stored or delivered");
+    const acceptedBy = await Promise.any(attempts.map(trackedAttempt));
 
     return NextResponse.json(
-      { ok: true, id, delivery: delivered ? "sent" : "stored" },
-      { status: delivered ? 200 : 202 },
+      { ok: true, id, delivery: acceptedBy === "storage" ? "stored" : "sent" },
+      { status: acceptedBy === "storage" ? 202 : 200 },
     );
   } catch (error) {
     console.error("Lead delivery failed", error instanceof Error ? error.message : error);
