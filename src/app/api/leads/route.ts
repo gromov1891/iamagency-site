@@ -117,12 +117,6 @@ function allowRequest(request: Request) {
   return true;
 }
 
-function requiredEnv(name: string) {
-  const value = process.env[name]?.trim();
-  if (!value) throw new Error(`Missing ${name}`);
-  return value;
-}
-
 export async function POST(request: Request) {
   if (!isSameOrigin(request)) return NextResponse.json({ error: "Недопустимый запрос" }, { status: 403 });
   if (!allowRequest(request)) return NextResponse.json({ error: "Слишком много заявок. Попробуйте чуть позже." }, { status: 429 });
@@ -190,6 +184,7 @@ export async function POST(request: Request) {
     labels.push(["✅ Валидный лид", validationUrl]);
     const visibleLabels = labels.filter(([, value]) => Boolean(value));
 
+    let stored = false;
     try {
       await saveLeadRecord({
         id,
@@ -199,21 +194,11 @@ export async function POST(request: Request) {
         lead,
         attribution,
       });
+      stored = true;
     } catch (storageError) {
       console.error("Unable to store lead", storageError instanceof Error ? storageError.message : storageError);
     }
 
-    const smtpPort = Number(process.env.LEADS_SMTP_PORT || 465);
-    const smtpUser = requiredEnv("LEADS_SMTP_USER");
-    const emailTo = requiredEnv("LEADS_EMAIL_TO");
-    const telegramToken = requiredEnv("LEADS_TELEGRAM_BOT_TOKEN");
-    const telegramChatId = requiredEnv("LEADS_TELEGRAM_CHAT_ID");
-    const transporter = nodemailer.createTransport({
-      host: requiredEnv("LEADS_SMTP_HOST"),
-      port: smtpPort,
-      secure: smtpPort === 465,
-      auth: { user: smtpUser, pass: requiredEnv("LEADS_SMTP_PASSWORD") },
-    });
     const emailText = visibleLabels.map(([label, value]) => `${label}: ${value}`).join("\n");
     const emailHtml = `<div style="font-family:Arial,sans-serif;color:#1c1c1c"><h2 style="margin:0 0 18px">Новая заявка · ${escapeHtml(lead.source)}</h2><table cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%;max-width:720px">${visibleLabels.map(([label, value]) => `<tr><td style="border-bottom:1px solid #ddd;color:#777;width:180px">${escapeHtml(label)}</td><td style="border-bottom:1px solid #ddd"><strong>${escapeHtml(value)}</strong></td></tr>`).join("")}</table></div>`;
 
@@ -267,53 +252,103 @@ export async function POST(request: Request) {
     const deliveryWebhookSecret = process.env.LEADS_DELIVERY_WEBHOOK_SECRET?.trim();
 
     if (deliveryWebhookUrl && deliveryWebhookSecret) {
-      const relayResponse = await fetch(deliveryWebhookUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-IAM-Lead-Secret": deliveryWebhookSecret,
-        },
-        body: JSON.stringify({
-          leadId: id,
-          lead,
-          attribution,
-          validationUrl,
-          emailSubject: `[I AM AGENCY] ${lead.source} · ${lead.name}`,
-          emailText,
-          emailHtml,
-          telegramTextPlain,
-          telegramTextHtml: telegramText,
-          telegramValidationUrl: validationUrl,
-        }),
-      });
+      try {
+        const relayResponse = await fetch(deliveryWebhookUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-IAM-Lead-Secret": deliveryWebhookSecret,
+          },
+          body: JSON.stringify({
+            leadId: id,
+            lead,
+            attribution,
+            validationUrl,
+            emailSubject: `[I AM AGENCY] ${lead.source} · ${lead.name}`,
+            emailText,
+            emailHtml,
+            telegramTextPlain,
+            telegramTextHtml: telegramText,
+            telegramValidationUrl: validationUrl,
+          }),
+        });
 
-      if (!relayResponse.ok) throw new Error(`Lead relay ${relayResponse.status}`);
-      return NextResponse.json({ ok: true, id });
+        if (!relayResponse.ok) throw new Error(`Lead relay ${relayResponse.status}`);
+        return NextResponse.json({ ok: true, id, delivery: "sent" });
+      } catch (relayError) {
+        console.error("Lead relay failed", relayError instanceof Error ? relayError.message : relayError);
+        if (stored) {
+          return NextResponse.json({ ok: true, id, delivery: "stored" }, { status: 202 });
+        }
+        throw relayError;
+      }
     }
 
-    await Promise.all([
-      transporter.sendMail({
-        from: process.env.LEADS_SMTP_FROM || `I AM AGENCY <${smtpUser}>`,
-        to: emailTo,
-        subject: `[I AM AGENCY] ${lead.source} · ${lead.name}`,
-        text: emailText,
-        html: emailHtml,
-      }),
-      fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: telegramChatId,
-          text: telegramText,
-          parse_mode: "HTML",
-          disable_web_page_preview: true,
+    const deliveries: Array<{ name: string; promise: Promise<unknown> }> = [];
+    const smtpHost = process.env.LEADS_SMTP_HOST?.trim();
+    const smtpUser = process.env.LEADS_SMTP_USER?.trim();
+    const smtpPassword = process.env.LEADS_SMTP_PASSWORD?.trim();
+    const emailTo = process.env.LEADS_EMAIL_TO?.trim();
+    if (smtpHost && smtpUser && smtpPassword && emailTo) {
+      const smtpPort = Number(process.env.LEADS_SMTP_PORT || 465);
+      const transporter = nodemailer.createTransport({
+        host: smtpHost,
+        port: smtpPort,
+        secure: smtpPort === 465,
+        auth: { user: smtpUser, pass: smtpPassword },
+      });
+      deliveries.push({
+        name: "email",
+        promise: transporter.sendMail({
+          from: process.env.LEADS_SMTP_FROM || `I AM AGENCY <${smtpUser}>`,
+          to: emailTo,
+          subject: `[I AM AGENCY] ${lead.source} · ${lead.name}`,
+          text: emailText,
+          html: emailHtml,
         }),
-      }).then(async (response) => {
-        if (!response.ok) throw new Error(`Telegram ${response.status}`);
-      }),
-    ]);
+      });
+    } else {
+      console.error("Lead email delivery is not configured");
+    }
 
-    return NextResponse.json({ ok: true, id });
+    const telegramToken = process.env.LEADS_TELEGRAM_BOT_TOKEN?.trim();
+    const telegramChatId = process.env.LEADS_TELEGRAM_CHAT_ID?.trim();
+    if (telegramToken && telegramChatId) {
+      deliveries.push({
+        name: "telegram",
+        promise: fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: telegramChatId,
+            text: telegramText,
+            parse_mode: "HTML",
+            disable_web_page_preview: true,
+          }),
+        }).then(async (response) => {
+          if (!response.ok) throw new Error(`Telegram ${response.status}`);
+        }),
+      });
+    } else {
+      console.error("Lead Telegram delivery is not configured");
+    }
+
+    const deliveryResults = await Promise.allSettled(deliveries.map(({ promise }) => promise));
+    deliveryResults.forEach((result, index) => {
+      if (result.status === "rejected") {
+        console.error(
+          `Lead ${deliveries[index].name} delivery failed`,
+          result.reason instanceof Error ? result.reason.message : result.reason,
+        );
+      }
+    });
+    const delivered = deliveryResults.some((result) => result.status === "fulfilled");
+    if (!stored && !delivered) throw new Error("Lead could not be stored or delivered");
+
+    return NextResponse.json(
+      { ok: true, id, delivery: delivered ? "sent" : "stored" },
+      { status: delivered ? 200 : 202 },
+    );
   } catch (error) {
     console.error("Lead delivery failed", error instanceof Error ? error.message : error);
     return NextResponse.json(
