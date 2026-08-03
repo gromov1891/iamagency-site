@@ -17,6 +17,7 @@ type LeadPayload = {
   source?: unknown;
   page?: unknown;
   name?: unknown;
+  email?: unknown;
   phone?: unknown;
   contact?: unknown;
   project?: unknown;
@@ -203,6 +204,7 @@ export async function POST(request: Request) {
       source: clean(raw.source, 180) || "Форма на сайте",
       page: clean(raw.page, 300) || "/",
       name: clean(raw.name, 120),
+      email: clean(raw.email, 200).toLowerCase(),
       phone: clean(raw.phone, 80),
       contact: clean(raw.contact, 240),
       project: clean(raw.project, 500),
@@ -214,8 +216,12 @@ export async function POST(request: Request) {
     };
     const attribution = cleanAttribution(raw.attribution);
 
-    if (lead.name.length < 2) return NextResponse.json({ error: "Укажите имя" }, { status: 400 });
-    if (lead.phone.length < 5) return NextResponse.json({ error: "Укажите телефон" }, { status: 400 });
+    const isEnglishLead = lead.page === "/en" || lead.page.startsWith("/en/");
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email);
+    if (lead.name.length < 2) return NextResponse.json({ error: isEnglishLead ? "Enter your name" : "Укажите имя" }, { status: 400 });
+    if (lead.phone.length < 5 && !validEmail) {
+      return NextResponse.json({ error: isEnglishLead ? "Enter a valid email or phone number" : "Укажите телефон" }, { status: 400 });
+    }
 
     const id = randomUUID().slice(0, 8).toUpperCase();
     const createdAtIso = new Date().toISOString();
@@ -230,6 +236,7 @@ export async function POST(request: Request) {
       ["Тип", lead.kind === "course" ? "Обучение" : lead.kind === "tariff" ? "Тариф" : "Услуги агентства"],
       ["Тариф", lead.tariff],
       ["Имя", lead.name],
+      ["Email", lead.email],
       ["Телефон", lead.phone],
       ["Telegram / соцсеть", lead.contact],
       ["Проект", lead.project],
@@ -263,7 +270,8 @@ export async function POST(request: Request) {
     const typeLabel = lead.kind === "course" ? "Обучение" : lead.kind === "tariff" ? "Тариф" : "Услуги агентства";
     const contactLines = [
       `👤 ${lead.name}`,
-      `📞 ${lead.phone}`,
+      lead.email ? `✉️ ${lead.email}` : "",
+      lead.phone ? `📞 ${lead.phone}` : "",
       lead.contact ? `💬 ${lead.contact}` : "",
     ].filter(Boolean);
     const detailLines = [

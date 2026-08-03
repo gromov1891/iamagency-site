@@ -4,19 +4,28 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { SERVICE_CATALOG } from "../uslugi/serviceCatalog";
+import { EN_SERVICES } from "@/lib/i18n/en-content";
+import { findTranslationRoute, getLocaleFromPath, getTranslatedPath } from "@/lib/i18n/routes";
 import styles from "./Header.module.css";
 
 /* Липкий хедер — ТОЧНАЯ КОПИЯ родного меню из hero: тот же холст 1440,
    те же позиции пунктов, тот же шрифт (Inter 23.42px / 500 / -1.171px).
    Масштабируется как страница (clientWidth/1440), поэтому при скролле выглядит
    один-в-один с верхним меню. На главной вверху прячется (родное меню видно). */
-const LINKS = [
+const RU_LINKS = [
   { label: "УСЛУГИ", href: "/#uslugi", left: 313 },
   { label: "ПОРТФОЛИО", href: "/keisy", left: 483 },
   { label: "МАРКЕТИНГ", href: "/marketing", left: 698 },
   { label: "ШКОЛА SMM", href: "/shkola-smm", left: 905 },
   { label: "БЛОГ", href: "/blog", left: 1121 },
   { label: "КОНТАКТЫ", href: "/#kontakty", left: 1252 },
+];
+const EN_LINKS = [
+  { label: "SERVICES", href: "/en/services", left: 313 },
+  { label: "WORK", href: "/en/cases", left: 535 },
+  { label: "EXPERTISE", href: "/en/marketing", left: 698 },
+  { label: "ABOUT", href: "/en#about", left: 956 },
+  { label: "CONTACT", href: "/en#contact", left: 1190 },
 ];
 const CANVAS_H = 80;
 
@@ -35,6 +44,23 @@ const linkStyle: React.CSSProperties = {
 
 export default function Header() {
   const pathname = usePathname();
+  const locale = getLocaleFromPath(pathname);
+  const isEnglish = locale === "en";
+  const links = isEnglish ? EN_LINKS : RU_LINKS;
+  const translationRoute = findTranslationRoute(pathname);
+  const exactTranslatedPath = getTranslatedPath(pathname, isEnglish ? "ru" : "en");
+  const englishFallback = pathname.startsWith("/en/services")
+    ? "/#uslugi"
+    : pathname.startsWith("/en/packages")
+      ? "/#tarify"
+      : pathname.startsWith("/en/blog/")
+        ? "/blog"
+        : "/";
+  const translatedPath = exactTranslatedPath || (isEnglish ? englishFallback : undefined);
+  const showLanguageSwitcher = Boolean(
+    translatedPath &&
+    (!translationRoute || translationRoute.status === "published" || (translationRoute.status === "preview" && isEnglish))
+  );
   const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -59,8 +85,11 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    setMenuOpen(false);
-    setServicesOpen(false);
+    const frame = requestAnimationFrame(() => {
+      setMenuOpen(false);
+      setServicesOpen(false);
+    });
+    return () => cancelAnimationFrame(frame);
   }, [pathname]);
 
   useEffect(() => {
@@ -107,7 +136,13 @@ export default function Header() {
   const solid = isMobile || !isHome || scrolled;
 
   return (
-    <header
+    <>
+      {isHome && !scrolled && !isMobile && showLanguageSwitcher && translatedPath ? (
+        <Link href={translatedPath} hrefLang="en" className={styles.homeLanguage}>
+          EN
+        </Link>
+      ) : null}
+      <header
       className={styles.header}
       style={{
         position: "fixed",
@@ -143,7 +178,7 @@ export default function Header() {
         >
           {/* пилюля «I AM AGENCY» — 1:1 как в макете */}
           <Link
-            href="/"
+            href={isEnglish ? "/en" : "/"}
             style={{
               position: "absolute",
               left: 40,
@@ -169,22 +204,27 @@ export default function Header() {
             I AM AGENCY
           </Link>
 
-          {LINKS.map((l) => (
+          {links.map((l) => (
             <Link key={l.label} href={l.href} style={{ ...linkStyle, left: l.left }}>
               {l.label}
             </Link>
           ))}
+          {showLanguageSwitcher && translatedPath ? (
+            <Link href={translatedPath} className={styles.desktopLanguage} hrefLang={isEnglish ? "ru" : "en"}>
+              {isEnglish ? "RU" : "EN"}
+            </Link>
+          ) : null}
         </div>
       </div>
 
       <div className={styles.mobileBar}>
-        <Link href="/" className={styles.mobileLogo} onClick={() => setMenuOpen(false)}>
+        <Link href={isEnglish ? "/en" : "/"} className={styles.mobileLogo} onClick={() => setMenuOpen(false)}>
           I AM AGENCY
         </Link>
         <button
           type="button"
           className={`${styles.menuButton} ${menuOpen ? styles.menuButtonOpen : ""}`}
-          aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
+            aria-label={menuOpen ? (isEnglish ? "Close menu" : "Закрыть меню") : (isEnglish ? "Open menu" : "Открыть меню")}
           aria-expanded={menuOpen}
           aria-controls="mobile-site-menu"
           onClick={() => setMenuOpen((value) => !value)}
@@ -198,14 +238,24 @@ export default function Header() {
       <nav
         id="mobile-site-menu"
         className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuOpen : ""}`}
-        aria-label="Мобильное меню"
+        aria-label={isEnglish ? "Mobile menu" : "Мобильное меню"}
       >
         <div className={styles.mobileMenuScroll}>
+          {showLanguageSwitcher && translatedPath ? (
+            <Link href={translatedPath} hrefLang={isEnglish ? "ru" : "en"} className={styles.mobileLanguage} onClick={() => setMenuOpen(false)}>
+              <span>{isEnglish ? "LANGUAGE" : "ЯЗЫК"}</span>
+              <strong>{isEnglish ? "RU" : "EN"} ↗</strong>
+            </Link>
+          ) : null}
           <div className={styles.mobileMenuRow}>
-            <Link href="/#uslugi" onClick={() => setMenuOpen(false)}>Услуги</Link>
+            <Link href={links[0].href} onClick={() => setMenuOpen(false)}>{links[0].label}</Link>
             <button
               type="button"
-              aria-label={servicesOpen ? "Скрыть направления услуг" : "Показать направления услуг"}
+              aria-label={
+                servicesOpen
+                  ? isEnglish ? "Hide services" : "Скрыть направления услуг"
+                  : isEnglish ? "Show services" : "Показать направления услуг"
+              }
               aria-expanded={servicesOpen}
               onClick={() => setServicesOpen((value) => !value)}
             >
@@ -213,7 +263,15 @@ export default function Header() {
             </button>
           </div>
           <div className={`${styles.mobileServices} ${servicesOpen ? styles.mobileServicesOpen : ""}`}>
-            {SERVICE_CATALOG.map((service) => (
+            {(isEnglish
+              ? EN_SERVICES.map((service, index) => ({
+                  id: service.slug,
+                  href: `/en/services/${service.slug}`,
+                  number: String(index + 1).padStart(2, "0"),
+                  title: service.name,
+                }))
+              : SERVICE_CATALOG
+            ).map((service) => (
               <Link key={service.id} href={service.href} onClick={() => setMenuOpen(false)}>
                 <span>{service.number}</span>
                 <span>{service.title}</span>
@@ -221,7 +279,7 @@ export default function Header() {
               </Link>
             ))}
           </div>
-          {LINKS.slice(1).map((link) => (
+          {links.slice(1).map((link) => (
             <Link key={link.label} href={link.href} className={styles.mobileMainLink} onClick={() => setMenuOpen(false)}>
               {link.label}
               <span aria-hidden="true">↗</span>
@@ -229,6 +287,7 @@ export default function Header() {
           ))}
         </div>
       </nav>
-    </header>
+      </header>
+    </>
   );
 }

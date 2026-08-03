@@ -22,6 +22,8 @@ import styles from "../admin.module.css";
 
 type Status = "draft" | "published";
 type CmsArticle = {
+  locale: "ru" | "en";
+  translationId?: string;
   slug: string;
   title: string;
   excerpt: string;
@@ -37,6 +39,8 @@ type CmsArticle = {
 
 const emptySection = (): ArticleSection => ({ heading: "", paragraphs: [""] });
 const emptyArticle = (): CmsArticle => ({
+  locale: "ru",
+  translationId: "",
   slug: "",
   title: "",
   excerpt: "",
@@ -246,14 +250,14 @@ export default function CmsEditor({ user }: { user: string }) {
             {articles.map((article) => (
               <button
                 type="button"
-                key={article.slug}
+                key={`${article.locale || "ru"}:${article.slug}`}
                 className={`${styles.articleListItem} ${article.slug === originalSlug ? styles.articleListItemActive : ""}`}
                 onClick={() => selectArticle(article)}
               >
                 <span className={article.status === "published" ? styles.statusPublished : styles.statusDraft}>
                   {article.status === "published" ? "Опубликовано" : "Черновик"}
                 </span>
-                <strong>{article.title}</strong>
+                <strong>{article.locale === "en" ? "EN · " : "RU · "}{article.title}</strong>
                 <small>{article.updatedAt ? new Date(article.updatedAt).toLocaleDateString("ru-RU") : "Новая"}</small>
               </button>
             ))}
@@ -268,7 +272,7 @@ export default function CmsEditor({ user }: { user: string }) {
             </div>
             <div className={styles.editorActions}>
               {selectedArticle?.status === "published" && (
-                <a href={`/blog/${selectedArticle.slug}`} target="_blank" rel="noreferrer" className={styles.iconButton} title="Открыть статью"><FiExternalLink /><span className="sr-only">Открыть статью</span></a>
+                <a href={`${selectedArticle.locale === "en" ? "/en/blog" : "/blog"}/${selectedArticle.slug}`} target="_blank" rel="noreferrer" className={styles.iconButton} title="Открыть статью"><FiExternalLink /><span className="sr-only">Открыть статью</span></a>
               )}
               {originalSlug && <button type="button" data-testid="delete-article" className={styles.dangerIconButton} onClick={removeArticle} title="Удалить"><FiTrash2 /><span className="sr-only">Удалить</span></button>}
             </div>
@@ -280,8 +284,10 @@ export default function CmsEditor({ user }: { user: string }) {
             <section className={styles.formSection}>
               <div className={styles.formSectionTitle}><FiEdit3 /><div><h2>Основное</h2><p>Название, адрес и описание карточки</p></div></div>
               <div className={styles.twoColumns}>
+                <label><span>Язык</span><select value={form.locale || "ru"} onChange={(event) => update("locale", event.target.value as "ru" | "en")}><option value="ru">Русский</option><option value="en">English</option></select></label>
+                <label><span>ID связанного перевода</span><input value={form.translationId || ""} onChange={(event) => update("translationId", event.target.value)} placeholder="Одинаковый ID для RU и EN" /></label>
                 <label className={styles.fieldWide}><span>Название статьи</span><input data-testid="article-title" value={form.title} onChange={(event) => updateTitle(event.target.value)} maxLength={180} placeholder="Например: Как оформить соцсети бизнеса" /></label>
-                <label><span>Адрес страницы</span><div className={styles.slugField}><span>/blog/</span><input data-testid="article-slug" value={form.slug} onChange={(event) => { setSlugTouched(true); update("slug", slugify(event.target.value)); }} placeholder="adres-stati" /></div></label>
+                <label><span>Адрес страницы</span><div className={styles.slugField}><span>{form.locale === "en" ? "/en/blog/" : "/blog/"}</span><input data-testid="article-slug" value={form.slug} onChange={(event) => { setSlugTouched(true); update("slug", slugify(event.target.value)); }} placeholder="adres-stati" /></div></label>
                 <label className={styles.fieldWide}><span>Краткое описание</span><textarea data-testid="article-excerpt" value={form.excerpt} onChange={(event) => update("excerpt", event.target.value)} rows={3} maxLength={500} placeholder="Два-три предложения для карточки статьи и поисковых систем" /><small>{form.excerpt.length}/500</small></label>
               </div>
             </section>

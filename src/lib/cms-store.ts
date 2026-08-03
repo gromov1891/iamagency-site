@@ -3,6 +3,7 @@ import "server-only";
 import { randomUUID } from "node:crypto";
 import { unstable_noStore as noStore } from "next/cache";
 import { BLOG_ARTICLES, BLOG_TAGS, getRelatedArticles, type ArticleSection, type BlogArticle, type BlogTag } from "@/app/blog/articles";
+import { EN_ARTICLES } from "@/lib/i18n/en-articles";
 import { getJsonObject, getStorageBackend, listStoredObjects, putJsonObject } from "@/lib/object-storage";
 
 const CMS_RECORDS_PREFIX = "cms/records/";
@@ -77,6 +78,8 @@ export function sanitizeCmsArticle(value: unknown, existing?: CmsArticle): CmsAr
     : [];
   const sections = cleanSections(raw.sections);
   const status: CmsArticleStatus = raw.status === "published" ? "published" : "draft";
+  const locale = raw.locale === "en" ? "en" : "ru";
+  const translationId = cleanText(raw.translationId, 180) || undefined;
 
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) throw new Error("Некорректный адрес статьи");
   if (title.length < 5) throw new Error("Добавьте название статьи");
@@ -88,6 +91,8 @@ export function sanitizeCmsArticle(value: unknown, existing?: CmsArticle): CmsAr
 
   return {
     slug,
+    locale,
+    translationId,
     title,
     excerpt,
     image,
@@ -101,8 +106,11 @@ export function sanitizeCmsArticle(value: unknown, existing?: CmsArticle): CmsAr
   };
 }
 
-export async function getCmsArticles(): Promise<CmsArticle[]> {
-  noStore();
+const CMS_CACHE_TTL_MS = 30_000;
+let cmsCache: { expiresAt: number; articles: CmsArticle[] } | undefined;
+let cmsRequest: Promise<CmsArticle[]> | undefined;
+
+async function loadCmsArticles(): Promise<CmsArticle[]> {
   if (getStorageBackend() === "none") return [];
 
   try {
@@ -130,6 +138,25 @@ export async function getCmsArticles(): Promise<CmsArticle[]> {
   }
 }
 
+export async function getCmsArticles(): Promise<CmsArticle[]> {
+  noStore();
+  if (cmsCache && cmsCache.expiresAt > Date.now()) return cmsCache.articles;
+  if (cmsRequest) return cmsRequest;
+
+  cmsRequest = loadCmsArticles();
+  try {
+    const articles = await cmsRequest;
+    cmsCache = { expiresAt: Date.now() + CMS_CACHE_TTL_MS, articles };
+    return articles;
+  } finally {
+    cmsRequest = undefined;
+  }
+}
+
+function invalidateCmsCache() {
+  cmsCache = undefined;
+}
+
 function recordPath(slug: string) {
   return `${CMS_RECORDS_PREFIX}${slug}/${Date.now().toString().padStart(13, "0")}-${randomUUID()}.json`;
 }
@@ -140,16 +167,23 @@ async function saveRecord(slug: string, record: CmsRecord) {
 
 export async function upsertCmsArticle(article: CmsArticle) {
   await saveRecord(article.slug, { kind: "article", article, updatedAt: article.updatedAt });
+  invalidateCmsCache();
 }
 
 export async function deleteCmsArticle(slug: string) {
   await saveRecord(slug, { kind: "delete", slug, updatedAt: new Date().toISOString() });
+  invalidateCmsCache();
 }
 
-export async function getPublishedArticles() {
-  const cms = (await getCmsArticles()).filter((article) => article.status === "published");
+export async function getPublishedArticles(locale: "ru" | "en" = "ru") {
+  const cms = (await getCmsArticles()).filter(
+    (article) => article.status === "published" && (article.locale || "ru") === locale,
+  );
   const bySlug = new Map<string, BlogArticle>();
-  for (const article of BLOG_ARTICLES) bySlug.set(article.slug, article);
+  const bundled: BlogArticle[] = locale === "en"
+    ? EN_ARTICLES.map((article) => ({ ...article, locale: "en", translationId: article.ruSlug }))
+    : BLOG_ARTICLES;
+  for (const article of bundled) bySlug.set(article.slug, article);
   for (const article of cms) bySlug.set(article.slug, article);
   return [...bySlug.values()].sort((a, b) => {
     if (!a.publishedAt && !b.publishedAt) return 0;
@@ -159,10 +193,10 @@ export async function getPublishedArticles() {
   });
 }
 
-export async function getPublishedArticle(slug: string) {
-  return (await getPublishedArticles()).find((article) => article.slug === slug);
+export async function getPublishedArticle(slug: string, locale: "ru" | "en" = "ru") {
+  return (await getPublishedArticles(locale)).find((article) => article.slug === slug);
 }
 
 export async function getPublishedRelatedArticles(article: BlogArticle, limit = 3) {
-  return getRelatedArticles(article, limit, await getPublishedArticles());
+  return getRelatedArticles(article, limit, await getPublishedArticles(article.locale || "ru"));
 }

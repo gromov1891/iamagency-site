@@ -6,6 +6,12 @@ export const BLOG_TAGS = [
   "Социальные сети",
   "Нейросети",
   "Тренды",
+  "Social media",
+  "Marketing",
+  "Content",
+  "Design",
+  "AI",
+  "Business",
 ] as const;
 
 export type BlogTag = (typeof BLOG_TAGS)[number];
@@ -21,12 +27,14 @@ export type ArticleSection = {
 };
 
 export type BlogArticle = {
+  locale?: "ru" | "en";
+  translationId?: string;
   slug: string;
   title: string;
   excerpt: string;
   image: string;
   imageAlt: string;
-  tags: BlogTag[];
+  tags: string[];
   sections: ArticleSection[];
   publishedAt?: string;
   updatedAt?: string;

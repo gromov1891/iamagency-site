@@ -8,7 +8,7 @@ import { getLeadAttribution } from "@/lib/lead-attribution";
 
 const normalizeText = (value: string | null | undefined) =>
   (value || "")
-    .replace(/[↘→↓]/g, "")
+    .replace(/[↗↘→↓]/g, "")
     .replace(/\s+/g, " ")
     .trim()
     .toLocaleLowerCase("ru-RU");
@@ -27,6 +27,10 @@ const isLeadLabel = (value: string | null | undefined) => {
     /^получить скидку$/,
     /^купить тариф$/,
     /^заказать (?:услугу|консультацию|продвижение)$/,
+    /^discuss (?:your|a) project$/,
+    /^start (?:your|a) project$/,
+    /^request a proposal$/,
+    /^book a consultation$/,
   ].some((pattern) => pattern.test(text));
 };
 
@@ -36,7 +40,18 @@ const TARIFF_NAMES: Record<string, string> = {
   triumf: "ТРИУМФ",
 };
 
+const EN_PACKAGE_NAMES: Record<string, string> = {
+  momentum: "MOMENTUM",
+  breakthrough: "BREAKTHROUGH",
+  triumph: "TRIUMPH",
+};
+
 function getLeadContext(label: string, pathname: string) {
+  const englishPackageSlug = pathname.match(/^\/en\/packages\/([^/]+)/)?.[1] || "";
+  const englishPackage = EN_PACKAGE_NAMES[englishPackageSlug] || "";
+  if (englishPackage) return { kind: "tariff" as const, source: `Package · ${englishPackage} · ${label}`, tariff: englishPackage };
+  if (pathname === "/en/smm-school") return { kind: "course" as const, source: "SMM School · course enquiry", tariff: "" };
+  if (pathname.startsWith("/en")) return { kind: "business" as const, source: `English site · ${label}`, tariff: "" };
   const tariffSlug = pathname.match(/^\/tarify\/([^/]+)/)?.[1] || "";
   const tariff = TARIFF_NAMES[tariffSlug] || "";
   if (tariff) return { kind: "tariff" as const, source: `Тариф · ${tariff} · ${label}`, tariff };
@@ -48,7 +63,7 @@ function getLeadContext(label: string, pathname: string) {
 
 const isCourseLeadLabel = (value: string | null | undefined, pathname: string) => {
   const text = normalizeText(value);
-  return text.includes("обучение") || pathname === "/shkola-smm";
+  return text.includes("обучение") || text.includes("course") || pathname === "/shkola-smm" || pathname === "/en/smm-school";
 };
 
 function resolveLeadTrigger(start: HTMLElement | null) {
@@ -78,6 +93,7 @@ function resolveExactTextTrigger(start: HTMLElement, expected: string) {
 
 export default function LeadModal() {
   const pathname = usePathname();
+  const isEnglish = pathname.startsWith("/en");
   const [open, setOpen] = useState(false);
   const [sent, setSent] = useState(false);
   const [source, setSource] = useState("Оставить заявку");
@@ -129,7 +145,10 @@ export default function LeadModal() {
           trigger.setAttribute("tabindex", "0");
         }
         if (!trigger.getAttribute("aria-label")) {
-          trigger.setAttribute("aria-label", `${getLeadLabel(trigger)?.trim()}. Открыть форму заявки`);
+          trigger.setAttribute(
+            "aria-label",
+            `${getLeadLabel(trigger)?.trim()}. ${isEnglish ? "Open enquiry form" : "Открыть форму заявки"}`,
+          );
         }
       });
     };
@@ -165,7 +184,7 @@ export default function LeadModal() {
       document.removeEventListener("click", onClick, true);
       document.removeEventListener("keydown", onKeyDown, true);
     };
-  }, [openModal, pathname]);
+  }, [isEnglish, openModal, pathname]);
 
   useEffect(() => {
     if (!open) return;
@@ -226,12 +245,12 @@ export default function LeadModal() {
         }),
       });
       const result = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(result.error || "Не удалось отправить заявку");
+      if (!response.ok) throw new Error(result.error || (isEnglish ? "Unable to send your enquiry" : "Не удалось отправить заявку"));
       form.reset();
       trackAnalyticsGoal("lead_sent", { kind, source, tariff: tariff || undefined });
       setSent(true);
     } catch (submitError) {
-      setError(submitError instanceof Error ? submitError.message : "Не удалось отправить заявку");
+      setError(submitError instanceof Error ? submitError.message : isEnglish ? "Unable to send your enquiry" : "Не удалось отправить заявку");
     } finally {
       setSending(false);
     }
@@ -243,9 +262,9 @@ export default function LeadModal() {
 
   return (
     <>
-      {pathname === "/marketing" ? (
-        <button className={styles.floatingButton} type="button" onClick={() => openModal("Оставить заявку")}>
-          Оставить заявку
+      {pathname === "/marketing" || pathname === "/en/marketing" ? (
+        <button className={styles.floatingButton} type="button" onClick={() => openModal(isEnglish ? "Start a project" : "Оставить заявку")}>
+          {isEnglish ? "Start a project" : "Оставить заявку"}
         </button>
       ) : null}
 
@@ -263,23 +282,48 @@ export default function LeadModal() {
             aria-labelledby="lead-form-title"
             onKeyDown={stopControlPropagation}
           >
-            <button className={styles.close} type="button" onClick={closeModal} aria-label="Закрыть форму">
+            <button className={styles.close} type="button" onClick={closeModal} aria-label={isEnglish ? "Close form" : "Закрыть форму"}>
               ×
             </button>
 
             {sent ? (
               <div className={styles.thanks} aria-live="polite">
-                <p>{isCourse ? "ШКОЛА SMM · I AM AGENCY" : isTariff ? `ТАРИФ ${tariff} · I AM AGENCY` : "I AM AGENCY"}</p>
-                <h2 id="lead-form-title">Спасибо!</h2>
+                <p>{isCourse ? (isEnglish ? "SMM SCHOOL · I AM AGENCY" : "ШКОЛА SMM · I AM AGENCY") : isTariff ? `${isEnglish ? "PACKAGE" : "ТАРИФ"} ${tariff} · I AM AGENCY` : "I AM AGENCY"}</p>
+                <h2 id="lead-form-title">{isEnglish ? "Thank you!" : "Спасибо!"}</h2>
                 <span>
-                  {isCourse
+                  {isEnglish
+                    ? "We have received your enquiry and will get back to you shortly."
+                    : isCourse
                     ? "Мы свяжемся с вами и расскажем о ближайшем потоке курса"
                     : isTariff
                       ? `Тариф ${tariff} выбран. Менеджер уточнит детали и подготовит предложение`
                     : "Мы свяжемся с вами в течение 15 минут"}
                 </span>
-                <button type="button" onClick={closeModal}>Закрыть</button>
+                <button type="button" onClick={closeModal}>{isEnglish ? "Close" : "Закрыть"}</button>
               </div>
+            ) : isEnglish ? (
+              <form onSubmit={submit}>
+                <p className={styles.brand}>I AM AGENCY</p>
+                <p className={styles.source}>{source}</p>
+                <h2 id="lead-form-title">{isCourse ? <>Join the<br />course</> : isTariff ? <>Your selected<br />package</> : <>Tell us about<br />your project</>}</h2>
+                {isTariff ? (
+                  <div className={styles.tariffChoice}><span>Selected package</span><strong>{tariff}</strong></div>
+                ) : null}
+                <label>Name<input ref={nameRef} name="name" autoComplete="name" required /></label>
+                <label>Email<input name="email" type="email" autoComplete="email" required /></label>
+                <label>Phone / messenger<input name="phone" autoComplete="tel" /></label>
+                <label>Website or social profile<input name="project" autoComplete="url" /></label>
+                <label>How can we help?<textarea name="message" rows={3} placeholder="A short note about your goals, timing and market" required /></label>
+                <label className={styles.consent}>
+                  <input name="consent" type="checkbox" required />
+                  <span>I agree to the <a href="/en/personal-data-consent" target="_blank">processing of my personal data</a></span>
+                </label>
+                <input className={styles.honeypot} name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+                {error ? <p className={styles.error} role="alert">{error}</p> : null}
+                <button className={styles.submit} type="submit" disabled={sending}>
+                  {sending ? "Sending..." : "Send enquiry"}
+                </button>
+              </form>
             ) : isCourse ? (
               <form onSubmit={submit}>
                 <p className={styles.brand}>ШКОЛА SMM · I AM AGENCY</p>

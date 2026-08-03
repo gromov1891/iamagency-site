@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { BLOG_ARTICLES } from "@/app/blog/articles";
+import { EN_ARTICLES } from "@/lib/i18n/en-articles";
 import { getCmsSession, isSameOrigin } from "@/lib/cms-auth";
 import { deleteCmsArticle, getCmsArticles, sanitizeCmsArticle, upsertCmsArticle } from "@/lib/cms-store";
 
@@ -26,7 +27,10 @@ export async function POST(request: Request) {
     const existing = existingIndex >= 0 ? articles[existingIndex] : undefined;
     const article = sanitizeCmsArticle(body.article, existing);
 
-    if (BLOG_ARTICLES.some((item) => item.slug === article.slug)) {
+    if (
+      BLOG_ARTICLES.some((item) => item.slug === article.slug) ||
+      EN_ARTICLES.some((item) => item.slug === article.slug)
+    ) {
       return NextResponse.json({ error: "Этот адрес занят встроенной статьёй" }, { status: 409 });
     }
     if (articles.some((item, index) => item.slug === article.slug && index !== existingIndex)) {
@@ -38,6 +42,8 @@ export async function POST(request: Request) {
 
     revalidatePath("/blog");
     revalidatePath(`/blog/${article.slug}`);
+    revalidatePath("/en/blog");
+    revalidatePath(`/en/blog/${article.slug}`);
     if (originalSlug && originalSlug !== article.slug) revalidatePath(`/blog/${originalSlug}`);
     revalidatePath("/sitemap");
     revalidatePath("/sitemap.xml");
