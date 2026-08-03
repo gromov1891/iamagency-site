@@ -7,7 +7,7 @@ import Header from "./blocks/Header";
 import ServicesDropdown from "./blocks/ServicesDropdown";
 import LeadModal from "./blocks/LeadModal";
 import Analytics from "./blocks/Analytics";
-import { EnglishFooter } from "./en/EnglishPages";
+import SiteEnglishFooter from "./en/SiteEnglishFooter";
 
 export const siteMetadata: Metadata = {
   metadataBase: new URL("https://iamagency.su"),
@@ -175,7 +175,7 @@ export default function SiteDocument({
         <ServicesDropdown />
         <LeadModal />
         <div className="site-shell">{children}</div>
-        {locale === "en" ? <EnglishFooter /> : null}
+        {locale === "en" ? <SiteEnglishFooter /> : null}
         <div
           className="tantal-credit"
           aria-label={locale === "en" ? "Website development by Tantal" : "Разработка сайта Tantal"}

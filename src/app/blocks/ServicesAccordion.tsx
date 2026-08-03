@@ -36,7 +36,16 @@ const SERVICES = [
   },
 ];
 
+const EN_SERVICES = [
+  { number: "01", title: "Brand book & SMM strategy", text: "The foundation of brand communication: positioning, tone of voice, a visual system and practical content rules your team can use consistently.", href: "/en/services/brand-social-strategy" },
+  { number: "02", title: "Social media management", text: "End-to-end social media management: strategy, content, design, publishing, community work and reporting adapted to each platform and business goal.", href: "/en/services/social-media-management" },
+  { number: "03", title: "Marketing & growth", text: "We attract relevant audiences and enquiries through paid media, partnerships, special projects and a channel mix shaped around your goals and budget.", href: "/en/services/social-media-marketing" },
+  { number: "04", title: "Web development", text: "Corporate websites, landing pages and ecommerce experiences — from structure and prototype to design, development, measurement and launch.", href: "/en/marketing/web-development" },
+  { number: "05", title: "Content / Production", text: "Photography and video for social media, brands and events: concepts, production, editing and a repeatable library of ready-to-use content.", href: "/en/services/content-production" },
+];
+
 type Props = {
+  locale?: "ru" | "en";
   desktopHtml: string;
   desktopH: number;
   tabletHtml: string;
@@ -49,14 +58,17 @@ function ServiceList({
   variant,
   open,
   setOpen,
+  locale = "ru",
 }: {
   variant: "desktop" | "tablet" | "mobile";
   open: number | null;
   setOpen: (value: number | null) => void;
+  locale?: "ru" | "en";
 }) {
+  const services = locale === "en" ? EN_SERVICES : SERVICES;
   return (
     <div className={`services-live-list services-live-list-${variant}`}>
-      {SERVICES.map((service, index) => {
+      {services.map((service, index) => {
         const expanded = open === index;
         const panelId = `service-${variant}-${index}`;
         return (
@@ -75,7 +87,7 @@ function ServiceList({
             <div className="services-live-panel" id={panelId} aria-hidden={!expanded}>
               <div>
                 <p>{service.text}</p>
-                <a href={service.href}>Подробнее →</a>
+                <a href={service.href}>{locale === "en" ? "Details" : "Подробнее"} →</a>
               </div>
             </div>
           </div>
@@ -119,9 +131,9 @@ export default function ServicesAccordion(props: Props) {
       style={{ "--services-mobile-extra": open === null ? "0px" : "100px" } as CSSProperties}
     >
       <ResponsiveBlock {...props} />
-      <div className="rb-desktop rb-has-tablet services-live-overlay"><ServiceList variant="desktop" open={open} setOpen={setOpen} /></div>
-      <div className="rb-tablet rb-has-mobile services-live-overlay"><ServiceList variant="tablet" open={open} setOpen={setOpen} /></div>
-      <div className="rb-mobile services-live-overlay"><ServiceList variant="mobile" open={open} setOpen={setOpen} /></div>
+      <div className="rb-desktop rb-has-tablet services-live-overlay"><ServiceList variant="desktop" open={open} setOpen={setOpen} locale={props.locale} /></div>
+      <div className="rb-tablet rb-has-mobile services-live-overlay"><ServiceList variant="tablet" open={open} setOpen={setOpen} locale={props.locale} /></div>
+      <div className="rb-mobile services-live-overlay"><ServiceList variant="mobile" open={open} setOpen={setOpen} locale={props.locale} /></div>
     </div>
   );
 }

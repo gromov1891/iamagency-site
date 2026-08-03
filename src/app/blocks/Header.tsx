@@ -21,11 +21,12 @@ const RU_LINKS = [
   { label: "КОНТАКТЫ", href: "/#kontakty", left: 1252 },
 ];
 const EN_LINKS = [
-  { label: "SERVICES", href: "/en/services", left: 313 },
-  { label: "WORK", href: "/en/cases", left: 535 },
-  { label: "EXPERTISE", href: "/en/marketing", left: 698 },
-  { label: "ABOUT", href: "/en#about", left: 956 },
-  { label: "CONTACT", href: "/en#contact", left: 1190 },
+  { label: "SERVICES", href: "/en#uslugi", left: 313 },
+  { label: "PORTFOLIO", href: "/en/cases", left: 483 },
+  { label: "MARKETING", href: "/en/marketing", left: 698 },
+  { label: "SMM SCHOOL", href: "/en/smm-school", left: 905 },
+  { label: "BLOG", href: "/en/blog", left: 1121 },
+  { label: "CONTACTS", href: "/en#kontakty", left: 1252 },
 ];
 const CANVAS_H = 80;
 
@@ -61,7 +62,7 @@ export default function Header() {
     translatedPath &&
     (!translationRoute || translationRoute.status === "published" || (translationRoute.status === "preview" && isEnglish))
   );
-  const isHome = pathname === "/";
+  const isHome = pathname === "/" || pathname === "/en";
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -138,8 +139,8 @@ export default function Header() {
   return (
     <>
       {isHome && !scrolled && !isMobile && showLanguageSwitcher && translatedPath ? (
-        <Link href={translatedPath} hrefLang="en" className={styles.homeLanguage}>
-          EN
+        <Link href={translatedPath} hrefLang={isEnglish ? "ru" : "en"} className={styles.homeLanguage}>
+          {isEnglish ? "RU" : "EN"}
         </Link>
       ) : null}
       <header

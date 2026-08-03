@@ -10,6 +10,13 @@ const CARD_LINKS = [
   ["f41a088987f8", "/blog/servisy-dlya-sozdaniya-vizuala"],
 ] as const;
 
+const EN_CARD_LINKS = [
+  ["96fe8ff810d3", "/en/blog/claude-for-business-explained"],
+  ["0b713db08b53", "/en/blog/what-drives-sales-in-2026"],
+  ["e7fa50c7bae4", "/en/blog/instagram-growth-rules-have-changed"],
+  ["f41a088987f8", "/en/blog/tools-for-social-media-visuals"],
+] as const;
+
 const CATEGORY_LINKS = [
   ["смм", "SMM"],
   ["маркетинг", "Маркетинг"],
@@ -20,7 +27,17 @@ const CATEGORY_LINKS = [
   ["тренды", "Тренды"],
 ] as const;
 
-export default function BlogCardsLinker({ children }: { children: ReactNode }) {
+const EN_CATEGORY_LINKS = [
+  ["smm", "SMM"],
+  ["marketing", "Marketing"],
+  ["growth", "Growth"],
+  ["visuals", "Visuals"],
+  ["social media", "Social media"],
+  ["ai", "AI"],
+  ["trends", "Trends"],
+] as const;
+
+export default function BlogCardsLinker({ children, locale = "ru" }: { children: ReactNode; locale?: "ru" | "en" }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -29,7 +46,8 @@ export default function BlogCardsLinker({ children }: { children: ReactNode }) {
     if (!root) return;
     const cleanups: Array<() => void> = [];
 
-    for (const [imageKey, href] of CARD_LINKS) {
+    const cardLinks = locale === "en" ? EN_CARD_LINKS : CARD_LINKS;
+    for (const [imageKey, href] of cardLinks) {
       root.querySelectorAll<HTMLImageElement>(`img[src*="${imageKey}"]`).forEach((image) => {
         const card = image.parentElement;
         if (!card || card === root) return;
@@ -54,7 +72,7 @@ export default function BlogCardsLinker({ children }: { children: ReactNode }) {
 
         card.setAttribute("role", "link");
         card.setAttribute("tabindex", "0");
-        card.setAttribute("aria-label", `Читать статью: ${image.alt}`);
+        card.setAttribute("aria-label", `${locale === "en" ? "Read article" : "Читать статью"}: ${image.alt}`);
         card.style.cursor = "pointer";
         card.addEventListener("click", activate);
         card.addEventListener("keydown", onKeyDown);
@@ -65,13 +83,14 @@ export default function BlogCardsLinker({ children }: { children: ReactNode }) {
       });
     }
 
-    for (const [label, tag] of CATEGORY_LINKS) {
+    const categoryLinks = locale === "en" ? EN_CATEGORY_LINKS : CATEGORY_LINKS;
+    for (const [label, tag] of categoryLinks) {
       root.querySelectorAll<HTMLElement>("[layer-name]").forEach((element) => {
         const text = (element.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
         if (text !== label || element.dataset.blogCategory) return;
         const chip = element.parentElement;
         if (!chip || chip === root) return;
-        const href = `/blog?tag=${encodeURIComponent(tag)}`;
+        const href = `${locale === "en" ? "/en/blog" : "/blog"}?tag=${encodeURIComponent(tag)}`;
         const activate = () => router.push(href);
         const onKeyDown = (event: KeyboardEvent) => {
           if (event.key === "Enter" || event.key === " ") {
@@ -82,7 +101,7 @@ export default function BlogCardsLinker({ children }: { children: ReactNode }) {
         element.dataset.blogCategory = "1";
         chip.setAttribute("role", "link");
         chip.setAttribute("tabindex", "0");
-        chip.setAttribute("aria-label", `Открыть статьи: ${tag}`);
+        chip.setAttribute("aria-label", `${locale === "en" ? "Open articles" : "Открыть статьи"}: ${tag}`);
         chip.style.cursor = "pointer";
         chip.addEventListener("click", activate);
         chip.addEventListener("keydown", onKeyDown);
@@ -94,7 +113,7 @@ export default function BlogCardsLinker({ children }: { children: ReactNode }) {
     }
 
     return () => cleanups.forEach((cleanup) => cleanup());
-  }, [router]);
+  }, [locale, router]);
 
   return <div ref={rootRef}>{children}</div>;
 }

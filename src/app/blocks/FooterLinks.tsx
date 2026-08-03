@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 /* Делает легал-ссылки футера кликабельными и добавляет «Карта сайта».
    Политика и согласие ведут на отдельные юридические документы.
    Новая строка «Карта сайта» (клон «Согласия», ниже) → /sitemap. */
 export default function FooterLinks() {
+  const pathname = usePathname();
+  const isEnglish = pathname.startsWith("/en");
   useEffect(() => {
     const run = () => {
       const footerRoots = ([...document.querySelectorAll("div")] as HTMLElement[]).filter(
@@ -27,16 +30,16 @@ export default function FooterLinks() {
       };
 
       const navigation: Record<string, string> = {
-        "Услуги": "/#uslugi",
-        "Портфолио": "/keisy",
-        "Маркетинг": "/marketing",
-        "Блог": "/blog",
-        "Школа СММ": "/shkola-smm",
-        "Брендбук и SMM-стратегия": "/uslugi/brendbuk-i-smm-strategiya",
-        "Ведение соцсетей": "/uslugi/vedenie-sotssetey",
-        "Маркетинг и продвижение": "/uslugi/marketing-i-prodvizhenie",
-        "Создание сайтов": "/marketing/razrabotka-saytov",
-        "Контент / Съёмки": "/uslugi/kontent-syomki",
+        "Услуги": isEnglish ? "/en#uslugi" : "/#uslugi",
+        "Портфолио": isEnglish ? "/en/cases" : "/keisy",
+        "Маркетинг": isEnglish ? "/en/marketing" : "/marketing",
+        "Блог": isEnglish ? "/en/blog" : "/blog",
+        "Школа СММ": isEnglish ? "/en/smm-school" : "/shkola-smm",
+        "Брендбук и SMM-стратегия": isEnglish ? "/en/services/brand-social-strategy" : "/uslugi/brendbuk-i-smm-strategiya",
+        "Ведение соцсетей": isEnglish ? "/en/services/social-media-management" : "/uslugi/vedenie-sotssetey",
+        "Маркетинг и продвижение": isEnglish ? "/en/services/social-media-marketing" : "/uslugi/marketing-i-prodvizhenie",
+        "Создание сайтов": isEnglish ? "/en/marketing/web-development" : "/marketing/razrabotka-saytov",
+        "Контент / Съёмки": isEnglish ? "/en/services/content-production" : "/uslugi/kontent-syomki",
       };
 
       for (const root of footerRoots) {
@@ -53,15 +56,15 @@ export default function FooterLinks() {
           clone.setAttribute("data-sitemap-link", "1");
           clone.removeAttribute("data-flink");
           const span = (clone.querySelector("span") as HTMLElement) || clone;
-          span.textContent = "Карта сайта";
+          span.textContent = isEnglish ? "Sitemap" : "Карта сайта";
           clone.style.top = parseFloat(sog.style.top || "0") + 70 + "px";
           clone.style.height = "auto";
           sog.parentElement?.appendChild(clone);
-          wrap(clone, "/sitemap");
+          wrap(clone, isEnglish ? "/en/sitemap" : "/sitemap");
         }
 
-        wrap(pol, "/privacy-policy");
-        wrap(sog, "/privacy-consent");
+        wrap(pol, isEnglish ? "/en/privacy-policy" : "/privacy-policy");
+        wrap(sog, isEnglish ? "/en/personal-data-consent" : "/privacy-consent");
       }
     };
 
@@ -71,6 +74,6 @@ export default function FooterLinks() {
       clearTimeout(t1);
       clearTimeout(t2);
     };
-  }, []);
+  }, [isEnglish]);
   return null;
 }

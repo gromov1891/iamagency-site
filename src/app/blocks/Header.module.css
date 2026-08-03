@@ -4,22 +4,20 @@
 
 .desktopLanguage {
   position: absolute;
-  top: 22px;
-  left: 1366px;
-  display: flex;
-  width: 50px;
-  height: 40px;
-  align-items: center;
-  justify-content: center;
-  border: 1.5px solid #1c1c1c;
-  border-radius: 999px;
-  background: #cee3a7;
+  top: 31px;
+  right: 18px;
+  display: inline-block;
   color: #1c1c1c;
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 600;
   line-height: 1;
+  letter-spacing: -.03em;
   text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  transition: opacity 160ms ease;
 }
+
+.desktopLanguage:hover { opacity: .48; }
 
 .desktopLanguage:focus-visible {
   outline: 3px solid #ff8aa8;
@@ -29,22 +27,20 @@
 .homeLanguage {
   position: fixed;
   z-index: 120;
-  top: 27px;
-  right: clamp(18px, 1.7vw, 34px);
-  display: flex;
-  width: 50px;
-  height: 40px;
-  align-items: center;
-  justify-content: center;
-  border: 1.5px solid #1c1c1c;
-  border-radius: 999px;
-  background: #cee3a7;
+  top: clamp(26px, 2vw, 34px);
+  right: clamp(12px, 1vw, 20px);
+  display: inline-block;
   color: #1c1c1c;
-  font-size: 18px;
-  font-weight: 700;
+  font-size: clamp(13px, 1vw, 16px);
+  font-weight: 600;
   line-height: 1;
+  letter-spacing: -.03em;
   text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  transition: opacity 160ms ease;
 }
+
+.homeLanguage:hover { opacity: .48; }
 
 .homeLanguage:focus-visible {
   outline: 3px solid #ff8aa8;
