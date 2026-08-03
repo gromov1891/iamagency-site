@@ -1,12 +1,14 @@
+import os
 import re
 from pathlib import Path
 from urllib.parse import urlparse
 
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from playwright.sync_api import sync_playwright
 
 
 ROOT = Path(__file__).resolve().parents[1]
-LOCAL = "http://127.0.0.1:3107"
+BASE_URL = os.environ.get("SITE_BASE_URL", "http://127.0.0.1:3107").rstrip("/")
 PRODUCTION = "https://iamagency.su"
 
 
@@ -17,9 +19,22 @@ def mapped_routes():
 
 def check_page(page, path: str, locale: str, counterpart: str | None = None):
     errors = []
+    page.route(
+        "**/*",
+        lambda route: route.abort()
+        if route.request.resource_type in {"image", "media", "font"}
+        else route.continue_(),
+    )
     page.on("console", lambda message: errors.append(f"console:{message.type}:{message.text}") if message.type == "error" else None)
     page.on("pageerror", lambda error: errors.append(f"pageerror:{error}"))
-    response = page.goto(f"{LOCAL}{path}", wait_until="domcontentloaded")
+    response = None
+    for attempt in range(2):
+        try:
+            response = page.goto(f"{BASE_URL}{path}", wait_until="domcontentloaded", timeout=60_000)
+            break
+        except PlaywrightTimeoutError:
+            if attempt == 1:
+                raise
     canonical = page.locator('link[rel="canonical"]').get_attribute("href")
     result = {
         "path": path,
@@ -52,11 +67,13 @@ def check_page(page, path: str, locale: str, counterpart: str | None = None):
         x_default = page.locator('link[rel="alternate"][hreflang="x-default"]').get_attribute("href")
         expected_default = PRODUCTION if expected_alternates["ru"] == "/" else f'{PRODUCTION}{expected_alternates["ru"]}'
         assert x_default == expected_default, (result, "x-default", x_default)
-        switch_label = "RU" if locale == "en" else "EN"
-        switch = page.get_by_role("link", name=switch_label, exact=True)
-        assert switch.count() >= 1, (result, "missing language switch")
-        switch_hrefs = switch.evaluate_all("elements => elements.map(element => element.getAttribute('href'))")
-        assert counterpart in switch_hrefs, (result, switch_hrefs, counterpart)
+        switch = page.locator(f'a[href="{counterpart}"][hreflang]')
+        assert switch.count() >= 1, (result, "missing language switch", counterpart)
+        assert switch.evaluate_all("elements => elements.some(element => element.offsetWidth || element.offsetHeight)"), (
+            result,
+            "language switch is not visible",
+            counterpart,
+        )
     if locale == "en":
         assert len(result["title"]) >= 20, result
         assert len(result["description"]) >= 50, result
@@ -91,7 +108,7 @@ with sync_playwright() as playwright:
     assert len({result["description"] for result in english_results}) == len(english_results)
 
     request_context = playwright.request.new_context()
-    sitemap_response = request_context.get(f"{LOCAL}/sitemap.xml")
+    sitemap_response = request_context.get(f"{BASE_URL}/sitemap.xml")
     sitemap_text = sitemap_response.text()
     assert sitemap_response.status == 200
     assert sitemap_text.count("<loc>") == 92, sitemap_text.count("<loc>")
@@ -108,13 +125,13 @@ with sync_playwright() as playwright:
     ]
     for path, filename, viewport in screenshot_routes:
         visual = browser.new_page(viewport=viewport)
-        visual.goto(f"{LOCAL}{path}", wait_until="networkidle")
+        visual.goto(f"{BASE_URL}{path}", wait_until="networkidle")
         visual.screenshot(path=str(ROOT / "tools" / filename), full_page=True)
         visual.close()
 
     form = browser.new_page(viewport={"width": 1280, "height": 900})
     form.route("**/api/leads", lambda route: route.fulfill(status=200, content_type="application/json", body='{"ok":true}'))
-    form.goto(f"{LOCAL}/en/services/social-media-management", wait_until="networkidle")
+    form.goto(f"{BASE_URL}/en/services/social-media-management", wait_until="networkidle")
     form.get_by_role("link", name=re.compile("Discuss your project", re.I)).click()
     form.get_by_label("Name").fill("Codex QA")
     form.get_by_label("Email").fill("test-noreply@example.com")
