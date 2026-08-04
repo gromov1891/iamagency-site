@@ -10,6 +10,7 @@ const CTA_LINKS: Record<string, string> = {
   "book a consultation": "/en#kontakty",
   "apply for the course": "/en/smm-school",
   "learn more": "/en/marketing",
+  "view project": "/en/cases",
 };
 
 function setFontSize(element: HTMLElement, size: number) {
@@ -57,6 +58,15 @@ function fitEnglishText(root: HTMLElement) {
       const size = inlineSize >= 20 ? 19 : inlineSize >= 10 ? 10.5 : Math.min(inlineSize || 6.5, 6.5);
       setFontSize(element, size);
       element.style.lineHeight = "98%";
+    }
+
+    if (text.startsWith("Learn the profession from scratch")) {
+      const size = inlineSize >= 45 ? 42 : inlineSize >= 25 ? 24 : Math.min(inlineSize || 18, 18);
+      setFontSize(element, size);
+      element.style.lineHeight = "100%";
+      if (element.parentElement && element.parentElement.textContent?.trim() === text) {
+        setFontSize(element.parentElement, size);
+      }
     }
   });
 }

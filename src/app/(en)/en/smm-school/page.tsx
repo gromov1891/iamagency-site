@@ -96,15 +96,15 @@ export default function EnglishSchoolPage() {
         <nav aria-label="Breadcrumb"><Link href="/en">Home</Link><span>→</span><span>SMM School</span></nav>
         <div className={styles.heroCopy}>
           <p className={styles.kicker}>I AM AGENCY EDUCATION</p>
-          <h1>SMM SCHOOL<br />FROM AN AGENCY</h1>
+          <h1><span>SMM</span><span>SCHOOL</span><span>BY</span><span>I AM AGENCY</span></h1>
           <p className={styles.heroLead}>Learn the profession from zero — through the same system we use every day.</p>
           <div className={styles.heroStats}><strong>7 years</strong><span>teaching SMM</span><strong>350+</strong><span>graduates</span></div>
           <SchoolLeadButton className={styles.primary}>Book a consultation</SchoolLeadButton>
         </div>
-        <Image className={styles.heroArt} src="/blk/shkola/glass_curl.png" alt="" width={405} height={466} priority />
+        <Image className={styles.heroArt} src="/marketing-hero/pink-swirl.webp" alt="" width={768} height={768} priority />
       </section>
 
-      <section className={styles.darkSection}>
+      <section className={`${styles.darkSection} ${styles.method}`}>
         <header className={styles.sectionHeader}><p>THE METHOD</p><h2>HOW WE TEACH</h2></header>
         <div className={styles.methodGrid}>{TEACHING.map(([title, text], index) => <article key={title} className={styles.methodCard}><span>{String(index + 1).padStart(2, "0")}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
       </section>
@@ -116,7 +116,7 @@ export default function EnglishSchoolPage() {
         <div><strong>6 weeks</strong><span>guided programme</span><strong>Lifetime</strong><span>access to materials</span></div>
       </section>
 
-      <section className={styles.darkSection}>
+      <section className={`${styles.darkSection} ${styles.audience}`}>
         <header className={styles.sectionHeader}><p>WHO IT IS FOR</p><h2>A NEW PROFESSION<br />CAN START HERE.</h2></header>
         <div className={styles.audienceGrid}>{AUDIENCES.map(([title, text]) => <article key={title}><h3>{title}</h3><p>{text}</p><span>↘</span></article>)}</div>
       </section>
@@ -128,7 +128,7 @@ export default function EnglishSchoolPage() {
 
       <section className={styles.stories}>
         <header className={styles.sectionHeader}><p>REAL OUTCOMES</p><h2>OUR STUDENTS&apos;<br />STORIES</h2></header>
-        <div>{STORIES.map(([name, city, text]) => <article key={name}><p>{city}</p><h3>{name}</h3><span>{text}</span></article>)}</div>
+        <div>{STORIES.map(([name, city, text]) => <article key={name}><div className={styles.studentPhoto} aria-hidden="true" /><p>{city}</p><h3>{name}</h3><span>{text}</span></article>)}</div>
       </section>
 
       <section className={styles.apply}>
