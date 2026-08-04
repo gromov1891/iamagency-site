@@ -31,6 +31,8 @@ const isLeadLabel = (value: string | null | undefined) => {
     /^start (?:your|a) project$/,
     /^request a proposal$/,
     /^book a consultation$/,
+    /^apply for the course$/,
+    /^request course details$/,
   ].some((pattern) => pattern.test(text));
 };
 
@@ -168,6 +170,10 @@ export default function LeadModal() {
     };
 
     const onClick = (event: MouseEvent) => activate(event.target, event);
+    const onOpenLead = (event: Event) => {
+      const label = (event as CustomEvent<{ label?: string }>).detail?.label;
+      openModal(label?.trim() || (isEnglish ? "Course enquiry" : "Заявка на обучение"));
+    };
     const onKeyDown = (event: globalThis.KeyboardEvent) => {
       if (event.key === "Enter" || event.key === " ") activate(event.target, event);
     };
@@ -177,12 +183,14 @@ export default function LeadModal() {
     observer.observe(document.body, { childList: true, subtree: true });
     document.addEventListener("click", onClick, true);
     document.addEventListener("keydown", onKeyDown, true);
+    window.addEventListener("iam:open-lead", onOpenLead);
 
     return () => {
       if (decorateTimer) clearTimeout(decorateTimer);
       observer.disconnect();
       document.removeEventListener("click", onClick, true);
       document.removeEventListener("keydown", onKeyDown, true);
+      window.removeEventListener("iam:open-lead", onOpenLead);
     };
   }, [isEnglish, openModal, pathname]);
 
@@ -262,6 +270,12 @@ export default function LeadModal() {
 
   return (
     <>
+      <button
+        id="global-course-lead-trigger"
+        type="button"
+        hidden
+        onClick={() => openModal(isEnglish ? "SMM School course enquiry" : "Заявка на обучение")}
+      />
       {pathname === "/marketing" || pathname === "/en/marketing" ? (
         <button className={styles.floatingButton} type="button" onClick={() => openModal(isEnglish ? "Start a project" : "Оставить заявку")}>
           {isEnglish ? "Start a project" : "Оставить заявку"}
