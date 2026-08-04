@@ -82,6 +82,24 @@ function findButtonHost(element: HTMLElement, root: HTMLElement) {
   return element;
 }
 
+function resolveCtaHref(element: HTMLElement, label: string) {
+  if (label !== "view project") return CTA_LINKS[label];
+  const projectRoutes: Array<[string, string]> = [
+    ["maxim", "/en/cases/real-estate"],
+    ["yulia", "/en/cases/events"],
+    ["travel times", "/en/cases/travel-hospitality"],
+    ["connected show", "/en/cases/events"],
+    ["altay village", "/en/cases/travel-hospitality"],
+  ];
+  let current: HTMLElement | null = element.parentElement;
+  for (let depth = 0; current && depth < 4; depth += 1, current = current.parentElement) {
+    const cardText = (current.textContent || "").replace(/\s+/g, " ").toLowerCase();
+    const match = projectRoutes.find(([name]) => cardText.includes(name));
+    if (match) return match[1];
+  }
+  return CTA_LINKS[label];
+}
+
 export default function EnglishFigmaEnhancer({ children }: { children: ReactNode }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -95,7 +113,7 @@ export default function EnglishFigmaEnhancer({ children }: { children: ReactNode
     root.querySelectorAll<HTMLElement>("span, div").forEach((element) => {
       if (element.children.length > 0) return;
       const label = (element.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
-      const href = CTA_LINKS[label];
+      const href = resolveCtaHref(element, label);
       if (!href) return;
       const host = findButtonHost(element, root);
       host.style.zIndex = "90";
