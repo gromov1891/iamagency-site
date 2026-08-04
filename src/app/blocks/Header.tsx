@@ -115,14 +115,14 @@ export default function Header() {
         }
       });
       document.querySelectorAll<HTMLAnchorElement>('a[href="/#blog"]').forEach((link) => {
-        link.setAttribute("href", "/blog");
+        link.setAttribute("href", isEnglish ? "/en/blog" : "/blog");
       });
     };
     updateLegacyServiceLinks();
     const observer = new MutationObserver(updateLegacyServiceLinks);
     observer.observe(document.body, { childList: true, subtree: true });
     return () => observer.disconnect();
-  }, [pathname]);
+  }, [isEnglish, pathname]);
 
   useEffect(() => {
     const el = innerRef.current;

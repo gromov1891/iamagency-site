@@ -76,11 +76,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .filter((route) => route.status === "published")
     .map((route) => entry(route.en, priorityFor(route.en), route.en.startsWith("/en/blog") ? "monthly" : "monthly"));
 
-  const standaloneEnglishEntries = [
-    entry("/en/services", 0.9, "monthly", UPDATED, false),
-    entry("/en/packages", 0.75, "monthly", UPDATED, false),
-  ];
-
   const registeredEnglishPaths = new Set(TRANSLATION_ROUTES.map((route) => route.en));
   const cmsEnglishEntries = englishBlogArticles
     .filter((article) => !registeredEnglishPaths.has(`/en/blog/${article.slug}`))
@@ -92,5 +87,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       false,
     ));
 
-  return [...russianEntries, ...translatedEntries, ...standaloneEnglishEntries, ...cmsEnglishEntries];
+  return [...russianEntries, ...translatedEntries, ...cmsEnglishEntries];
 }

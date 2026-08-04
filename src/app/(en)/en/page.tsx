@@ -42,6 +42,7 @@ import { futerHtml, futerH } from "@/app/blocks/gen/futerHtml";
 import { futerTabletHtml, futerTabletH } from "@/app/blocks/gen/futerTabletHtml";
 import { futerMobileHtml, futerMobileH } from "@/app/blocks/gen/futerMobileHtml";
 import { CASES } from "@/app/case/cases";
+import EnglishFigmaEnhancer from "@/app/en/EnglishFigmaEnhancer";
 
 export const metadata: Metadata = {
   title: { absolute: "Full-Service SMM Agency | I AM AGENCY" },
@@ -55,7 +56,7 @@ const englishCaseLinks = Object.fromEntries(
 
 export default function EnglishHome() {
   return (
-    <>
+    <EnglishFigmaEnhancer>
       <Preloader />
       <h1 className="sr-only">Full-service SMM agency I AM AGENCY</h1>
       <div className="relative z-20">
@@ -88,6 +89,6 @@ export default function EnglishHome() {
         <ContactBlock locale="en" html={en(kontaktyHtml)} h={kontaktyH} tabletHtml={en(kontaktyTabletHtml)} tabletH={kontaktyTabletH} mobileHtml={en(kontaktyMobileHtml)} mobileH={kontaktyMobileH} />
       </div>
       <ResponsiveBlock desktopHtml={en(futerHtml)} desktopH={futerH} tabletHtml={en(futerTabletHtml)} tabletH={futerTabletH} mobileHtml={en(futerMobileHtml)} mobileH={futerMobileH} />
-    </>
+    </EnglishFigmaEnhancer>
   );
 }

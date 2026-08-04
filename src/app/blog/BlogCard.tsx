@@ -6,15 +6,17 @@ import styles from "./blog.module.css";
 type BlogCardProps = {
   article: BlogArticle;
   compact?: boolean;
+  locale?: "ru" | "en";
 };
 
-export default function BlogCard({ article, compact = false }: BlogCardProps) {
+export default function BlogCard({ article, compact = false, locale = "ru" }: BlogCardProps) {
+  const english = locale === "en";
   return (
     <article className={`${styles.card} ${compact ? styles.cardCompact : ""}`}>
       <Link
-        href={`/blog/${article.slug}`}
+        href={`${english ? "/en" : ""}/blog/${article.slug}`}
         className={styles.cardLink}
-        aria-label={`Читать статью: ${article.title}`}
+        aria-label={`${english ? "Read article" : "Читать статью"}: ${article.title}`}
       >
         <div className={styles.cardCopy}>
           <div className={styles.cardMeta}>
@@ -23,11 +25,11 @@ export default function BlogCard({ article, compact = false }: BlogCardProps) {
               <span>AM</span>
               <span>AGENCY</span>
             </span>
-            <span className={styles.newBadge}>Новое</span>
+            <span className={styles.newBadge}>{english ? "New" : "Новое"}</span>
           </div>
           <h2 className={styles.cardTitle}>{article.title}</h2>
           <p className={styles.cardExcerpt}>{article.excerpt}</p>
-          <span className={styles.readMore}>Читать <span aria-hidden="true">↘</span></span>
+          <span className={styles.readMore}>{english ? "Read" : "Читать"} <span aria-hidden="true">↘</span></span>
         </div>
         <div className={styles.cardImageWrap}>
           <Image

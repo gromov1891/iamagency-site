@@ -1,3 +1,5 @@
+import autoTranslations from "./auto-translations.json";
+
 const PATH_REPLACEMENTS: Array<[string, string]> = [
   ['href="/uslugi/brendbuk-i-smm-strategiya"', 'href="/en/services/brand-social-strategy"'],
   ['href="/uslugi/vedenie-sotssetey"', 'href="/en/services/social-media-management"'],
@@ -16,6 +18,9 @@ const PATH_REPLACEMENTS: Array<[string, string]> = [
   ['href="/marketing"', 'href="/en/marketing"'],
   ['href="/shkola-smm"', 'href="/en/smm-school"'],
   ['href="/blog"', 'href="/en/blog"'],
+  ['href="/blog?tag=', 'href="/en/blog?tag='],
+  ['href="/marketing/razrabotka-saytov"', 'href="/en/marketing/web-development"'],
+  ["location.href='/marketing'", "location.href='/en/marketing'"],
   ['href="/"', 'href="/en"'],
 ];
 
@@ -223,6 +228,9 @@ function fallbackEnglishText(content: string) {
   if (lower.includes("ип громова")) return "Sole proprietor M. A. Gromova · Tax ID 420545021010 · Registration No. 324420500100030";
   if (lower.includes("согласие на обработку")) return "Personal data consent";
   if (lower.includes("личный экспертный") && lower.includes("блог")) return "Personal expert blog";
+
+  const automatic = (autoTranslations as Record<string, string>)[text];
+  if (automatic) return automatic;
 
   return "I AM AGENCY";
 }

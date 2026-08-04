@@ -6,7 +6,19 @@ import BlogCard from "./BlogCard";
 import { BLOG_TAGS, type BlogArticle, type BlogTag } from "./articles";
 import styles from "./blog.module.css";
 
-export default function BlogIndex({ articles }: { articles: BlogArticle[] }) {
+const EN_TAG_LABELS: Record<string, string> = {
+  "СММ": "SMM",
+  "Маркетинг": "Marketing",
+  "Продвижение": "Growth",
+  "Визуал": "Visuals",
+  "Социальные сети": "Social media",
+  "Нейросети": "AI",
+  "Тренды": "Trends",
+};
+
+export default function BlogIndex({ articles, locale = "ru" }: { articles: BlogArticle[]; locale?: "ru" | "en" }) {
+  const english = locale === "en";
+  const tagLabel = (tag: string) => english ? EN_TAG_LABELS[tag] || tag : tag;
   const [activeTag, setActiveTag] = useState<BlogTag | null>(null);
 
   useEffect(() => {
@@ -25,7 +37,8 @@ export default function BlogIndex({ articles }: { articles: BlogArticle[] }) {
   function selectTag(tag: BlogTag) {
     const nextTag = activeTag === tag ? null : tag;
     setActiveTag(nextTag);
-    const url = nextTag ? `/blog?tag=${encodeURIComponent(nextTag)}` : "/blog";
+    const base = english ? "/en/blog" : "/blog";
+    const url = nextTag ? `${base}?tag=${encodeURIComponent(nextTag)}` : base;
     window.history.replaceState(null, "", url);
   }
 
@@ -33,10 +46,10 @@ export default function BlogIndex({ articles }: { articles: BlogArticle[] }) {
     <main className={styles.blogPage}>
       <div className={styles.blogLayout}>
         <header className={styles.blogIntro}>
-          <h1 className={styles.blogTitle}>Блог</h1>
+          <h1 className={styles.blogTitle}>{english ? "Blog" : "Блог"}</h1>
           <div className={styles.filtersBlock}>
-            <p className={styles.filtersLabel}>Категории</p>
-            <div className={styles.filters} aria-label="Фильтр статей по категориям">
+            <p className={styles.filtersLabel}>{english ? "Categories" : "Категории"}</p>
+            <div className={styles.filters} aria-label={english ? "Filter articles by category" : "Фильтр статей по категориям"}>
               {BLOG_TAGS.map((tag, index) => {
                 const active = tag === activeTag;
                 return (
@@ -47,7 +60,7 @@ export default function BlogIndex({ articles }: { articles: BlogArticle[] }) {
                     onClick={() => selectTag(tag)}
                     aria-pressed={active}
                   >
-                    <span>{tag}</span>
+                    <span>{tagLabel(tag)}</span>
                     <span
                       className={styles.filterIcon}
                       style={{ "--filter-accent": index % 2 ? "#ffad19" : "#8992e4" } as CSSProperties}
@@ -64,15 +77,15 @@ export default function BlogIndex({ articles }: { articles: BlogArticle[] }) {
 
         <section className={styles.cardsSection} aria-live="polite">
           <p className="sr-only">
-            {activeTag ? `Статьи по теме ${activeTag}` : "Все статьи"}
+            {activeTag ? (english ? `Articles about ${tagLabel(activeTag)}` : `Статьи по теме ${activeTag}`) : (english ? "All articles" : "Все статьи")}
           </p>
           <div className={styles.cardsGrid}>
             {visibleArticles.map((article) => (
-              <BlogCard key={article.slug} article={article} />
+              <BlogCard key={article.slug} article={article} locale={locale} />
             ))}
           </div>
           {visibleArticles.length === 0 && (
-            <p className={styles.emptyState}>В этой категории скоро появятся статьи.</p>
+            <p className={styles.emptyState}>{english ? "New articles are coming to this category." : "В этой категории скоро появятся статьи."}</p>
           )}
         </section>
       </div>

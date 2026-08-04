@@ -2,6 +2,8 @@
 
 import { useEffect } from "react";
 import { DIRECTIONS } from "../marketing/directions";
+import { EN_MARKETING } from "@/lib/i18n/en-content";
+import { translateGeneratedHtml } from "@/lib/i18n/translate-generated-html";
 
 /* Делает карточки направлений на /marketing кликабельными: заголовок и «+»
    ведут на лендинг /marketing/<slug>. Линкуем ТОЛЬКО готовые (status: "ready"),
@@ -16,7 +18,7 @@ const FOLD: Record<string, string> = {
 const norm = (s: string) =>
   [...s.toLowerCase()].map((ch) => FOLD[ch] || ch).join("").replace(/\s+/g, " ").trim();
 
-export default function DirectionLinks() {
+export default function DirectionLinks({ locale = "ru" }: { locale?: "ru" | "en" }) {
   useEffect(() => {
     const ready = DIRECTIONS.filter((d) => d.status === "ready");
     if (!ready.length) return;
@@ -35,10 +37,14 @@ export default function DirectionLinks() {
 
     const run = () => {
       const divs = [...document.querySelectorAll("div")] as HTMLElement[];
-      ready.forEach((d) => {
-        const href = `/marketing/${d.slug}`;
+      ready.forEach((d, index) => {
+        const english = EN_MARKETING[index];
+        const href = locale === "en" && english ? `/en/marketing/${english.slug}` : `/marketing/${d.slug}`;
         // заголовок карточки: div, чей нормализованный текст = названию направления
-        const dn = norm(d.name);
+        const translatedDirectionName = locale === "en"
+          ? translateGeneratedHtml(`>${d.name}<`).slice(1, -1)
+          : d.name;
+        const dn = norm(translatedDirectionName);
         const title = divs.find(
           (el) => !el.dataset.dlink && norm((el.textContent || "").trim()) === dn
         );
@@ -76,6 +82,6 @@ export default function DirectionLinks() {
       clearTimeout(t1);
       clearTimeout(t2);
     };
-  }, []);
+  }, [locale]);
   return null;
 }
