@@ -1,4 +1,5 @@
 import autoTranslations from "./auto-translations.json";
+import { CASE_TRANSLATIONS } from "./case-translations";
 
 const PATH_REPLACEMENTS: Array<[string, string]> = [
   ['href="/uslugi/brendbuk-i-smm-strategiya"', 'href="/en/services/brand-social-strategy"'],
@@ -115,12 +116,20 @@ const TEXT_REPLACEMENTS: Array<[string, string]> = [
   ["Спасибо!", "Thank you!"],
   ["Закрыть", "Close"],
   ["компания", "company"],
+  ["full-book", "Full occupancy:"],
+  ["Sold Out", "Sold out"],
+  ["×2", "2× growth in the"],
+  ["×3", "3× growth in"],
+  ["×4", "4× growth in"],
 ];
 
 function fallbackEnglishText(content: string) {
   if (!/[А-Яа-яЁё]/.test(content)) return content;
   const text = content.replaceAll("&nbsp;", " ").replace(/\s+/g, " ").trim();
   const lower = text.toLowerCase();
+
+  const caseTranslation = CASE_TRANSLATIONS[text];
+  if (caseTranslation) return caseTranslation;
 
   const short: Record<string, string> = {
     "контент": "Content",
@@ -232,7 +241,9 @@ function fallbackEnglishText(content: string) {
   const automatic = (autoTranslations as Record<string, string>)[text];
   if (automatic) return automatic;
 
-  return "I AM AGENCY";
+  // Unknown copy must stay visible for QA. Replacing it with the brand name
+  // created plausible-looking but nonsensical English sentences on production.
+  return content;
 }
 
 export function translateGeneratedHtml(source: string) {

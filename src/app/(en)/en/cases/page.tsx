@@ -13,7 +13,7 @@ import { translateGeneratedHtml as en } from "@/lib/i18n/translate-generated-htm
 import { getSeoAlternates } from "@/lib/i18n/routes";
 
 export const metadata: Metadata = {
-  title: "Social Media Case Studies by Industry | I AM AGENCY",
+  title: { absolute: "Social Media Case Studies by Industry | I AM AGENCY" },
   description: "Explore I AM AGENCY social media work across beauty, fashion, hospitality, real estate, ecommerce, personal brands and more.",
   alternates: getSeoAlternates("/keisy"),
   robots: { index: true, follow: true },
