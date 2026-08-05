@@ -86,6 +86,10 @@ export default async function EnglishCasePage({ params }: { params: Promise<{ sl
         </div>
       </section>
 
+      <div className={styles.mobileCanvas}>
+        <BuilderBlock html={en(source.html)} w={1440} h={source.height} overflow="hidden" />
+      </div>
+
       <section className={styles.seo}>
         <div className={styles.seoIntro}><h1>{item.h1}</h1><p>{item.intro}</p></div>
         <div className={styles.faqBand}>

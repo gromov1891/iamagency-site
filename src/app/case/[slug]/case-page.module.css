@@ -230,7 +230,7 @@
 
 @media (max-width: 767px) {
   .responsiveCanvas { display: none; }
-  .responsiveCanvas.englishResponsiveCanvas { display: block; }
+  .responsiveCanvas.englishResponsiveCanvas { display: none; }
   .mobileCanvas { display: block; }
 }
 

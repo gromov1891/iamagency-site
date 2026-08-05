@@ -28,14 +28,24 @@ const CARDS = [
   { m: "320 заявок/мес", c: "B2B SAAS", d: "Контекст + SEO + PR, 8 мес" },
 ];
 
+const EN_CARDS = [
+  { m: "+250% enquiries", c: "Dental clinic", d: "Paid search + SEO · four months" },
+  { m: "3× orders", c: "Restaurant", d: "Telegram Ads + VK paid social · three months" },
+  { m: "CPL cut in half", c: "EdTech courses", d: "Influencer marketing + paid search · six months" },
+  { m: "+180% revenue", c: "Ecommerce", d: "Connected analytics + remarketing · five months" },
+  { m: "320 enquiries/month", c: "B2B SaaS", d: "Paid search + SEO + PR · eight months" },
+];
+
 export default function HoverMarkers({
   html,
   h,
   labels,
+  locale = "ru",
 }: {
   html: string;
   h?: number;
   labels: string[];
+  locale?: "ru" | "en";
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -109,7 +119,7 @@ export default function HoverMarkers({
             climber.style.transform = `translate(${dx}px, ${dy}px)`;
           }
           // карточка слева-сверху от метки, не вылезая за холст
-          const cd = CARDS[i];
+          const cd = (locale === "en" ? EN_CARDS : CARDS)[i];
           mEl.textContent = cd.m;
           cEl.textContent = cd.c;
           dEl.textContent = cd.d;
@@ -135,7 +145,7 @@ export default function HoverMarkers({
     }, 150);
 
     return () => clearTimeout(t);
-  }, [labels]);
+  }, [labels, locale]);
 
   return (
     <div ref={ref}>

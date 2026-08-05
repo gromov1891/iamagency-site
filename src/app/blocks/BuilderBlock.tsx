@@ -25,6 +25,7 @@ export default function BuilderBlock({
       style={{ aspectRatio: `${w} / ${h}`, overflow, containerType: "inline-size" }}
     >
       <div
+        suppressHydrationWarning
         style={{
           width: w,
           height: h,

@@ -46,25 +46,25 @@ const layers: Layer[] = [
   { x: 55, y: 3040, w: 1280, h: 365, text: "The course is currently delivered one-to-one with a personal curator. Your curator supports you throughout the programme, reviews every assignment and adapts the pace to you.\n\nDuration — six weeks\nLifetime access to all materials", size: 28, color: DARK, background: LIME, lineHeight: 1.04, family: "body" },
 
   { x: 58, y: 3615, w: 850, h: 100, text: "WHO IS IT FOR?", size: 78, color: LIME, background: DARK },
-  { x: 125, y: 3746, w: 780, h: 195, text: "PEOPLE WHO WANT FREEDOM\nWork online from anywhere in the world and keep travelling.  ↘", size: 40, titleSize: 40, bodySize: 27, color: DARK, background: "#fbfafa", radius: 42, padding: 30, variant: "audience" },
-  { x: 910, y: 3964, w: 470, h: 196, text: "STUDENTS\nBuild an in-demand skill and earn alongside your studies.  ↘", size: 34, titleSize: 34, bodySize: 24, color: DARK, background: "#fbfafa", radius: 42, padding: 28, variant: "audience" },
-  { x: 60, y: 4064, w: 575, h: 196, text: "PARENTS ON PARENTAL LEAVE\nLearn a remote profession and earn while staying close to your family.  ↘", size: 34, titleSize: 34, bodySize: 23, color: DARK, background: "#fbfafa", radius: 42, padding: 28, variant: "audience" },
-  { x: 420, y: 4326, w: 845, h: 195, text: "PEOPLE READY FOR CHANGE\nLeave an unfulfilling job for a creative, in-demand career.  ↘", size: 40, titleSize: 40, bodySize: 27, color: DARK, background: "#fbfafa", radius: 42, padding: 30, variant: "audience" },
+  { x: 125, y: 3746, w: 780, h: 195, text: "PEOPLE WHO WANT FREEDOM\nWork online from anywhere in the world and keep travelling.  ↘", size: 36, titleSize: 36, bodySize: 27, color: DARK, background: "#fbfafa", radius: 42, padding: 30, variant: "audience" },
+  { x: 910, y: 3964, w: 470, h: 196, text: "STUDENTS\nBuild an in-demand skill and earn alongside your studies.  ↘", size: 30, titleSize: 30, bodySize: 23, color: DARK, background: "#fbfafa", radius: 42, padding: 28, variant: "audience" },
+  { x: 60, y: 4064, w: 575, h: 196, text: "PARENTS ON PARENTAL LEAVE\nLearn a remote profession and earn while staying close to your family.  ↘", size: 30, titleSize: 30, bodySize: 22, color: DARK, background: "#fbfafa", radius: 42, padding: 28, variant: "audience" },
+  { x: 420, y: 4326, w: 845, h: 195, text: "PEOPLE READY FOR CHANGE\nLeave an unfulfilling job for a creative, in-demand career.  ↘", size: 36, titleSize: 36, bodySize: 27, color: DARK, background: "#fbfafa", radius: 42, padding: 30, variant: "audience" },
 
   { x: 235, y: 4750, w: 970, h: 110, text: "WHAT YOU WILL LEARN", size: 76, color: GRAY, background: DARK, align: "center" },
   { x: 105, y: 4870, w: 1230, h: 65, text: "From strategy to independently managing a complete social media project", size: 27, color: WHITE, background: DARK, align: "center", family: "body" },
-  { x: 88, y: 5030, w: 1264, h: 170, text: "01  STRATEGY\nAnalysis, positioning, content pillars and a practical content plan.", size: 44, titleSize: 44, bodySize: 29, color: WHITE, background: DARK, padding: 22, variant: "program" },
-  { x: 88, y: 5241, w: 1264, h: 168, text: "02  VISUALS AND CONTENT\nCreative production, layout and video editing — practical skills for everyday work.", size: 44, titleSize: 44, bodySize: 29, color: WHITE, background: DARK, padding: 22, variant: "program" },
-  { x: 88, y: 5452, w: 1264, h: 169, text: "03  PLATFORMS\nInstagram, Telegram and VK: what makes each platform different and how to grow on it.", size: 44, titleSize: 44, bodySize: 29, color: WHITE, background: DARK, padding: 22, variant: "program" },
-  { x: 88, y: 5662, w: 1264, h: 152, text: "04  INFLUENCER PARTNERSHIPS\nHow to find, assess and brief creators and prepare integrations.", size: 42, titleSize: 42, bodySize: 28, color: WHITE, background: DARK, padding: 22, variant: "program" },
-  { x: 88, y: 5855, w: 1264, h: 158, text: "05  AI TOOLS\nHow to use AI for copy, imagery and faster routine production.", size: 44, titleSize: 44, bodySize: 29, color: WHITE, background: DARK, padding: 22, variant: "program" },
-  { x: 88, y: 6056, w: 1264, h: 279, text: "06  MARKETING FUNDAMENTALS\nHow content supports sales and helps you make better commercial decisions.", size: 42, titleSize: 42, bodySize: 28, color: WHITE, background: DARK, padding: 22, variant: "program" },
+  { x: 88, y: 5030, w: 1264, h: 170, text: "01  STRATEGY\nAnalysis, positioning, content pillars and a practical content plan.", size: 52, titleSize: 52, bodySize: 31, color: WHITE, background: DARK, padding: 22, variant: "program" },
+  { x: 88, y: 5241, w: 1264, h: 168, text: "02  VISUALS AND CONTENT\nCreative production, layout and video editing — practical skills for everyday work.", size: 52, titleSize: 52, bodySize: 31, color: WHITE, background: DARK, padding: 22, variant: "program" },
+  { x: 88, y: 5452, w: 1264, h: 169, text: "03  PLATFORMS\nInstagram, Telegram and VK: what makes each platform different and how to grow on it.", size: 52, titleSize: 52, bodySize: 31, color: WHITE, background: DARK, padding: 22, variant: "program" },
+  { x: 88, y: 5662, w: 1264, h: 152, text: "04  INFLUENCER PARTNERSHIPS\nHow to find, assess and brief creators and prepare integrations.", size: 49, titleSize: 49, bodySize: 30, color: WHITE, background: DARK, padding: 22, variant: "program" },
+  { x: 88, y: 5855, w: 1264, h: 158, text: "05  AI TOOLS\nHow to use AI for copy, imagery and faster routine production.", size: 52, titleSize: 52, bodySize: 31, color: WHITE, background: DARK, padding: 22, variant: "program" },
+  { x: 88, y: 6056, w: 1264, h: 279, text: "06  MARKETING FUNDAMENTALS\nHow content supports sales and helps you make better commercial decisions.", size: 49, titleSize: 49, bodySize: 30, color: WHITE, background: DARK, padding: 22, variant: "program" },
 
   { x: 60, y: 6415, w: 880, h: 210, text: "OUR STUDENTS'\nSTORIES", size: 76, color: DARK, background: LIME, lineHeight: .88 },
-  { x: 70, y: 6710, w: 375, h: 414, text: "Kristina, 29\nSaint Petersburg\n\nJoined with a five-month-old baby and received her first projects during the course. She later became a curator and now works as a creative director for a major cosmetics brand.", size: 20, titleSize: 22, bodySize: 19, color: WHITE, background: DARK, radius: 30, padding: 24, variant: "story", family: "body" },
-  { x: 765, y: 6710, w: 375, h: 414, text: "Kira, 32\nYekaterinburg\n\nMoved from beauty services into SMM, built a portfolio on real projects and found her first clients. She now works remotely and lives in Thailand.", size: 20, titleSize: 22, bodySize: 19, color: WHITE, background: DARK, radius: 30, padding: 24, variant: "story", family: "body" },
-  { x: 70, y: 7195, w: 375, h: 414, text: "Diana, 25\nMoscow\n\nLeft banking for creative work. Her first project was a clothing brand. Today she combines three projects and continues to grow.", size: 20, titleSize: 22, bodySize: 19, color: WHITE, background: DARK, radius: 30, padding: 24, variant: "story", family: "body" },
-  { x: 765, y: 7195, w: 375, h: 414, text: "Nastya, 31\nKrasnoyarsk\n\nChanged careers while expecting her second child. Today she manages major international clients as part of the agency team.", size: 20, titleSize: 22, bodySize: 19, color: WHITE, background: DARK, radius: 30, padding: 24, variant: "story", family: "body" },
+  { x: 70, y: 6710, w: 375, h: 442, text: "Kristina, 29\nSaint Petersburg\n\nJoined with a five-month-old baby and received her first projects during the course. She later became a curator and now works as a creative director for a major cosmetics brand.", size: 20, titleSize: 22, bodySize: 19, color: WHITE, background: DARK, radius: 30, padding: 24, variant: "story", family: "body" },
+  { x: 765, y: 6710, w: 375, h: 442, text: "Kira, 32\nYekaterinburg\n\nMoved from beauty services into SMM, built a portfolio on real projects and found her first clients. She now works remotely and lives in Thailand.", size: 20, titleSize: 22, bodySize: 19, color: WHITE, background: DARK, radius: 30, padding: 24, variant: "story", family: "body" },
+  { x: 70, y: 7195, w: 375, h: 442, text: "Diana, 25\nMoscow\n\nLeft banking for creative work. Her first project was a clothing brand. Today she combines three projects and continues to grow.", size: 20, titleSize: 22, bodySize: 19, color: WHITE, background: DARK, radius: 30, padding: 24, variant: "story", family: "body" },
+  { x: 765, y: 7195, w: 375, h: 442, text: "Nastya, 31\nKrasnoyarsk\n\nChanged careers while expecting her second child. Today she manages major international clients as part of the agency team.", size: 20, titleSize: 22, bodySize: 19, color: WHITE, background: DARK, radius: 30, padding: 24, variant: "story", family: "body" },
 
   { x: 60, y: 7860, w: 990, h: 150, text: "READY FOR A NEW PROFESSION?\nLEAVE AN APPLICATION", size: 49, color: WHITE, background: DARK, lineHeight: 1.02 },
   { x: 60, y: 8015, w: 610, h: 90, text: "We will explain the programme, format and current price.", size: 28, color: GRAY, background: DARK, lineHeight: 1.02, family: "body" },
@@ -191,22 +191,23 @@ function LayerContent({ layer }: { layer: Layer }) {
     return (
       <>
         <div style={{
-          fontFamily: "Coolvetica, sans-serif",
+          fontFamily: audience ? "Inter, Arial, sans-serif" : "Coolvetica, sans-serif",
+          fontWeight: 400,
           fontSize: layer.titleSize ?? layer.size,
-          lineHeight: audience ? .92 : .94,
-          letterSpacing: 0,
+          lineHeight: audience ? .96 : .94,
+          letterSpacing: audience ? "-.055em" : 0,
           textTransform: "uppercase",
           color: audience ? DARK : LIME,
         }}>{title}</div>
         <div style={{
           marginTop: audience
-            ? Math.max(3, (layer.titleSize ?? layer.size) * .32)
+            ? Math.max(3, (layer.titleSize ?? layer.size) * .25)
             : Math.max(4, (layer.titleSize ?? layer.size) * .45),
           fontFamily: "Inter, sans-serif",
           fontSize: layer.bodySize ?? layer.size * .62,
           fontWeight: 400,
           lineHeight: audience ? 1.04 : 1.02,
-          letterSpacing: "-.05em",
+          letterSpacing: audience ? "-.045em" : "-.05em",
           textTransform: "none",
           color: audience ? GRAY : WHITE,
           whiteSpace: "pre-line",
@@ -220,12 +221,12 @@ function LayerContent({ layer }: { layer: Layer }) {
     const body = lines.slice(1).join("\n").trim();
     return (
       <>
-        <div style={{ display: "flex", alignItems: "baseline", gap: Math.max(8, (layer.titleSize ?? layer.size) * .77) }}>
-          <span style={{ fontFamily: "Coolvetica, sans-serif", fontSize: layer.titleSize ?? layer.size, lineHeight: .86, color: LIME, letterSpacing: 0 }}>{number}</span>
-          <span style={{ fontFamily: "Coolvetica, sans-serif", fontSize: layer.titleSize ?? layer.size, lineHeight: .86, color: WHITE, letterSpacing: 0 }}>{title}</span>
+        <div style={{ display: "flex", alignItems: "baseline", gap: Math.max(8, (layer.titleSize ?? layer.size) * .72) }}>
+          <span style={{ fontFamily: "Inter, Arial, sans-serif", fontWeight: 400, fontSize: layer.titleSize ?? layer.size, lineHeight: .9, color: LIME, letterSpacing: "-.045em" }}>{number}</span>
+          <span style={{ fontFamily: "Inter, Arial, sans-serif", fontWeight: 400, fontSize: layer.titleSize ?? layer.size, lineHeight: .9, color: WHITE, letterSpacing: "-.055em" }}>{title}</span>
         </div>
         <div style={{
-          marginTop: Math.max(4, (layer.titleSize ?? layer.size) * .55),
+          marginTop: Math.max(4, (layer.titleSize ?? layer.size) * .42),
           fontFamily: "Inter, sans-serif",
           fontSize: layer.bodySize ?? layer.size * .66,
           fontWeight: 400,
