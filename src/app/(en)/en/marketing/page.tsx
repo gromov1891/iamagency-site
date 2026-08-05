@@ -7,7 +7,7 @@ import AppearBlock from "@/app/blocks/AppearBlock";
 import HoverMarkers from "@/app/blocks/HoverMarkers";
 import DirectionLinks from "@/app/blocks/DirectionLinks";
 import Reveal from "@/app/blocks/Reveal";
-import { EnglishHub } from "@/app/en/EnglishPages";
+import MarketingTranslatedMobile from "./MarketingTranslatedMobile";
 import { marketingHeroLeftHtml, marketingHeroRightHtml } from "@/app/blocks/gen/marketingHeroHtml";
 import { napravleniyaHtml } from "@/app/blocks/gen/napravleniyaHtml";
 import { keysyHtml } from "@/app/blocks/gen/keysyHtml";
@@ -17,7 +17,6 @@ import { sozdanieHtml } from "@/app/blocks/gen/sozdanieHtml";
 import { qaHtml, qaH } from "@/app/blocks/gen/qaHtml";
 import { skidkaHtml, skidkaH } from "@/app/blocks/gen/skidkaHtml";
 import { futerHtml, futerH } from "@/app/blocks/gen/futerHtml";
-import { EN_MARKETING } from "@/lib/i18n/en-content";
 import { getSeoAlternates } from "@/lib/i18n/routes";
 import { translateGeneratedHtml as en } from "@/lib/i18n/translate-generated-html";
 import styles from "@/app/marketing/marketing-page.module.css";
@@ -57,7 +56,7 @@ export default function EnglishMarketingPage() {
         <Reveal><BuilderBlock html={en(futerHtml)} h={futerH} overflow="hidden" /></Reveal>
       </div>
       <div className={styles.mobilePage}>
-        <EnglishHub eyebrow="INTEGRATED GROWTH" title="Marketing" intro="Sixteen specialist capabilities connected by one strategy." items={EN_MARKETING} basePath="/en/marketing" numberLabel="DIRECTION" />
+        <MarketingTranslatedMobile />
       </div>
     </>
   );
