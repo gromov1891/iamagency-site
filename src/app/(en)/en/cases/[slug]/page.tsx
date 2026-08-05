@@ -12,6 +12,7 @@ import { EN_CASES, findEnglishOffer } from "@/lib/i18n/en-content";
 import { TRANSLATION_ROUTES, getSeoAlternates } from "@/lib/i18n/routes";
 import { translateGeneratedHtml as en } from "@/lib/i18n/translate-generated-html";
 import styles from "@/app/case/[slug]/case-page.module.css";
+import CaseTranslatedMobile from "./CaseTranslatedMobile";
 
 const SITE = "https://iamagency.su";
 
@@ -86,9 +87,7 @@ export default async function EnglishCasePage({ params }: { params: Promise<{ sl
         </div>
       </section>
 
-      <div className={styles.mobileCanvas}>
-        <BuilderBlock html={en(source.html)} w={1440} h={source.height} overflow="hidden" />
-      </div>
+      <CaseTranslatedMobile slug={slug} html={en(source.html)} height={source.height} />
 
       <section className={styles.seo}>
         <div className={styles.seoIntro}><h1>{item.h1}</h1><p>{item.intro}</p></div>

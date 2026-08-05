@@ -11,6 +11,8 @@ import { futerMobileHtml, futerMobileH } from "@/app/blocks/gen/futerMobileHtml"
 import { CASES, caseScrollLinks } from "@/app/case/cases";
 import { translateGeneratedHtml as en } from "@/lib/i18n/translate-generated-html";
 import { getSeoAlternates } from "@/lib/i18n/routes";
+import CaseTranslatedMobile from "./[slug]/CaseTranslatedMobile";
+import { EN_CASES } from "@/lib/i18n/en-content";
 
 export const metadata: Metadata = {
   title: { absolute: "Social Media Case Studies by Industry | I AM AGENCY" },
@@ -36,9 +38,14 @@ export default function EnglishCasesPage() {
       <h1 className="sr-only">Social media case studies and portfolio by I AM AGENCY</h1>
       <div className="header-spacer" style={{ background: "#fff" }} />
       <FloatChips html={hubDesktop} h={HUB_H} tabletHtml={hubTablet} tabletH={HUB_TABLET_H} mobileHtml={hubMobile} mobileH={HUB_MOBILE_H} links={caseScrollLinks} mode="flee" />
-      {CASES.map((source) => (
+      {CASES.map((source, index) => (
         <div key={source.slug} id={source.slug} style={{ scrollMarginTop: 90 }}>
-          <ResponsiveBlock desktopHtml={en(stripCrumb(source.html))} desktopH={source.height} tabletHtml={en(stripCrumb(source.html))} tabletH={source.height} tabletW={1440} mobileHtml={en(stripCrumb(source.html))} mobileH={source.height} mobileW={1440} overflow="hidden" />
+          <div className="case-hub-desktop-canvas">
+            <ResponsiveBlock desktopHtml={en(stripCrumb(source.html))} desktopH={source.height} tabletHtml={en(stripCrumb(source.html))} tabletH={source.height} tabletW={1440} mobileHtml={en(stripCrumb(source.html))} mobileH={source.height} mobileW={1440} overflow="hidden" />
+          </div>
+          <div className="case-hub-mobile-canvas">
+            <CaseTranslatedMobile slug={EN_CASES[index]?.slug ?? source.slug} html={en(stripCrumb(source.html))} height={source.height} />
+          </div>
         </div>
       ))}
       <ResponsiveBlock desktopHtml={en(futerHtml)} desktopH={futerH} tabletHtml={en(futerTabletHtml)} tabletH={futerTabletH} mobileHtml={en(futerMobileHtml)} mobileH={futerMobileH} overflow="hidden" />

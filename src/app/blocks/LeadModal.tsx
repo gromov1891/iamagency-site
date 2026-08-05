@@ -129,6 +129,7 @@ export default function LeadModal() {
     const decorate = () => {
       const triggers = new Set<HTMLElement>();
       document.querySelectorAll<HTMLElement>("a,button,div,span").forEach((element) => {
+        if (element.closest("[data-en-cta-ignore]")) return;
         if (isLeadLabel(getLeadLabel(element))) {
           const trigger = resolveLeadTrigger(element);
           if (trigger) triggers.add(trigger);

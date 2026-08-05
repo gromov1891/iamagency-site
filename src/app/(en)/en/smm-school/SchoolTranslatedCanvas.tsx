@@ -324,7 +324,7 @@ function Frame({ kind, width, height, src }: { kind: string; width: number; heig
 
 export default function SchoolTranslatedCanvas() {
   return (
-    <section className={styles.canvas} aria-label="I AM AGENCY SMM School">
+    <section className={styles.canvas} aria-label="I AM AGENCY SMM School" data-en-cta-ignore>
       <Frame kind="desktop" width={1440} height={8323} src="/blk/responsive/mobile/school-desktop.webp" />
       <Frame kind="tablet" width={768} height={5084} src="/blk/responsive/mobile/school-tablet.webp" />
       <Frame kind="mobile" width={375} height={3982} src="/blk/responsive/mobile/school-mobile.webp" />

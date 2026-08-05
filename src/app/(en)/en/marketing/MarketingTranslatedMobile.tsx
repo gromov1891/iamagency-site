@@ -187,5 +187,5 @@ function Frame({ frame }: { frame: FrameData }) {
 }
 
 export default function MarketingTranslatedMobile() {
-  return <section className={styles.root} aria-label="Digital marketing services">{frames.map((frame) => <Frame frame={frame} key={frame.src} />)}</section>;
+  return <section className={styles.root} aria-label="Digital marketing services" data-en-cta-ignore>{frames.map((frame) => <Frame frame={frame} key={frame.src} />)}</section>;
 }

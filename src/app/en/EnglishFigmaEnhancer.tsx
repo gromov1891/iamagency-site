@@ -111,6 +111,7 @@ export default function EnglishFigmaEnhancer({ children }: { children: ReactNode
 
     const cleanups: Array<() => void> = [];
     root.querySelectorAll<HTMLElement>("span, div").forEach((element) => {
+      if (element.closest("[data-en-cta-ignore]")) return;
       if (element.children.length > 0) return;
       const label = (element.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
       const href = resolveCtaHref(element, label);
