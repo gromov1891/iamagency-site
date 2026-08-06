@@ -39,6 +39,11 @@ const ph = (
   return `<div style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;background:${PH};${r ? `border-radius:${r};` : ""}" data-figma-node="${node}"${ref ? ` data-image-ref="${ref}"` : ""}></div>`;
 };
 
+/* Small connector under an Instagram handle. These are vector arrows in the
+   source layout, not image placeholders. */
+const connector = (x: number, y: number, w: number, h: number) =>
+  `<svg aria-hidden="true" style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;overflow:visible" viewBox="0 0 24 22" fill="none"><path d="M12 1v16M6.5 12.5 12 18l5.5-5.5" stroke="#9A9895" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
 /* Белая карточка с чёрной обводкой (RECTANGLE "image" без фото-заливки) */
 const card = (x: number, y: number, w: number, h: number, r: number) =>
   `<div style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;background:#FFF;border:1.4px solid #000;border-radius:${r}px;box-sizing:border-box"></div>`;
@@ -205,10 +210,10 @@ ${b("100k+")} довольных клиентов</p>
     ${pill(1142.83, 129.95, 160.85, 30.2, 15.33, "project.beautybox", "https://www.instagram.com/project.beautybox?igsh=MTN3ajl1NXplYmgzYQ==")}
     ${avatar(969.42, 11.33, 127.84, 4, "12339:1538", "253da7e60e8af24c1ec86474f0c2f17bed0f4890")}
     ${pill(968.63, 129.95, 128.54, 30.2, 15.33, "japancosm.ru", "https://www.instagram.com/japancosm.ru?igsh=MWQ4bXM5OThpcjU4dw==")}
-    ${ph(829.55, 154.53, 23.18, 21.63, "0", "12339:1541")}
-    ${ph(83.59, 162.96, 23.18, 21.63, "0", "12339:1547")}
-    ${ph(1021.31, 154.53, 23.18, 21.63, "0", "12339:1553")}
-    ${ph(1211.66, 154.53, 23.18, 21.63, "0", "12339:1559")}
+    ${connector(829.55, 154.53, 23.18, 21.63)}
+    ${connector(83.59, 162.96, 23.18, 21.63)}
+    ${connector(1021.31, 154.53, 23.18, 21.63)}
+    ${connector(1211.66, 154.53, 23.18, 21.63)}
   </div>
 
   <!-- карточка mix_lab (3-й ряд) -->
@@ -265,10 +270,10 @@ ${b("100k+")} довольных клиентов</p>
     <p style="position:absolute;left:415.13px;top:591.43px;width:297.82px;${list14}">разработка ${b("маркетинговой стратегии")}
 работа с ${b("блогерами")}
 создание ${b("контента в нейросетях")}</p>
-    ${ph(829.55, 154.53, 23.18, 21.63, "0", "12339:1435")}
-    ${ph(85.69, 165.07, 18.81, 17.56, "0", "12339:1441")}
-    ${ph(1021.31, 154.53, 23.18, 21.63, "0", "12339:1447")}
-    ${ph(1211.66, 154.53, 23.18, 21.63, "0", "12339:1453")}
+    ${connector(829.55, 154.53, 23.18, 21.63)}
+    ${connector(85.69, 165.07, 18.81, 17.56)}
+    ${connector(1021.31, 154.53, 23.18, 21.63)}
+    ${connector(1211.66, 154.53, 23.18, 21.63)}
   </div>
 
 </div>`;

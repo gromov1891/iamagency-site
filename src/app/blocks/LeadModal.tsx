@@ -31,6 +31,9 @@ const isLeadLabel = (value: string | null | undefined) => {
     /^start (?:your|a) project$/,
     /^request a proposal$/,
     /^book a consultation$/,
+    /^consultation$/,
+    /^get (?:a |the )?discount$/,
+    /^get the marketing discount$/,
     /^apply for the course$/,
     /^request course details$/,
   ].some((pattern) => pattern.test(text));

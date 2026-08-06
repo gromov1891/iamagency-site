@@ -1,5 +1,17 @@
 .mobilePage { display: none; }
 
+.englishDesktop :global(.qa-row > div:nth-child(2)) {
+  top: 20px !important;
+  font-size: 32px !important;
+  line-height: 0.92 !important;
+}
+
+.englishDesktop :global(.qa-row:nth-of-type(5) > div:nth-child(2)) {
+  top: 14px !important;
+  font-size: 28px !important;
+  line-height: 0.9 !important;
+}
+
 @media (max-width: 767px) {
   .desktopPage { display: none; }
   .mobilePage { display: block; background: #fff; }

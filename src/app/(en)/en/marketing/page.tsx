@@ -43,7 +43,7 @@ export default function EnglishMarketingPage() {
     <>
       <h1 className="sr-only">Full-service digital marketing agency</h1>
       <div className="header-spacer" />
-      <div className={styles.desktopPage}>
+      <div className={`${styles.desktopPage} ${styles.englishDesktop}`}>
         <HeroBlock leftHtml={en(marketingHeroLeftHtml)} rightHtml={en(marketingHeroRightHtml)} />
         <AppearBlock html={en(napravleniyaHtml)} targets={["Класс"]} />
         <DirectionLinks locale="en" />
