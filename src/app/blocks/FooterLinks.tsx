@@ -40,6 +40,7 @@ export default function FooterLinks() {
         "Маркетинг и продвижение": isEnglish ? "/en/services/social-media-marketing" : "/uslugi/marketing-i-prodvizhenie",
         "Создание сайтов": isEnglish ? "/en/marketing/web-development" : "/marketing/razrabotka-saytov",
         "Контент / Съёмки": isEnglish ? "/en/services/content-production" : "/uslugi/kontent-syomki",
+        "Контакты": isEnglish ? "/en/contacts" : "/kontakty",
       };
 
       for (const root of footerRoots) {

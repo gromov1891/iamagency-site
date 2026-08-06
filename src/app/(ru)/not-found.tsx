@@ -11,7 +11,7 @@ const MENU = [
   { label: "Маркетинг", href: "/marketing" },
   { label: "Школа SMM", href: "/#shkola" },
   { label: "Блог", href: "/#blog" },
-  { label: "Контакты", href: "/#kontakty" },
+  { label: "Контакты", href: "/kontakty" },
 ];
 
 const CONTACTS = [

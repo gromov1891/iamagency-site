@@ -18,7 +18,7 @@ const RU_LINKS = [
   { label: "МАРКЕТИНГ", href: "/marketing", left: 698 },
   { label: "ШКОЛА SMM", href: "/shkola-smm", left: 905 },
   { label: "БЛОГ", href: "/blog", left: 1121 },
-  { label: "КОНТАКТЫ", href: "/#kontakty", left: 1252 },
+  { label: "КОНТАКТЫ", href: "/kontakty", left: 1252 },
 ];
 const EN_LINKS = [
   { label: "SERVICES", href: "/en#uslugi", left: 313 },
@@ -26,7 +26,7 @@ const EN_LINKS = [
   { label: "MARKETING", href: "/en/marketing", left: 698 },
   { label: "SMM SCHOOL", href: "/en/smm-school", left: 905 },
   { label: "BLOG", href: "/en/blog", left: 1121 },
-  { label: "CONTACTS", href: "/en#kontakty", left: 1252 },
+  { label: "CONTACTS", href: "/en/contacts", left: 1252 },
 ];
 const CANVAS_H = 80;
 

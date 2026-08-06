@@ -10,6 +10,7 @@ export type TranslationRoute = {
 
 const TRANSLATION_ROUTE_PLAN: TranslationRoute[] = [
   { id: "home", ru: "/", en: "/en", status: "preview" },
+  { id: "contacts", ru: "/kontakty", en: "/en/contacts", status: "published" },
   { id: "cases", ru: "/keisy", en: "/en/cases", status: "planned" },
   { id: "case-beauty", ru: "/case/beauty", en: "/en/cases/beauty", status: "planned" },
   { id: "case-fashion", ru: "/case/fashion", en: "/en/cases/fashion", status: "planned" },

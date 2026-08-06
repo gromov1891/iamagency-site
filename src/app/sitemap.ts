@@ -51,6 +51,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
   const russianEntries = [
     entry("", 1, "weekly"),
+    entry("/kontakty", 0.9, "monthly"),
     entry("/keisy", 0.9, "monthly"),
     ...CASES.map((item) => entry(`/case/${item.slug}`, 0.8)),
     entry("/marketing", 0.9, "monthly"),

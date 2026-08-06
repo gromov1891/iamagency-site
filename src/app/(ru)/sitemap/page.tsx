@@ -26,7 +26,7 @@ const getTree = (blogArticles: Awaited<ReturnType<typeof getPublishedArticles>>)
       { title: "Портфолио / Кейсы", href: "/keisy" },
       { title: "Школа SMM", href: "/shkola-smm" },
       { title: "Блог", href: "/blog" },
-      { title: "Контакты", href: "/#kontakty" },
+      { title: "Контакты", href: "/kontakty" },
     ],
   },
   {

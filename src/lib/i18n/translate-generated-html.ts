@@ -15,6 +15,7 @@ const PATH_REPLACEMENTS: Array<[string, string]> = [
   ['href="/#tarify"', 'href="/en#tarify"'],
   ['href="/#portfolio"', 'href="/en#portfolio"'],
   ['href="/#kontakty"', 'href="/en#kontakty"'],
+  ['href="/kontakty"', 'href="/en/contacts"'],
   ['href="/keisy"', 'href="/en/cases"'],
   ['href="/marketing"', 'href="/en/marketing"'],
   ['href="/shkola-smm"', 'href="/en/smm-school"'],
