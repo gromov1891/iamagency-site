@@ -6,7 +6,7 @@ import styles from "./contact-page.module.css";
 type Locale = "ru" | "en";
 type Status = "idle" | "running" | "finished";
 type Like = { x: number; y: number; radius: number; pulse: number };
-type Obstacle = { x: number; width: number; height: number; hit: boolean };
+type Obstacle = { x: number; width: number; height: number; hit: boolean; kind: "fine" | "dislike" };
 
 const WIDTH = 960;
 const HEIGHT = 420;
@@ -21,7 +21,7 @@ const copy = {
     start: "НАЧАТЬ КОНТЕНТ-СПРИНТ",
     restart: "СЫГРАТЬ ЕЩЁ РАЗ",
     hint: "Пробел / ↑ / тап — прыжок",
-    ready: "Собирайте лайки и перепрыгивайте токсичные комментарии",
+    ready: "Собирайте лайки и перепрыгивайте штрафы и дизлайки",
     result: "ВАША СКИДКА",
     promo: "ПРОМОКОД",
     copied: "СКОПИРОВАНО",
@@ -35,7 +35,7 @@ const copy = {
     start: "START THE CONTENT SPRINT",
     restart: "PLAY AGAIN",
     hint: "Space / ↑ / tap to jump",
-    ready: "Collect likes and jump over toxic comments",
+    ready: "Collect likes and jump over fines and dislikes",
     result: "YOUR DISCOUNT",
     promo: "PROMO CODE",
     copied: "COPIED",
@@ -132,6 +132,7 @@ export default function ContactGame({ locale }: { locale: Locale }) {
     obstacles: [] as Obstacle[],
     likeTimer: 0,
     obstacleTimer: 0,
+    obstacleSerial: 0,
     elapsed: 0,
     last: 0,
     run: 0,
@@ -203,14 +204,38 @@ export default function ContactGame({ locale }: { locale: Locale }) {
 
     game.likes.forEach((like) => drawLike(ctx, like));
     game.obstacles.forEach((obstacle) => {
-      rounded(ctx, obstacle.x, GROUND - obstacle.height, obstacle.width, obstacle.height, 8);
-      ctx.fillStyle = obstacle.hit ? "#c5c5c5" : "#f55d1c";
-      ctx.fill();
-      ctx.fillStyle = "#fff";
-      ctx.font = "700 14px Arial";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText("@!?", obstacle.x + obstacle.width / 2, GROUND - obstacle.height / 2);
+      const top = GROUND - obstacle.height;
+      if (obstacle.kind === "fine") {
+        rounded(ctx, obstacle.x, top, obstacle.width, obstacle.height, 13);
+        ctx.fillStyle = obstacle.hit ? "#c5c5c5" : "#f55d1c";
+        ctx.fill();
+        ctx.strokeStyle = "#1c1c1c";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.fillStyle = "#fff";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.font = "800 12px Inter, Arial";
+        ctx.fillText(locale === "ru" ? "ШТРАФ" : "FINE", obstacle.x + obstacle.width / 2, top + 19);
+        ctx.font = "700 18px Inter, Arial";
+        ctx.fillText("−₽", obstacle.x + obstacle.width / 2, top + 39);
+      } else {
+        rounded(ctx, obstacle.x, top, obstacle.width, obstacle.height - 8, 18);
+        ctx.fillStyle = obstacle.hit ? "#777" : "#1c1c1c";
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(obstacle.x + 18, top + obstacle.height - 10);
+        ctx.lineTo(obstacle.x + 29, top + obstacle.height - 1);
+        ctx.lineTo(obstacle.x + 34, top + obstacle.height - 10);
+        ctx.fill();
+        ctx.fillStyle = "#fff";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.font = "800 11px Inter, Arial";
+        ctx.fillText(locale === "ru" ? "ДИЗЛАЙК" : "DISLIKE", obstacle.x + obstacle.width / 2, top + 17);
+        ctx.font = "800 20px Inter, Arial";
+        ctx.fillText("↓", obstacle.x + obstacle.width / 2, top + 37);
+      }
     });
 
     drawCharacter(ctx, 118, game.playerY, game.run);
@@ -218,7 +243,7 @@ export default function ContactGame({ locale }: { locale: Locale }) {
       ctx.fillStyle = `rgba(245,93,28,${game.flash * 0.22})`;
       ctx.fillRect(0, 0, WIDTH, HEIGHT);
     }
-  }, [syncCanvas]);
+  }, [locale, syncCanvas]);
 
   const finish = useCallback(() => {
     const game = stateRef.current;
@@ -262,7 +287,15 @@ export default function ContactGame({ locale }: { locale: Locale }) {
       game.likeTimer = 0.62 + Math.random() * 0.38;
     }
     if (game.obstacleTimer <= 0) {
-      game.obstacles.push({ x: WIDTH + 50, width: 38, height: 45 + Math.random() * 18, hit: false });
+      const kind = game.obstacleSerial % 2 === 0 ? "fine" : "dislike";
+      game.obstacleSerial += 1;
+      game.obstacles.push({
+        x: WIDTH + 50,
+        width: kind === "fine" ? 76 : 92,
+        height: kind === "fine" ? 58 : 66,
+        hit: false,
+        kind,
+      });
       game.obstacleTimer = 2.35 + Math.random() * 1.25;
     }
 
@@ -305,7 +338,7 @@ export default function ContactGame({ locale }: { locale: Locale }) {
     cancelAnimationFrame(rafRef.current);
     stateRef.current = {
       status: "running", score: 0, time: DURATION, playerY: GROUND - 72, velocity: 0,
-      likes: [], obstacles: [], likeTimer: 0.55, obstacleTimer: 2.4, elapsed: 0, last: 0, run: 0, flash: 0,
+      likes: [], obstacles: [], likeTimer: 0.55, obstacleTimer: 2.4, obstacleSerial: 0, elapsed: 0, last: 0, run: 0, flash: 0,
     };
     setScore(0);
     setTime(DURATION);
@@ -357,7 +390,7 @@ export default function ContactGame({ locale }: { locale: Locale }) {
           width={WIDTH}
           height={HEIGHT}
           tabIndex={0}
-          aria-label={locale === "ru" ? "Игра: собирайте лайки и перепрыгивайте комментарии" : "Game: collect likes and jump over comments"}
+          aria-label={locale === "ru" ? "Игра: собирайте лайки и перепрыгивайте штрафы и дизлайки" : "Game: collect likes and jump over fines and dislikes"}
           onPointerDown={jump}
           onKeyDown={(event) => {
             if ([" ", "ArrowUp", "w", "W"].includes(event.key)) {

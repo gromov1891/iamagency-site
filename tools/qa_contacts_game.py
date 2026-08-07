@@ -69,6 +69,18 @@ def inspect_page(page, route, locale, viewport_name, failures):
     hrefs = set(page.locator("main a").evaluate_all("els => els.map(el => el.getAttribute('href'))"))
     check(CONTACT_HREFS.issubset(hrefs), f"{route}: missing contact links {sorted(CONTACT_HREFS - hrefs)}", failures)
     main_text = page.locator("main").inner_text()
+    expected_heading = "КРАСИВО" if locale == "ru" else "BEAUTIFUL"
+    check(expected_heading in page.locator("main h1").inner_text(), f"{route}: updated hero heading missing", failures)
+    expected_obstacles = ("штрафы", "дизлайки") if locale == "ru" else ("fines", "dislikes")
+    check(all(label in main_text.lower() for label in expected_obstacles), f"{route}: obstacle copy is incomplete", failures)
+    check(page.locator("main details").count() == 4, f"{route}: expected four FAQ rows", failures)
+    check(page.locator("main details[open]").count() == 0, f"{route}: FAQ should start collapsed", failures)
+    page.locator("main details summary").first.click()
+    check(page.locator("main details").first.get_attribute("open") is not None, f"{route}: FAQ does not open", failures)
+    page.locator("main details summary").first.click()
+    check(page.locator("main details").first.get_attribute("open") is None, f"{route}: FAQ does not close", failures)
+    unloaded_art = page.locator("main img").evaluate_all("els => els.filter(el => !el.complete || !el.naturalWidth).map(el => el.getAttribute('src'))")
+    check(not unloaded_art, f"{route}: unloaded reused artwork {unloaded_art}", failures)
     if locale == "en":
         cyrillic = sorted(set(re.findall(r"[^\n]*[А-Яа-яЁё][^\n]*", main_text)))
         check(not cyrillic, f"{route}: Cyrillic remains: {cyrillic[:5]}", failures)

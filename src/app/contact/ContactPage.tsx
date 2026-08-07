@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import ContactGame from "./ContactGame";
 import { CONTACT_CHANNELS, SOCIAL_CHANNELS } from "./contact-data";
 import styles from "./contact-page.module.css";
@@ -10,7 +11,7 @@ const PAGE_COPY = {
     crumbHome: "Главная",
     crumb: "Контакты",
     eyebrow: "I AM AGENCY · НА СВЯЗИ",
-    h1: <>ДАВАЙТЕ<br />СДЕЛАЕМ<br /><i>ШУМ</i></>,
+    h1: <>ДАВАЙТЕ<br />СДЕЛАЕМ<br />КРАСИВО</>,
     intro: "Обсудим SMM, контент, продвижение или новый сайт. Напишите удобным способом — команда ответит, задаст несколько точных вопросов и предложит следующий шаг.",
     lead: "Обсудить проект",
     phone: "Позвонить",
@@ -20,8 +21,8 @@ const PAGE_COPY = {
     socialText: "Кейсы, разборы, бэкстейджи съёмок и наблюдения команды — на наших площадках.",
     gameKicker: "НЕБОЛЬШАЯ ПАУЗА ПЕРЕД БРИФОМ",
     gameTitle: <>СОБЕРИТЕ ЛАЙКИ.<br />ЗАБЕРИТЕ СКИДКУ.</>,
-    gameText: "Помогите SMM-специалисту пережить контент-спринт: перепрыгивайте токсичные комментарии и собирайте реакции. 30 секунд — и промокод ваш.",
-    faqTitle: "Частые вопросы перед стартом",
+    gameText: "Помогите SMM-специалисту пережить контент-спринт: перепрыгивайте штрафы и дизлайки, собирайте реакции. 30 секунд — и промокод ваш.",
+    faqTitle: "Вопросы и ответы",
     faq: [
       ["С какими задачами можно обратиться?", "Со стратегией, ведением социальных сетей, контентом и съёмками, performance-маркетингом, influencer-маркетингом, брендингом и разработкой сайтов."],
       ["Вы работаете только с российскими проектами?", "Нет. Команда работает удалённо и ведёт проекты из России и других стран. Состав площадок и продвижение адаптируем под рынок и аудиторию."],
@@ -35,7 +36,7 @@ const PAGE_COPY = {
     crumbHome: "Home",
     crumb: "Contacts",
     eyebrow: "I AM AGENCY · ONLINE",
-    h1: <>LET&apos;S<br />MAKE<br /><i>NOISE</i></>,
+    h1: <>LET&apos;S<br />MAKE IT<br />BEAUTIFUL</>,
     intro: "Let’s talk about social media, content, growth or a new website. Choose the channel that suits you — our team will ask a few focused questions and suggest the next step.",
     lead: "Start a project",
     phone: "Call us",
@@ -45,8 +46,8 @@ const PAGE_COPY = {
     socialText: "Case studies, practical breakdowns, production backstage and ideas from the team — across our social channels.",
     gameKicker: "A SHORT BREAK BEFORE THE BRIEF",
     gameTitle: <>COLLECT LIKES.<br />UNLOCK A DISCOUNT.</>,
-    gameText: "Help our social media manager survive a content sprint: jump over toxic comments and collect reactions. Thirty seconds later, the promo code is yours.",
-    faqTitle: "Questions before we start",
+    gameText: "Help our social media manager survive a content sprint: jump over fines and dislikes, collect reactions. Thirty seconds later, the promo code is yours.",
+    faqTitle: "Questions and answers",
     faq: [
       ["What can I contact you about?", "Social media strategy and management, content and production, performance marketing, influencer campaigns, branding and website development."],
       ["Do you work with international projects?", "Yes. Our team works remotely with businesses in Russia and other markets. We adapt channels, content and promotion to the audience and location."],
@@ -121,7 +122,6 @@ export default function ContactPage({ locale }: { locale: Locale }) {
         <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       ))}
       <section className={styles.hero}>
-        <div className={styles.heroGrid} aria-hidden="true" />
         <div className={styles.breadcrumbs}>
           <Link href={homeHref}>{t.crumbHome}</Link><span>→</span><span>{t.crumb}</span>
         </div>
@@ -135,8 +135,8 @@ export default function ContactPage({ locale }: { locale: Locale }) {
           </div>
           <small><i />{t.response}</small>
         </div>
-        <div className={styles.heroSticker} aria-hidden="true"><span>♥</span><b>+1</b></div>
-        <div className={styles.heroOrb} aria-hidden="true" />
+        <Image className={styles.heroEgg} src="/blk/hero/hero-egg.webp" alt="" fill sizes="(max-width: 767px) 54vw, 30vw" priority />
+        <Image className={styles.heroSpeckled} src="/blk/hero/hero-speckled.webp" alt="" fill sizes="(max-width: 767px) 45vw, 25vw" priority />
       </section>
 
       <section className={styles.direct} aria-labelledby="direct-title">
@@ -150,10 +150,11 @@ export default function ContactPage({ locale }: { locale: Locale }) {
               <span>{String(index + 1).padStart(2, "0")} · {contactLabels[channel.key]}</span>
               <strong>{channel.value}</strong>
               <i>{channel.mark}</i>
-              <b aria-hidden="true">↗</b>
+              <b aria-hidden="true">+</b>
             </a>
           ))}
         </div>
+        <Image className={styles.directArt} src="/blk/hero/hero-blue.webp" alt="" fill sizes="34vw" />
       </section>
 
       <section className={styles.socials} aria-labelledby="social-title">
@@ -170,10 +171,11 @@ export default function ContactPage({ locale }: { locale: Locale }) {
               <span>{String(index + 1).padStart(2, "0")}</span>
               <strong>{locale === "en" && channel.href.includes("dzen.ru") ? "Dzen" : channel.label}</strong>
               <small>{channel.handle}</small>
-              <b aria-hidden="true">↗</b>
+              <b aria-hidden="true">+</b>
             </a>
           ))}
         </div>
+        <Image className={styles.socialArt} src="/marketing-hero/marble-flower.webp" alt="" fill sizes="28vw" />
       </section>
 
       <section className={styles.gameSection} aria-labelledby="game-title">
@@ -192,8 +194,8 @@ export default function ContactPage({ locale }: { locale: Locale }) {
         </div>
         <div className={styles.faqList}>
           {faq.map((item, index) => (
-            <details key={item.question} open={index === 0}>
-              <summary><span>{String(index + 1).padStart(2, "0")}</span>{item.question}<b aria-hidden="true">+</b></summary>
+            <details key={item.question}>
+              <summary><span>{String(index + 1).padStart(2, "0")}</span>{item.question}<b aria-hidden="true"><i>+</i><i>−</i></b></summary>
               <p>{item.answer}</p>
             </details>
           ))}
