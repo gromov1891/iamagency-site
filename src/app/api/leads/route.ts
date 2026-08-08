@@ -3,6 +3,12 @@ import { request as httpsRequest } from "node:https";
 import nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
 import {
+  LEAD_ATTRIBUTION_KEYS,
+  attributionClickId,
+  compactAttributionReferrer,
+  describeAttribution,
+} from "@/lib/lead-attribution-schema";
+import {
   createLeadValidation,
   saveLeadRecord,
   type StoredLeadAttribution,
@@ -30,12 +36,6 @@ type LeadPayload = {
   attribution?: unknown;
 };
 
-const ATTRIBUTION_KEYS = [
-  "client_id",
-  "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term",
-  "gclid", "gbraid", "wbraid", "yclid", "ymclid", "fbclid", "vk_click_id",
-] as const;
-
 const rateLimit = new Map<string, number[]>();
 
 function clean(value: unknown, max = 500) {
@@ -49,11 +49,11 @@ function cleanAttributionTouch(value: unknown): StoredLeadAttributionTouch | nul
     referrer: clean(raw.referrer, 1000),
     capturedAt: clean(raw.capturedAt, 80),
   };
-  for (const key of ATTRIBUTION_KEYS) {
+  for (const key of LEAD_ATTRIBUTION_KEYS) {
     const field = clean(raw[key], 500);
     if (field) touch[key] = field;
   }
-  return touch.landingPage || touch.referrer || ATTRIBUTION_KEYS.some((key) => Boolean(touch[key])) ? touch : null;
+  return touch.landingPage || touch.referrer || LEAD_ATTRIBUTION_KEYS.some((key) => Boolean(touch[key])) ? touch : null;
 }
 
 function cleanAttribution(value: unknown): StoredLeadAttribution | null {
@@ -80,15 +80,6 @@ function compactLandingPage(value: string) {
     return `${url.pathname}${url.hash}`;
   } catch {
     return value.split("?")[0];
-  }
-}
-
-function compactReferrer(value: string) {
-  if (!value) return "";
-  try {
-    return new URL(value).hostname.replace(/^www\./, "");
-  } catch {
-    return value;
   }
 }
 
@@ -248,16 +239,31 @@ export async function POST(request: Request) {
       ["ID", id],
     ];
     const touch = attribution?.lastTouch;
-    const clickId = touch?.gclid || touch?.gbraid || touch?.wbraid || touch?.yclid || touch?.ymclid || touch?.vk_click_id || touch?.fbclid || "";
+    const attributionSummary = describeAttribution(touch);
+    const clickId = attributionClickId(touch);
+    const campaign = touch?.campaign_name || touch?.utm_campaign || "";
+    const campaignId = touch?.campaign_id || touch?.utm_id || "";
+    const adId = touch?.ad_id || touch?.banner_id || "";
+    const adContent = touch?.utm_content && touch.utm_content !== adId ? touch.utm_content : "";
+    const keyword = touch?.matched_keyword || touch?.keyword || touch?.utm_term || "";
     labels.splice(2, 0,
+      ["Канал", attributionSummary.channel],
+      ["Рекламный источник", attributionSummary.source],
       ["Metrika Client ID", touch?.client_id || ""],
       ["UTM source / medium", [touch?.utm_source, touch?.utm_medium].filter(Boolean).join(" / ")],
-      ["UTM campaign", touch?.utm_campaign || ""],
+      ["Кампания", campaign],
+      ["ID кампании", campaignId],
       ["UTM content", touch?.utm_content || ""],
-      ["UTM term", touch?.utm_term || ""],
+      ["Ключевая фраза", keyword],
+      ["ID объявления", adId],
+      ["ID креатива / группы", [touch?.creative_id, touch?.gbid].filter(Boolean).join(" / ")],
+      ["Площадка", [touch?.source, touch?.source_type].filter(Boolean).join(" / ")],
+      ["Позиция", [touch?.position_type, touch?.position].filter(Boolean).join(" / ")],
+      ["Устройство / регион", [touch?.device_type, touch?.region_name || touch?.region_id].filter(Boolean).join(" / ")],
       ["Click ID", clickId],
       ["Первая посадочная", attribution?.firstTouch.landingPage || ""],
-      ["Referrer", attribution?.firstTouch.referrer || ""],
+      ["Первый referrer", attribution?.firstTouch.referrer || ""],
+      ["Последний referrer", touch?.referrer || ""],
     );
     const validation = createLeadValidation(id);
     const validationUrl = validation.url;
@@ -284,12 +290,21 @@ export async function POST(request: Request) {
       lead.message ? `Комментарий: ${lead.message}` : "",
     ].filter(Boolean);
     const attributionLines = [
-      `📊 Реклама`,
-      touch?.utm_source || touch?.utm_medium ? `UTM: ${[touch?.utm_source, touch?.utm_medium].filter(Boolean).join(" / ")}` : "Органический или прямой переход",
-      touch?.utm_campaign ? `Кампания: ${touch.utm_campaign}` : "",
+      `📊 Атрибуция`,
+      `Канал: ${attributionSummary.channel}`,
+      `Источник: ${attributionSummary.source}`,
+      touch?.utm_source || touch?.utm_medium ? `UTM: ${[touch?.utm_source, touch?.utm_medium].filter(Boolean).join(" / ")}` : "",
+      campaign ? `Кампания: ${campaign}${campaignId && campaignId !== campaign ? ` · ID ${campaignId}` : ""}` : campaignId ? `ID кампании: ${campaignId}` : "",
+      adId || adContent ? `Объявление: ${[adId && `ID ${adId}`, adContent].filter(Boolean).join(" · ")}` : "",
+      keyword ? `Ключ: ${keyword}${touch?.phrase_id ? ` · phrase ${touch.phrase_id}` : ""}` : "",
+      touch?.source || touch?.source_type ? `Площадка: ${[touch?.source, touch?.source_type].filter(Boolean).join(" · ")}` : "",
+      touch?.position || touch?.position_type ? `Позиция: ${[touch?.position_type, touch?.position].filter(Boolean).join(" · ")}` : "",
+      touch?.device_type || touch?.region_name || touch?.region_id ? `Устройство / регион: ${[touch?.device_type, touch?.region_name || touch?.region_id].filter(Boolean).join(" · ")}` : "",
       clickId ? `Click ID: ${clickId}` : "",
       attribution?.firstTouch.landingPage ? `Первая страница: ${compactLandingPage(attribution.firstTouch.landingPage)}` : "",
-      attribution?.firstTouch.referrer ? `Реферер: ${compactReferrer(attribution.firstTouch.referrer)}` : "",
+      attribution?.firstTouch.referrer ? `Первый реферер: ${compactAttributionReferrer(attribution.firstTouch.referrer)}` : "",
+      touch?.referrer && touch.referrer !== attribution?.firstTouch.referrer ? `Последний реферер: ${compactAttributionReferrer(touch.referrer)}` : "",
+      touch?.client_id ? `Metrika Client ID: ${touch.client_id}` : "",
     ].filter(Boolean);
     const telegramLines = [
       `✨ Новая заявка · I AM AGENCY`,

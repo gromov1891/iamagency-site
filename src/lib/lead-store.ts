@@ -2,32 +2,15 @@ import "server-only";
 
 import { createHmac, randomUUID, timingSafeEqual } from "node:crypto";
 import { getJsonObject, listStoredObjects, putJsonObject } from "@/lib/object-storage";
+import type {
+  LeadAttribution,
+  LeadAttributionTouch,
+} from "@/lib/lead-attribution-schema";
 
 const LEAD_RECORDS_PREFIX = "leads/records/";
 
-export type StoredLeadAttributionTouch = {
-  landingPage: string;
-  referrer: string;
-  capturedAt: string;
-  client_id?: string;
-  utm_source?: string;
-  utm_medium?: string;
-  utm_campaign?: string;
-  utm_content?: string;
-  utm_term?: string;
-  gclid?: string;
-  gbraid?: string;
-  wbraid?: string;
-  yclid?: string;
-  ymclid?: string;
-  fbclid?: string;
-  vk_click_id?: string;
-};
-
-export type StoredLeadAttribution = {
-  firstTouch: StoredLeadAttributionTouch;
-  lastTouch: StoredLeadAttributionTouch;
-};
+export type StoredLeadAttributionTouch = LeadAttributionTouch;
+export type StoredLeadAttribution = LeadAttribution;
 
 export type StoredLead = {
   id: string;

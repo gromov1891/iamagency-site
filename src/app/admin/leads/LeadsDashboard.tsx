@@ -3,22 +3,19 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { FiCheck, FiDownload, FiFileText, FiRefreshCw, FiSearch } from "react-icons/fi";
+import { attributionClickId, describeAttribution } from "@/lib/lead-attribution-schema";
 import type { StoredLead } from "@/lib/lead-store";
 import styles from "../admin.module.css";
 
 type Props = { user: string };
 
 function sourceOf(record: StoredLead) {
-  const touch = record.attribution?.lastTouch;
-  if (touch?.utm_source) return touch.utm_source;
-  if (touch?.referrer) {
-    try { return new URL(touch.referrer).hostname.replace(/^www\./, ""); } catch { return touch.referrer; }
-  }
-  return "Прямой переход";
+  return describeAttribution(record.attribution?.lastTouch).source;
 }
 
 function campaignOf(record: StoredLead) {
-  return record.attribution?.lastTouch.utm_campaign || "Без кампании";
+  const touch = record.attribution?.lastTouch;
+  return touch?.campaign_name || touch?.utm_campaign || touch?.campaign_id || touch?.utm_id || "Без кампании";
 }
 
 function date(value?: string) {
@@ -39,7 +36,18 @@ export default function LeadsDashboard({ user }: Props) {
     setLoading(false);
   }
 
-  useEffect(() => { void load(); }, []);
+  useEffect(() => {
+    let active = true;
+    void fetch("/api/admin/leads", { cache: "no-store" })
+      .then((response) => response.ok ? response.json() : null)
+      .then((body) => {
+        if (active && body) setRecords(body.records);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => { active = false; };
+  }, []);
 
   const filtered = useMemo(() => records.filter((record) => {
     if (status !== "all" && record.status !== status) return false;
@@ -96,8 +104,9 @@ export default function LeadsDashboard({ user }: Props) {
         <table className={styles.leadsTable}><thead><tr><th>Заявка</th><th>Контакт</th><th>Форма</th><th>Последний источник</th><th>Кампания</th><th>Идентификатор</th><th>Статус</th></tr></thead>
           <tbody>{filtered.map((record) => {
             const touch = record.attribution?.lastTouch;
-            const clickId = touch?.yclid || touch?.gclid || touch?.vk_click_id || touch?.fbclid || touch?.client_id || "—";
-            return <tr key={record.id}><td><strong>{record.id}</strong><small>{date(record.createdAt)}</small></td><td><strong>{record.lead.name}</strong><small>{record.lead.phone}</small></td><td>{record.lead.source}<small>{record.lead.page}</small></td><td>{sourceOf(record)}<small>{touch?.utm_medium || record.attribution?.firstTouch.referrer || "—"}</small></td><td>{campaignOf(record)}<small>{touch?.utm_content || "—"}</small></td><td className={styles.idCell}>{clickId}<small>{record.offlineConversion?.message || "Не подтверждено"}</small></td><td>{record.status === "valid" ? <span className={styles.statusValid}>Качественный</span> : <button disabled={busyId === record.id} onClick={() => void qualify(record.id)} className={styles.qualifyButton}><FiCheck /> Подтвердить</button>}</td></tr>;
+            const summary = describeAttribution(touch);
+            const clickId = attributionClickId(touch) || touch?.client_id || "—";
+            return <tr key={record.id}><td><strong>{record.id}</strong><small>{date(record.createdAt)}</small></td><td><strong>{record.lead.name}</strong><small>{record.lead.phone}</small></td><td>{record.lead.source}<small>{record.lead.page}</small></td><td>{summary.source}<small>{summary.channel}{touch?.utm_medium ? ` · ${touch.utm_medium}` : ""}</small></td><td>{campaignOf(record)}<small>{touch?.utm_content || touch?.ad_id || touch?.keyword || "—"}</small></td><td className={styles.idCell}>{clickId}<small>{record.offlineConversion?.message || "Не подтверждено"}</small></td><td>{record.status === "valid" ? <span className={styles.statusValid}>Качественный</span> : <button disabled={busyId === record.id} onClick={() => void qualify(record.id)} className={styles.qualifyButton}><FiCheck /> Подтвердить</button>}</td></tr>;
           })}</tbody></table>
         {!loading && !filtered.length && <p className={styles.emptyAdmin}>Заявок по выбранным условиям нет.</p>}
         {loading && <p className={styles.emptyAdmin}>Загружаю заявки…</p>}
