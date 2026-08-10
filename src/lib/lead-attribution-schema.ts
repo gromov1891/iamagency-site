@@ -55,6 +55,10 @@ const PAID_MEDIA = new Set([
   "display", "banner", "cpm", "cpv", "remarketing", "retargeting",
 ]);
 
+const ORGANIC_SOCIAL_MEDIA = new Set([
+  "social", "organic_social", "organic-social", "social_organic", "social-organic",
+]);
+
 function normalized(value?: string) {
   return (value || "").trim().toLowerCase();
 }
@@ -72,6 +76,16 @@ function sourceMatches(source: string, values: string[]) {
   return values.some((value) => source === value || source.includes(value));
 }
 
+function socialSourceName(source: string, host: string) {
+  if (source === "ig" || source === "instagram" || host.includes("instagram.com")) return "Instagram";
+  if (source === "fb" || source === "facebook" || host.includes("facebook.com")) return "Facebook";
+  if (source === "tg" || source === "telegram" || host.includes("t.me")) return "Telegram";
+  if (source === "vk" || source === "vkontakte" || host.includes("vk.com")) return "ВКонтакте";
+  if (source === "tt" || source === "tiktok" || host.includes("tiktok.com")) return "TikTok";
+  if (source === "yt" || source === "youtube" || host.includes("youtube.com")) return "YouTube";
+  return "";
+}
+
 export function attributionClickId(touch?: LeadAttributionTouch | null) {
   if (!touch) return "";
   return touch.yclid || touch.ymclid || touch.gclid || touch.gbraid || touch.wbraid ||
@@ -86,8 +100,18 @@ export function describeAttribution(touch?: LeadAttributionTouch | null) {
   const sourceSignal = `${utmSource} ${placementSource}`.trim();
   const medium = normalized(touch.utm_medium);
   const host = referrerHost(touch.referrer);
+  const socialSource = socialSourceName(utmSource, host);
+  const explicitOrganicSocial = ORGANIC_SOCIAL_MEDIA.has(medium) || normalized(touch.utm_content) === "link_in_bio";
+  if (explicitOrganicSocial && socialSource) {
+    return { channel: "Социальные сети", source: socialSource };
+  }
+
   const hasDirectCampaignData = Boolean(touch.campaign_id || touch.ad_id || touch.banner_id || touch.phrase_id);
-  const paid = PAID_MEDIA.has(medium) || Boolean(attributionClickId(touch)) || Boolean(touch.openstat) || hasDirectCampaignData;
+  const hasPaidClickId = Boolean(
+    touch.yclid || touch.ymclid || touch.gclid || touch.gbraid || touch.wbraid ||
+    touch.vk_click_id || touch.msclkid || touch.ttclid,
+  );
+  const paid = PAID_MEDIA.has(medium) || hasPaidClickId || Boolean(touch.openstat) || hasDirectCampaignData;
 
   if (touch.yclid || touch.ymclid || touch.openstat || (paid && sourceMatches(sourceSignal, ["yandex", "ya", "direct"]))) {
     return { channel: "Платная реклама", source: "Яндекс Директ" };
@@ -98,7 +122,7 @@ export function describeAttribution(touch?: LeadAttributionTouch | null) {
   if (touch.vk_click_id || (paid && sourceMatches(sourceSignal, ["vk", "vkontakte", "mytarget"]))) {
     return { channel: "Платная реклама", source: "VK Ads" };
   }
-  if (touch.fbclid || (paid && sourceMatches(sourceSignal, ["facebook", "instagram", "meta"]))) {
+  if (paid && (touch.fbclid || sourceMatches(sourceSignal, ["facebook", "instagram", "meta"]))) {
     return { channel: "Платная реклама", source: "Meta Ads" };
   }
   if (touch.msclkid || (paid && sourceMatches(sourceSignal, ["bing", "microsoft"]))) {
@@ -117,9 +141,9 @@ export function describeAttribution(touch?: LeadAttributionTouch | null) {
   if (host.includes("mail.ru")) return { channel: "Органический поиск", source: "Поиск Mail.ru" };
 
   if (utmSource) {
-    const social = sourceMatches(utmSource, ["telegram", "vk", "vkontakte", "instagram", "facebook", "tiktok", "youtube"]);
-    return { channel: social ? "Социальные сети" : "Переход по метке", source: touch.utm_source || "UTM" };
+    return { channel: socialSource ? "Социальные сети" : "Переход по метке", source: socialSource || touch.utm_source || "UTM" };
   }
+  if (socialSource) return { channel: "Социальные сети", source: socialSource };
   if (host) return { channel: "Переход с сайта", source: host };
   return { channel: "Прямой переход", source: "Адрес введён напрямую или источник скрыт" };
 }
