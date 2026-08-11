@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 /* Делает иконки соцсетей кликабельными во всех блоках (Hero/УТП/Контакты/Футер).
    Опознаём по layer-name (whatsapp/instagram/vk) или по началу SVG-пути.
@@ -33,6 +34,8 @@ function detect(svg: SVGElement): string | null {
 }
 
 export default function SocialLinks() {
+  const pathname = usePathname();
+
   useEffect(() => {
     const wire = () => {
       document.querySelectorAll("svg").forEach((svg) => {
@@ -57,6 +60,6 @@ export default function SocialLinks() {
       clearTimeout(t1);
       clearTimeout(t2);
     };
-  }, []);
+  }, [pathname]);
   return null;
 }

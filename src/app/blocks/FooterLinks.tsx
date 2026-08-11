@@ -75,6 +75,6 @@ export default function FooterLinks() {
       clearTimeout(t1);
       clearTimeout(t2);
     };
-  }, [isEnglish]);
+  }, [isEnglish, pathname]);
   return null;
 }
