@@ -31,7 +31,7 @@ const isLeadLabel = (value: string | null | undefined) => {
     /^start (?:your|a) project$/,
     /^leave (?:a |your )?(?:request|application)$/,
     /^request a proposal$/,
-    /^book a consultation$/,
+    /^book a (?:free )?consultation$/,
     /^consultation$/,
     /^get (?:a |the )?discount$/,
     /^get the marketing discount$/,

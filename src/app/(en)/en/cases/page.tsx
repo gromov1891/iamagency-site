@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import BuilderBlock from "@/app/blocks/BuilderBlock";
 import FloatChips from "@/app/blocks/FloatChips";
 import ResponsiveBlock from "@/app/blocks/ResponsiveBlock";
 import { portfolioHtml } from "@/app/blocks/gen/portfolioHtml";

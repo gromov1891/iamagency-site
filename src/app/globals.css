@@ -131,6 +131,64 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden; /* фигуры, выходящие за край, не дают горизонтальной прокрутки */
 }
+
+/* Repair empty image layers left in the legacy Figma case exports without
+   mutating their generated HTML (which would destabilize hydration). */
+[data-figma-node="12354:3856"],
+[data-figma-node="12354:3859"],
+[data-figma-node="12354:3911"],
+[data-figma-node="12339:1364"],
+[data-figma-node="12354:2926"],
+[data-figma-node="12354:2932"],
+[data-figma-node="12354:2938"],
+[data-figma-node="12354:2947"],
+[data-figma-node="12354:2954"],
+[data-figma-node="12354:1989"],
+[data-figma-node="12354:2088"],
+[data-figma-node="12354:2100"],
+[data-figma-node="12354:2112"],
+[data-figma-node="12354:3208"],
+[data-figma-node="12354:3273"],
+[data-figma-node="12354:3274"],
+[data-figma-node="12354:3341"],
+[data-figma-node="12354:3307"],
+[data-figma-node="12354:3288"],
+[data-figma-node="12354:2680"],
+[data-figma-node="12354:2699"],
+[data-figma-node="12354:2705"],
+[data-figma-node="12354:3525"],
+[data-figma-node="12354:3570"],
+[data-figma-node="12354:3597"],
+[data-figma-node="12354:3603"],
+[data-figma-node="12354:3609"],
+[data-figma-node="12355:5804"],
+[data-figma-node="12355:4156"],
+[data-figma-node="12355:5454"],
+[data-figma-node="12355:5460"],
+[data-figma-node="12355:5466"],
+[data-figma-node="12355:5546"],
+[data-figma-node="12355:5552"],
+[data-figma-node="12355:5593"] {
+  background: transparent url("/blk/figma-mobile/mobile-social-instagram.webp") center / contain no-repeat !important;
+  border-radius: 0 !important;
+  opacity: 1 !important;
+}
+
+[data-figma-node="12355:5727"],
+[data-figma-node="12355:5757"],
+[data-figma-node="12355:5405"],
+[data-figma-node="12355:5408"],
+[data-figma-node="12355:5490"],
+[data-figma-node="12355:5501"],
+[data-figma-node="12354:2012"],
+[data-figma-node="12354:2637"],
+[data-figma-node="12354:2638"],
+[data-figma-node="12354:2905"],
+[data-figma-node="12354:3552"],
+[data-figma-node="12354:3564"] {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
 .font-display { font-family: var(--font-display); }
 ::selection { background: var(--color-accent); color: #fff; }
 
