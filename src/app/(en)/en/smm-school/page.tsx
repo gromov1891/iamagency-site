@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { getSeoAlternates } from "@/lib/i18n/routes";
 import SchoolTranslatedCanvas from "./SchoolTranslatedCanvas";
+import styles from "./school.module.css";
 
 const SITE = "https://iamagency.su";
 
@@ -72,25 +72,33 @@ export default function EnglishSchoolPage() {
       <div className="header-spacer" style={{ background: "#1c1c1c" }} />
       <SchoolTranslatedCanvas />
 
-      <section style={{ maxWidth: 1000, margin: "0 auto", padding: "clamp(32px,5vw,72px) clamp(20px,5vw,40px)", fontFamily: "Inter,sans-serif", color: "#1c1c1c" }}>
-        <h1 style={{ fontFamily: "var(--font-display),Inter,sans-serif", fontWeight: 400, textTransform: "uppercase", fontSize: "clamp(28px,5vw,56px)", lineHeight: 1, margin: "0 0 24px" }}>
-          SMM School: from zero to a new profession
-        </h1>
-        <p style={{ fontSize: "clamp(16px,1.4vw,19px)", lineHeight: 1.5, color: "#3a3a3a" }}>
-          I AM AGENCY&apos;s practical SMM course covers the complete workflow: strategy, visual content, platforms, influencer partnerships, AI tools and marketing. You learn through real tasks, build a portfolio and receive individual guidance.
-        </p>
-        <h2 style={{ fontSize: "clamp(22px,3vw,34px)", fontWeight: 700, margin: "40px 0 20px" }}>Frequently asked questions</h2>
-        {FAQ.map((item) => (
-          <details key={item.q} style={{ borderTop: "1px solid #e5e3e0", padding: "16px 0" }}>
-            <summary style={{ cursor: "pointer", listStyle: "none", fontSize: "clamp(17px,1.6vw,21px)", fontWeight: 600 }}>{item.q}</summary>
-            <p style={{ margin: "12px 0 0", fontSize: "clamp(15px,1.3vw,18px)", lineHeight: 1.55, color: "#3a3a3a" }}>{item.a}</p>
-          </details>
-        ))}
-        <nav style={{ marginTop: 44, display: "flex", flexWrap: "wrap", gap: "12px 24px", fontSize: 16 }}>
-          <Link href="/en#contact" style={{ color: "#f55d1c", fontWeight: 600 }}>Apply</Link>
-          <Link href="/en/cases" style={{ color: "#1c1c1c" }}>Cases</Link>
-          <Link href="/en/services" style={{ color: "#1c1c1c" }}>Services</Link>
-        </nav>
+      <section className={styles.seoSection} aria-labelledby="school-seo-title">
+        <div className={styles.seoIntro}>
+          <p className={styles.seoKicker}>I AM AGENCY EDUCATION</p>
+          <h1 id="school-seo-title">SMM SCHOOL:<br />FROM ZERO TO A<br />NEW PROFESSION</h1>
+          <p className={styles.seoLead}>
+            I AM AGENCY&apos;s practical SMM course covers the complete workflow: strategy, visual content, platforms, influencer partnerships, AI tools and marketing. You learn through real tasks, build a portfolio and receive individual guidance.
+          </p>
+        </div>
+
+        <div className={styles.seoFaq}>
+          <header>
+            <p className={styles.seoKicker}>FREQUENTLY ASKED QUESTIONS</p>
+            <h2>BEFORE YOU<br />BEGIN.</h2>
+          </header>
+          <div className={styles.seoFaqList}>
+            {FAQ.map((item, index) => (
+              <details key={item.q}>
+                <summary>
+                  <span className={styles.seoFaqNumber}>{String(index + 1).padStart(2, "0")}</span>
+                  <span className={styles.seoFaqQuestion}>{item.q}</span>
+                  <span className={styles.seoFaqToggle} aria-hidden="true">+</span>
+                </summary>
+                <p>{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
       </section>
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />

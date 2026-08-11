@@ -21,6 +21,7 @@ type Layer = {
   variant?: "teach" | "audience" | "program" | "story";
   titleSize?: number;
   bodySize?: number;
+  overflow?: "hidden" | "visible";
 };
 
 const DARK = "#1c1c1c";
@@ -32,8 +33,8 @@ const GRAY = "#9a9895";
 const layers: Layer[] = [
   { x: 60, y: 24, w: 310, h: 36, text: "HOME   →   SMM SCHOOL", size: 19, color: WHITE, background: DARK, family: "body" },
   { x: 60, y: 145, w: 710, h: 270, text: "SMM SCHOOL\nBY I AM AGENCY", size: 76, color: WHITE, background: DARK, lineHeight: .86 },
-  { x: 440, y: 505, w: 760, h: 175, text: "LEARN THE PROFESSION FROM ZERO —\nTHROUGH THE SAME SYSTEM WE USE EVERY DAY", size: 50, color: LIME, background: DARK, lineHeight: .98 },
-  { x: 60, y: 840, w: 1210, h: 125, text: "We have taught SMM for 7 years. More than 350 people have graduated from our school. Today they manage major brands, work remotely from anywhere in the world, and many are active I AM AGENCY managers.", size: 30, color: GRAY, background: DARK, lineHeight: 1.02, family: "body" },
+  { x: 440, y: 505, w: 850, h: 225, text: "LEARN THE PROFESSION FROM ZERO —\nTHROUGH THE SAME SYSTEM WE USE EVERY DAY", size: 46, color: LIME, background: DARK, lineHeight: .98, overflow: "visible" },
+  { x: 60, y: 840, w: 1280, h: 150, text: "We have taught SMM for 7 years. More than 350 people have graduated from our school. Today they manage major brands, work remotely from anywhere in the world, and many are active I AM AGENCY managers.", size: 28, color: GRAY, background: DARK, lineHeight: 1.02, family: "body", overflow: "visible" },
   { x: 350, y: 1120, w: 740, h: 105, text: "HOW WE TEACH", size: 82, color: WHITE, background: DARK, align: "center" },
 
   { x: 60, y: 1295, w: 645, h: 355, text: "90% PRACTICE\nThe programme is built around hands-on work, so every topic becomes a skill you can use on real client projects.", size: 48, titleSize: 48, bodySize: 28, color: WHITE, background: CARD, radius: 42, padding: 30, variant: "teach" },
@@ -93,8 +94,8 @@ const mobileLayers: Layer[] = [
   { x: 15, y: 1280, w: 175, h: 125, text: "", size: 1, background: CARD, radius: 12 },
   { x: 18, y: 66, w: 130, h: 18, text: "HOME  →  SMM SCHOOL", size: 7, color: WHITE, background: DARK, family: "body" },
   { x: 18, y: 268, w: 270, h: 100, text: "SMM SCHOOL\nBY I AM AGENCY", size: 30, color: WHITE, background: DARK, lineHeight: .86 },
-  { x: 102, y: 465, w: 265, h: 74, text: "LEARN THE PROFESSION FROM ZERO —\nTHROUGH THE SAME SYSTEM WE USE EVERY DAY", size: 15, color: LIME, background: DARK, lineHeight: .96 },
-  { x: 18, y: 648, w: 340, h: 72, text: "We have taught SMM for 7 years. More than 350 people have graduated. Today they manage major brands and work remotely around the world.", size: 9, color: GRAY, background: DARK, family: "body", lineHeight: 1.05 },
+  { x: 102, y: 465, w: 265, h: 92, text: "LEARN THE PROFESSION FROM ZERO —\nTHROUGH THE SAME SYSTEM WE USE EVERY DAY", size: 14.5, color: LIME, background: DARK, lineHeight: .96, overflow: "visible" },
+  { x: 18, y: 648, w: 340, h: 82, text: "We have taught SMM for 7 years. More than 350 people have graduated. Today they manage major brands and work remotely around the world.", size: 9, color: GRAY, background: DARK, family: "body", lineHeight: 1.05, overflow: "visible" },
   { x: 0, y: 816, w: 375, h: 68, text: "HOW WE TEACH", size: 29, color: WHITE, background: DARK, align: "center" },
   { x: 20, y: 901, w: 164, h: 109, text: "90% PRACTICE\nHands-on work turns every topic into a practical client skill.", size: 11, titleSize: 11, bodySize: 6.5, color: WHITE, background: CARD, radius: 12, padding: 9, variant: "teach" },
   { x: 193, y: 1010, w: 164, h: 100, text: "REAL AGENCY PROJECTS\nLearn on active projects with I AM AGENCY templates.", size: 10, titleSize: 10, bodySize: 6.5, color: WHITE, background: CARD, radius: 12, padding: 9, variant: "teach" },
@@ -138,8 +139,8 @@ const tabletLayers: Layer[] = [
   { x: 0, y: 735, w: 768, h: 225, text: "", size: 1, background: DARK },
   { x: 34, y: 53, w: 180, h: 20, text: "HOME  →  SMM SCHOOL", size: 9, color: WHITE, background: DARK, family: "body" },
   { x: 34, y: 235, w: 560, h: 180, text: "SMM SCHOOL\nBY I AM AGENCY", size: 51, color: WHITE, background: DARK, lineHeight: .86 },
-  { x: 195, y: 535, w: 470, h: 120, text: "LEARN THE PROFESSION FROM ZERO —\nTHROUGH THE SAME SYSTEM WE USE EVERY DAY", size: 29, color: LIME, background: DARK, lineHeight: .96 },
-  { x: 34, y: 842, w: 680, h: 85, text: "We have taught SMM for 7 years. More than 350 people have graduated. Today they manage major brands, work remotely around the world, and many are I AM AGENCY managers.", size: 15, color: GRAY, background: DARK, family: "body", lineHeight: 1.04 },
+  { x: 195, y: 535, w: 510, h: 145, text: "LEARN THE PROFESSION FROM ZERO —\nTHROUGH THE SAME SYSTEM WE USE EVERY DAY", size: 27, color: LIME, background: DARK, lineHeight: .96, overflow: "visible" },
+  { x: 34, y: 842, w: 700, h: 100, text: "We have taught SMM for 7 years. More than 350 people have graduated. Today they manage major brands, work remotely around the world, and many are I AM AGENCY managers.", size: 14.5, color: GRAY, background: DARK, family: "body", lineHeight: 1.04, overflow: "visible" },
   { x: 0, y: 1065, w: 768, h: 90, text: "HOW WE TEACH", size: 50, color: WHITE, background: DARK, align: "center" },
   { x: 34, y: 1137, w: 330, h: 145, text: "90% PRACTICE\nHands-on work turns every topic into a practical client skill.", size: 23, titleSize: 23, bodySize: 13, color: WHITE, background: CARD, radius: 22, padding: 16, variant: "teach" },
   { x: 397, y: 1276, w: 330, h: 190, text: "REAL AGENCY PROJECTS\nLearn on active projects with I AM AGENCY templates.", size: 21, titleSize: 21, bodySize: 13, color: WHITE, background: CARD, radius: 22, padding: 16, variant: "teach" },
@@ -316,6 +317,7 @@ function Frame({ kind, width, height, src }: { kind: string; width: number; heig
               fontWeight: layer.weight ?? 400,
               letterSpacing: layer.tracking === undefined ? undefined : `${layer.tracking}em`,
               textAlign: layer.align ?? "left",
+              overflow: layer.overflow,
             }}
           >
             <LayerContent layer={layer} />
