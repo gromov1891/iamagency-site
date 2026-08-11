@@ -19,6 +19,7 @@ export const futerMobileHtml = `<footer style="position:absolute;left:0;top:0;wi
     ${menuLink("/marketing", "Маркетинг")}
     ${menuLink("/blog", "Блог")}
     ${menuLink("/shkola-smm", "Школа SMM")}
+    ${menuLink("/sitemap", "Карта сайта")}
   </nav>
 
   <div style="font:400 28px/.9 Coolvetica,Inter,sans-serif;text-transform:uppercase;margin:38px 0 14px"><span style="color:#9A9895">&gt;</span>&nbsp; Услуги</div>
