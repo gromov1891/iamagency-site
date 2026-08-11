@@ -29,6 +29,7 @@ const isLeadLabel = (value: string | null | undefined) => {
     /^заказать (?:услугу|консультацию|продвижение)$/,
     /^discuss (?:your|a) project$/,
     /^start (?:your|a) project$/,
+    /^leave (?:a |your )?(?:request|application)$/,
     /^request a proposal$/,
     /^book a consultation$/,
     /^consultation$/,

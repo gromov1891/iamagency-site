@@ -7,28 +7,28 @@
       "svg": "Hero.svg",
       "live": "Маркетинг (заголовок-герой)",
       "gen": "src/app/blocks/gen/marketingHeroHtml.ts (ДОБАВЛЕН 2026-06-26 00:38)",
-      "lastChecked": "2026-06-26 00:38"
+      "lastChecked": "2026-08-12 16:30"
     },
     {
       "key": "napravleniya",
       "svg": "Направления.svg",
       "live": "НАПРАВЛЕНИЯ",
       "gen": "src/app/blocks/gen/napravleniyaHtml.ts",
-      "lastChecked": "2026-06-24 00:54"
+      "lastChecked": "2026-08-12 16:30"
     },
     {
       "key": "keysy",
       "svg": "Кейсы.svg",
       "live": "Кейсы маркетингового продвижения",
       "gen": "src/app/blocks/gen/keysyHtml.ts",
-      "lastChecked": "2026-06-24 01:28"
+      "lastChecked": "2026-08-12 16:30"
     },
     {
       "key": "process",
       "svg": "Процесс.svg",
       "live": "наведи мышкой на блок",
       "gen": "src/app/blocks/gen/processHtml.ts",
-      "lastChecked": "2026-06-24 01:54"
+      "lastChecked": "2026-08-12 16:30"
     },
     {
       "key": "sozdanie",
@@ -56,7 +56,7 @@
       "svg": "Футер.svg",
       "live": "футер",
       "gen": "src/app/blocks/gen/futerHtml.ts",
-      "lastChecked": "2026-06-24 03:54"
+      "lastChecked": "2026-08-12 16:30"
     }
   ]
 }

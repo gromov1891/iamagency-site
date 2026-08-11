@@ -16,7 +16,6 @@ import { processHtml, processH } from "@/app/blocks/gen/processHtml";
 import { sozdanieHtml } from "@/app/blocks/gen/sozdanieHtml";
 import { qaHtml, qaH } from "@/app/blocks/gen/qaHtml";
 import { skidkaHtml, skidkaH } from "@/app/blocks/gen/skidkaHtml";
-import { futerHtml, futerH } from "@/app/blocks/gen/futerHtml";
 import { getSeoAlternates } from "@/lib/i18n/routes";
 import { translateGeneratedHtml as en } from "@/lib/i18n/translate-generated-html";
 import styles from "@/app/marketing/marketing-page.module.css";
@@ -53,7 +52,6 @@ export default function EnglishMarketingPage() {
         <Reveal><MarqueeBlock html={en(sozdanieHtml)} rowTop={660} rowHeight={192} clipLeft={75} clipWidth={1290} extraCards={EXTRA_SITES} siteLinks={SITE_LINKS} /></Reveal>
         <BuilderBlock html={en(qaHtml)} h={qaH} />
         <Reveal><SkidkaCountdown html={en(skidkaHtml)} h={skidkaH} /></Reveal>
-        <Reveal><BuilderBlock html={en(futerHtml)} h={futerH} overflow="hidden" /></Reveal>
       </div>
       <div className={styles.mobilePage}>
         <MarketingTranslatedMobile />
