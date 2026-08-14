@@ -5,6 +5,7 @@ import Partners from "@/app/blocks/Partners";
 import ResponsiveBlock from "@/app/blocks/ResponsiveBlock";
 import ServicesAccordion from "@/app/blocks/ServicesAccordion";
 import MarqueeBlock from "@/app/blocks/MarqueeBlock";
+import { TESTIMONIAL_CASE_LINKS } from "@/app/blocks/testimonialCaseLinks";
 import ContactBlock from "@/app/blocks/ContactBlock";
 import FloatChips from "@/app/blocks/FloatChips";
 import BlogCardsLinker from "@/app/blocks/BlogCardsLinker";
@@ -76,7 +77,7 @@ export default function EnglishHome() {
       <div style={{ marginTop: "-2px" }}>
         <ResponsiveBlock desktopHtml={en(marketingHtml)} desktopH={marketingH} tabletHtml={en(marketingTabletHtml)} tabletH={marketingTabletH} mobileHtml={en(marketingMobileHtml)} mobileH={marketingMobileH} />
       </div>
-      <MarqueeBlock html={en(otzyvyHtml)} rowTop={275} rowHeight={475} speed={32} tabletHtml={en(otzyvyTabletHtml)} tabletH={otzyvyTabletH} tabletRowTop={201} tabletRowHeight={288.41} tabletSpeed={32} mobileHtml={en(otzyvyShkolaMobileHtml)} mobileH={otzyvyShkolaMobileH} mobileRowTop={123} mobileRowHeight={231.81} mobileSpeed={32} />
+      <MarqueeBlock html={en(otzyvyHtml)} rowTop={275} rowHeight={475} speed={32} tabletHtml={en(otzyvyTabletHtml)} tabletH={otzyvyTabletH} tabletRowTop={201} tabletRowHeight={288.41} tabletSpeed={32} mobileHtml={en(otzyvyShkolaMobileHtml)} mobileH={otzyvyShkolaMobileH} mobileRowTop={123} mobileRowHeight={231.81} mobileSpeed={32} siteLinks={TESTIMONIAL_CASE_LINKS} />
       <div id="shkola">
         <ResponsiveBlock desktopHtml={en(shkolaHtml)} desktopH={shkolaH} tabletHtml={en(shkolaTabletHtml)} tabletH={shkolaTabletH} mobileHtml={en(shkolaMobileEmptyHtml)} mobileH={shkolaMobileEmptyH} />
       </div>

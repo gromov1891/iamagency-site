@@ -57,7 +57,7 @@ function MarqueeCanvas({
         card.dataset.siteHref = match[1];
         card.setAttribute("role", "link");
         card.setAttribute("tabindex", "0");
-        card.setAttribute("aria-label", `${match[0]}: открыть сайт`);
+        card.setAttribute("aria-label", `${match[0]}: открыть кейс`);
         card.style.cursor = "pointer";
       }
 
@@ -145,7 +145,12 @@ function MarqueeCanvas({
         const element = event.target instanceof Element ? event.target.closest<HTMLElement>("[data-site-href]") : null;
         if (!element?.dataset.siteHref) return;
         event.preventDefault();
-        window.open(element.dataset.siteHref, "_blank", "noopener,noreferrer");
+        const href = element.dataset.siteHref;
+        if (href.startsWith("/") || href.startsWith(window.location.origin)) {
+          window.location.assign(href);
+          return;
+        }
+        window.open(href, "_blank", "noopener,noreferrer");
       };
       track.addEventListener("mouseenter", pause);
       track.addEventListener("mouseleave", play);
@@ -238,6 +243,7 @@ export default function MarqueeBlock({
           rowHeight={tabletRowHeight ?? rowHeight}
           speed={tabletSpeed ?? speed}
           clip={clip}
+          siteLinks={siteLinks}
         />
       </div>
       {mobileHtml ? (
@@ -250,6 +256,7 @@ export default function MarqueeBlock({
             rowHeight={mobileRowHeight ?? tabletRowHeight ?? rowHeight}
             speed={mobileSpeed ?? tabletSpeed ?? speed}
             clip={clip}
+            siteLinks={siteLinks}
           />
         </div>
       ) : null}

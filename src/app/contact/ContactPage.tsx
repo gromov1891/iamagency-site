@@ -86,11 +86,11 @@ export default function ContactPage({ locale }: { locale: Locale }) {
         "@id": "https://iamagency.su/#organization",
         name: "I AM AGENCY",
         email: "iamagency.su@gmail.com",
-        telephone: "+7-953-555-67-60",
+        telephone: "+7-993-437-67-60",
         contactPoint: {
           "@type": "ContactPoint",
           contactType: "sales",
-          telephone: "+7-953-555-67-60",
+          telephone: "+7-993-437-67-60",
           email: "iamagency.su@gmail.com",
           availableLanguage: ["Russian", "English"],
         },
@@ -131,7 +131,7 @@ export default function ContactPage({ locale }: { locale: Locale }) {
           <p>{t.intro}</p>
           <div className={styles.heroActions}>
             <button type="button">{t.lead}</button>
-            <a href="tel:+79535556760">{t.phone}</a>
+            <a href="tel:+79934376760">{t.phone}</a>
           </div>
           <small><i />{t.response}</small>
         </div>

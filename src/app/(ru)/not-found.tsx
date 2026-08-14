@@ -16,8 +16,8 @@ const MENU = [
 
 const CONTACTS = [
   { label: "Telegram", href: "https://t.me/iam_smmagency", bg: "#0088cc" },
-  { label: "WhatsApp", href: "https://wa.me/message/BPS3ETU5K3HZH1", bg: "#25D366" },
-  { label: "+7 953 555 67 60", href: "tel:+79535556760", bg: "#ff5a00" },
+  { label: "WhatsApp", href: "https://wa.me/79934376760", bg: "#25D366" },
+  { label: "+7 993 437 6760", href: "tel:+79934376760", bg: "#ff5a00" },
   { label: "iamagencysmm@gmail.com", href: "mailto:iamagencysmm@gmail.com", bg: "#1C1C1C" },
 ];
 

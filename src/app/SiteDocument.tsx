@@ -98,11 +98,11 @@ const siteJsonLd = {
       description: "SMM-агентство полного цикла: стратегия, ведение и продвижение социальных сетей, контент, съёмки и digital-маркетинг.",
       foundingDate: "2019",
       email: "iamagency.su@gmail.com",
-      telephone: "+7-953-555-67-60",
+      telephone: "+7-993-437-67-60",
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "sales",
-        telephone: "+7-953-555-67-60",
+        telephone: "+7-993-437-67-60",
         email: "iamagency.su@gmail.com",
         availableLanguage: ["Russian", "English"],
       },

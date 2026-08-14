@@ -4,6 +4,7 @@ import Partners from "@/app/blocks/Partners";
 import ResponsiveBlock from "@/app/blocks/ResponsiveBlock";
 import ServicesAccordion from "@/app/blocks/ServicesAccordion";
 import MarqueeBlock from "@/app/blocks/MarqueeBlock";
+import { TESTIMONIAL_CASE_LINKS } from "@/app/blocks/testimonialCaseLinks";
 import ContactBlock from "@/app/blocks/ContactBlock";
 import FloatChips from "@/app/blocks/FloatChips";
 import BlogCardsLinker from "@/app/blocks/BlogCardsLinker";
@@ -140,6 +141,7 @@ export default function Home() {
         mobileRowTop={123}
         mobileRowHeight={231.81}
         mobileSpeed={32}
+        siteLinks={TESTIMONIAL_CASE_LINKS}
       />
       <div id="shkola">
         <ResponsiveBlock

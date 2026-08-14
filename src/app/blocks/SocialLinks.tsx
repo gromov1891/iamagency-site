@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 const URLS: Record<string, string> = {
   Telegram: "https://t.me/iam_smmagency",
   Instagram: "https://www.instagram.com/iamagency.smm",
-  WhatsApp: "https://wa.me/message/BPS3ETU5K3HZH1",
+  WhatsApp: "https://wa.me/79934376760",
   VK: "https://vk.ru/imagencysmm",
   Pinterest: "https://pin.it/3toibIyDY",
   Dzen: "https://dzen.ru/iamagency",
