@@ -35,14 +35,18 @@ function pad(value: number) {
 export default function IntensiveClient() {
   const [tariff, setTariff] = useState("База");
   const [openAudience, setOpenAudience] = useState<number | null>(null);
-  const [remaining, setRemaining] = useState(Math.max(0, DEADLINE - Date.now()));
+  const [remaining, setRemaining] = useState(0);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
+    const initialTimer = window.setTimeout(() => setRemaining(Math.max(0, DEADLINE - Date.now())), 0);
     const timer = window.setInterval(() => setRemaining(Math.max(0, DEADLINE - Date.now())), 1000);
-    return () => window.clearInterval(timer);
+    return () => {
+      window.clearTimeout(initialTimer);
+      window.clearInterval(timer);
+    };
   }, []);
 
   const totalSeconds = Math.floor(remaining / 1000);
