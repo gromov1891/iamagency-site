@@ -67,6 +67,7 @@ export default function Header() {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [schoolOpen, setSchoolOpen] = useState(false);
   const innerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0);
 
@@ -89,6 +90,7 @@ export default function Header() {
     const frame = requestAnimationFrame(() => {
       setMenuOpen(false);
       setServicesOpen(false);
+      setSchoolOpen(false);
     });
     return () => cancelAnimationFrame(frame);
   }, [pathname]);
@@ -280,12 +282,33 @@ export default function Header() {
               </Link>
             ))}
           </div>
-          {links.slice(1).map((link) => (
-            <Link key={link.label} href={link.href} className={styles.mobileMainLink} onClick={() => setMenuOpen(false)}>
-              {link.label}
-              <span aria-hidden="true">↗</span>
-            </Link>
-          ))}
+          {links.slice(1).map((link) =>
+            link.label === "ШКОЛА SMM" ? (
+              <div key={link.label}>
+                <div className={styles.mobileMenuRow}>
+                  <Link href={link.href} onClick={() => setMenuOpen(false)}>{link.label}</Link>
+                  <button
+                    type="button"
+                    aria-label={schoolOpen ? "Скрыть интенсивы" : "Показать интенсивы"}
+                    aria-expanded={schoolOpen}
+                    onClick={() => setSchoolOpen((value) => !value)}
+                  >
+                    {schoolOpen ? "−" : "+"}
+                  </button>
+                </div>
+                <div className={`${styles.mobileServices} ${schoolOpen ? styles.mobileServicesOpen : ""}`}>
+                  <Link href="/shkola-smm/prikladnoy-intensiv" onClick={() => setMenuOpen(false)}>
+                    <span>01</span><span>Прикладной интенсив по Claude</span><span aria-hidden="true">↗</span>
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <Link key={link.label} href={link.href} className={styles.mobileMainLink} onClick={() => setMenuOpen(false)}>
+                {link.label}
+                <span aria-hidden="true">↗</span>
+              </Link>
+            )
+          )}
         </div>
       </nav>
       </header>

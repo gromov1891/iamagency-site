@@ -5,6 +5,7 @@ import FooterLinks from "./blocks/FooterLinks";
 import FloatFigures from "./blocks/FloatFigures";
 import Header from "./blocks/Header";
 import ServicesDropdown from "./blocks/ServicesDropdown";
+import SchoolDropdown from "./blocks/SchoolDropdown";
 import LeadModal from "./blocks/LeadModal";
 import Analytics from "./blocks/Analytics";
 import SiteEnglishFooter from "./en/SiteEnglishFooter";
@@ -181,6 +182,7 @@ export default function SiteDocument({
         />
         <Header />
         <ServicesDropdown />
+        <SchoolDropdown />
         <LeadModal />
         <div className="site-shell">{children}</div>
         {locale === "en" ? <SiteEnglishFooter /> : null}

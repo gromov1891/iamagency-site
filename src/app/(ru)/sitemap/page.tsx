@@ -25,6 +25,7 @@ const getTree = (blogArticles: Awaited<ReturnType<typeof getPublishedArticles>>)
       ...USLUGI.map((item) => ({ title: item.name, href: `/uslugi/${item.slug}` })),
       { title: "Портфолио / Кейсы", href: "/keisy" },
       { title: "Школа SMM", href: "/shkola-smm" },
+      { title: "Прикладной интенсив по Claude", href: "/shkola-smm/prikladnoy-intensiv" },
       { title: "Блог", href: "/blog" },
       { title: "Контакты", href: "/kontakty" },
     ],

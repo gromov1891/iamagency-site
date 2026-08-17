@@ -35,6 +35,7 @@ export default function FooterLinks() {
         "Маркетинг": isEnglish ? "/en/marketing" : "/marketing",
         "Блог": isEnglish ? "/en/blog" : "/blog",
         "Школа СММ": isEnglish ? "/en/smm-school" : "/shkola-smm",
+        "Прикладной интенсив": "/shkola-smm/prikladnoy-intensiv",
         "Брендбук и SMM-стратегия": isEnglish ? "/en/services/brand-social-strategy" : "/uslugi/brendbuk-i-smm-strategiya",
         "Ведение соцсетей": isEnglish ? "/en/services/social-media-management" : "/uslugi/vedenie-sotssetey",
         "Маркетинг и продвижение": isEnglish ? "/en/services/social-media-marketing" : "/uslugi/marketing-i-prodvizhenie",
@@ -48,6 +49,25 @@ export default function FooterLinks() {
           root.querySelector<HTMLElement>(`div[layer-name="${name}"]`);
 
         for (const [name, href] of Object.entries(navigation)) wrap(byName(name), href);
+
+        if (!isEnglish) {
+          const school = byName("Школа СММ");
+          if (school && !root.querySelector('[layer-name="Прикладной интенсив"]')) {
+            const intensive = school.cloneNode(true) as HTMLElement;
+            intensive.setAttribute("layer-name", "Прикладной интенсив");
+            intensive.removeAttribute("data-flink");
+            intensive.style.top = `${parseFloat(school.style.top || "0") + 31}px`;
+            intensive.style.left = `${parseFloat(school.style.left || "0") + 14}px`;
+            intensive.style.width = "245px";
+            intensive.style.color = "#90BEE9";
+            const text = intensive.querySelector("span") || intensive;
+            text.textContent = "↳ Прикладной интенсив";
+            if (text instanceof HTMLElement) text.style.color = "#90BEE9";
+            const schoolLink = school.closest("a");
+            (schoolLink?.parentElement || school.parentElement)?.appendChild(intensive);
+            wrap(intensive, "/shkola-smm/prikladnoy-intensiv");
+          }
+        }
 
         const pol = byName("Политика конфиденциальности");
         const sog = root.querySelector<HTMLElement>('div[layer-name^="Согласие на обработку"]');

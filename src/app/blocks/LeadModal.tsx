@@ -58,6 +58,7 @@ function getLeadContext(label: string, pathname: string) {
   if (englishPackage) return { kind: "tariff" as const, source: `Package · ${englishPackage} · ${label}`, tariff: englishPackage };
   if (pathname === "/en/smm-school") return { kind: "course" as const, source: "SMM School · course enquiry", tariff: "" };
   if (pathname.startsWith("/en")) return { kind: "business" as const, source: `English site · ${label}`, tariff: "" };
+  if (pathname === "/shkola-smm/prikladnoy-intensiv") return { kind: "course" as const, source: `Прикладной интенсив по Claude · ${label}`, tariff: "" };
   const tariffSlug = pathname.match(/^\/tarify\/([^/]+)/)?.[1] || "";
   const tariff = TARIFF_NAMES[tariffSlug] || "";
   if (tariff) return { kind: "tariff" as const, source: `Тариф · ${tariff} · ${label}`, tariff };
@@ -69,7 +70,7 @@ function getLeadContext(label: string, pathname: string) {
 
 const isCourseLeadLabel = (value: string | null | undefined, pathname: string) => {
   const text = normalizeText(value);
-  return text.includes("обучение") || text.includes("course") || pathname === "/shkola-smm" || pathname === "/en/smm-school";
+  return text.includes("обучение") || text.includes("course") || pathname.startsWith("/shkola-smm") || pathname === "/en/smm-school";
 };
 
 function resolveLeadTrigger(start: HTMLElement | null) {
@@ -272,6 +273,7 @@ export default function LeadModal() {
   const stopControlPropagation = (event: ReactKeyboardEvent<HTMLElement>) => event.stopPropagation();
   const isCourse = kind === "course";
   const isTariff = kind === "tariff";
+  const isIntensive = pathname === "/shkola-smm/prikladnoy-intensiv";
 
   return (
     <>
@@ -313,7 +315,7 @@ export default function LeadModal() {
                   {isEnglish
                     ? "We have received your enquiry and will get back to you shortly."
                     : isCourse
-                    ? "Мы свяжемся с вами и расскажем о ближайшем потоке курса"
+                    ? isIntensive ? "Мы свяжемся с вами и подтвердим тариф и скидку на интенсив" : "Мы свяжемся с вами и расскажем о ближайшем потоке курса"
                     : isTariff
                       ? `Тариф ${tariff} выбран. Менеджер уточнит детали и подготовит предложение`
                     : "Мы свяжемся с вами в течение 15 минут"}
@@ -346,8 +348,8 @@ export default function LeadModal() {
             ) : isCourse ? (
               <form onSubmit={submit}>
                 <p className={styles.brand}>ШКОЛА SMM · I AM AGENCY</p>
-                <p className={styles.source}>Заявка на обучение</p>
-                <h2 id="lead-form-title">Записаться<br />на курс</h2>
+                <p className={styles.source}>{isIntensive ? "Прикладной интенсив по Claude" : "Заявка на обучение"}</p>
+                <h2 id="lead-form-title">{isIntensive ? <>Забрать скидку<br />на интенсив</> : <>Записаться<br />на курс</>}</h2>
                 <label>Имя<input ref={nameRef} name="name" autoComplete="name" required /></label>
                 <label>Телефон<input name="phone" type="tel" autoComplete="tel" required /></label>
                 <label>Telegram / соцсеть<input name="contact" autoComplete="url" /></label>
@@ -374,7 +376,7 @@ export default function LeadModal() {
                 <input className={styles.honeypot} name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
                 {error ? <p className={styles.error} role="alert">{error}</p> : null}
                 <button className={styles.submit} type="submit" disabled={sending}>
-                  {sending ? "Отправляем..." : "Записаться на курс"}
+                  {sending ? "Отправляем..." : isIntensive ? "Отправить заявку" : "Записаться на курс"}
                 </button>
               </form>
             ) : (

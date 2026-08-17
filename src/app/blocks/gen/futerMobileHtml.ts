@@ -19,6 +19,7 @@ export const futerMobileHtml = `<footer style="position:absolute;left:0;top:0;wi
     ${menuLink("/marketing", "Маркетинг")}
     ${menuLink("/blog", "Блог")}
     ${menuLink("/shkola-smm", "Школа SMM")}
+    <a href="/shkola-smm/prikladnoy-intensiv" style="display:block;margin-left:14px;color:#90BEE9;text-decoration:none;font:400 13px/1.2 Inter,sans-serif;padding:3px 0 8px">↳ Прикладной интенсив по Claude</a>
     ${menuLink("/sitemap", "Карта сайта")}
   </nav>
 
