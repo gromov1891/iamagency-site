@@ -22,9 +22,9 @@ const PROGRAM = [
 ];
 
 const TARIFFS = [
-  { id: "Старт", duration: "5 дней", chat: "без чата", curator: "без куратора", price: "3 990", old: "7 990" },
-  { id: "База", duration: "5 дней", chat: "общий чат", curator: "куратор в чате", price: "7 990", old: "11 990" },
-  { id: "Премиум", duration: "5 дней + бессрочный доступ", chat: "общий чат", curator: "личный куратор", price: "13 990", old: "19 990" },
+  { id: "Старт", duration: "5 дней", chat: "Без чата", curator: "Без куратора", price: "3 990", old: "7 990" },
+  { id: "База", duration: "5 дней", chat: "Общий чат", chatNote: <>со всеми участниками. остается<br />у вас навсегда. дальше –<br />самостоятельное общение</>, curator: "Куратор в чате", curatorNote: <>на связи 7 дней после старта,<br />отвечает на все вопросы</>, price: "7 990", old: "11 990" },
+  { id: "Премиум", duration: "5 дней", durationNote: "+ бессрочный доступ", chat: "Общий чат", chatNote: <>со всеми участниками. остается<br />у вас навсегда. дальше –<br />самостоятельное общение</>, curator: "Личный куратор", curatorNote: <>индивидуально проверяет<br />и комментирует ваши задания<br />весь период</>, price: "13 990", old: "19 990" },
 ];
 
 function pad(value: number) { return String(Math.max(0, value)).padStart(2, "0"); }
@@ -92,13 +92,20 @@ export default function IntensiveClient() {
       <p className={styles.income}><b>×3-5 к текущему чеку</b><span>делают те, кто внедряют</span><em>Claude</em> в свою работу и жизнь</p>
     </section>
 
-    <section className={`${styles.canvas} ${styles.program}`} id="program"><h2>Программа</h2><div className={styles.programList}>{PROGRAM.map((item) => <article key={item.number}><span>{item.number}</span><div><h3>{item.title}</h3>{item.lines.map((line, index) => <p key={index}>{line}</p>)}</div></article>)}</div></section>
+    <section className={`${styles.canvas} ${styles.program}`} id="program">
+      <h2>Программа</h2>
+      <img className={styles.programFigureTop} src="/intensive/program-figure-top.png" alt="" />
+      <img className={styles.programFigureSide} src="/intensive/program-figure-side.png" alt="" />
+      <img className={styles.programClaudeIcon} src="/intensive/program-claude-icon.png" alt="" />
+      <div className={styles.programList}>{PROGRAM.map((item) => <article key={item.number}><span>{item.number}</span><div><h3>{item.title}</h3>{item.lines.map((line, index) => <p key={index}>{line}</p>)}</div></article>)}</div>
+    </section>
 
     <section className={`${styles.canvas} ${styles.tariffs}`} id="tariffs">
+      <img className={styles.tariffFigure} src="/intensive/tariff-figure.png" alt="" />
       <header><h2>Тарифы</h2><p>Пока другие продают за 60 000₽,<br /><b>мы устраиваем аукцион невиданной щедрости –</b><br /><strong>только в этом потоке</strong></p></header>
       <div className={styles.tariffTable}>
         <div className={styles.tariffLabels}><h3>О курсе</h3><p>Длительность</p><p>Чат</p><p>Куратор</p><p>Стоимость</p></div>
-        {TARIFFS.map(item => <button key={item.id} type="button" className={tariff === item.id ? styles.selected : ""} onClick={() => setTariff(item.id)}><h3>{item.id}<i>↘</i></h3><p>{item.duration}</p><p>{item.chat}</p><p>{item.curator}</p><p className={styles.price}>{item.price} ₽<small>вместо {item.old} ₽</small></p></button>)}
+        {TARIFFS.map(item => <button key={item.id} type="button" className={tariff === item.id ? styles.selected : ""} onClick={() => setTariff(item.id)}><h3>{item.id}<i>↘</i></h3><p>{item.duration}{item.durationNote && <small>{item.durationNote}</small>}</p><p>{item.chat}{item.chatNote && <small>{item.chatNote}</small>}</p><p>{item.curator}{item.curatorNote && <small>{item.curatorNote}</small>}</p><p className={styles.price}>{item.price} ₽<small>вместо {item.old} ₽</small></p></button>)}
       </div>
       <div className={styles.deadline}><h3>Цена действует<br /><span>до 27 августа</span></h3><p>повышение через</p><div className={styles.clock}>{time.map((value, index) => <b key={index}>{pad(value)}<small>{["дней","часов","минут","секунд"][index]}</small></b>)}</div><button type="button" onClick={() => chooseTariff(tariff)}>Получить скидку</button></div>
     </section>
