@@ -18,8 +18,8 @@
 
 /* Exact desktop corrections from the source Figma frames. */
 .formatStar{left:-7.9cqw;top:-33.911cqw;width:65.4cqw}
-.audienceIntro{left:24cqw;top:5.5cqw;grid-template-columns:38cqw 32cqw;gap:2cqw}
-.audienceIntro h2{font-size:3.45cqw;white-space:nowrap}
+.audienceIntro{left:24cqw;top:5.5cqw;grid-template-columns:37cqw 32cqw;gap:4cqw}
+.audienceIntro h2{font-size:2.9cqw;white-space:nowrap}
 .audienceList{top:22.8cqw}
 
 .program{min-height:126.25cqw}
@@ -31,7 +31,7 @@
 
 .tariffs{min-height:116.736cqw}
 .tariffs header,.tariffTable,.deadline{position:relative;z-index:2}
-.tariffFigure{left:-25.21cqw;top:36.53cqw;width:98.28cqw;height:98.28cqw;object-fit:cover}
+.tariffFigure{left:-25.21cqw;top:36.53cqw;width:98.28cqw;height:98.28cqw;object-fit:cover;transform:rotate(-45deg);transform-origin:center}
 .tariffTable{grid-template-columns:.8fr repeat(3,1fr);padding:.55cqw;border-radius:1.35cqw;background:#eeeeed;box-shadow:0 .15cqw .28cqw #0003,inset 0 .18cqw .3cqw #fff}
 .tariffTable>div,.tariffTable>button{grid-template-rows:7.5cqw repeat(4,8.4cqw);gap:.15cqw}
 .tariffTable h3{margin:.15cqw;border-radius:1.05cqw;box-shadow:0 0 .55cqw #d77655,0 .18cqw .22cqw #0005}
