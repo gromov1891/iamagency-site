@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import { getLeadAttribution } from "@/lib/lead-attribution";
 import { trackAnalyticsGoal } from "@/lib/analytics";
@@ -8,29 +9,25 @@ import styles from "./intensive.module.css";
 const DEADLINE = new Date("2026-08-27T23:59:59+03:00").getTime();
 
 const AUDIENCES = [
-  {
-    title: "Фрилансер / SMM-специалист в digital",
-    text: "Ускорите рутину: анализ, стратегия, контент и отчёты. Освободите время, чтобы брать больше проектов и сильнее погружаться в задачи клиентов.",
-  },
-  {
-    title: "SMM- или маркетинговое агентство",
-    text: "Встройте Claude в процессы команды: от исследования ниши до воронок и аналитики. Делайте больше без раздувания штата и потери качества.",
-  },
-  {
-    title: "Предприниматель со своим продуктом",
-    text: "Поймите, как ставить задачи нейросети для маркетинга, находить точки роста и превращать данные в решения, которые влияют на выручку.",
-  },
+  ["Фрилансер / SMM-специалист в digital", "Ускорите анализ, стратегию, контент и отчёты. Освободите время для новых проектов и более глубокой работы с клиентами."],
+  ["SMM- или маркетинговое агентство", "Встройте Claude в процессы команды — от исследования ниши до воронок и аналитики — без раздувания штата."],
+  ["Предприниматель со своим продуктом", "Научитесь ставить задачи Claude для маркетинга, находить точки роста и превращать данные в решения для бизнеса."],
+] as const;
+
+const PROGRAM = [
+  { number: "01", title: "Вводный блок", lines: [<> <b>как это работает</b><span> – что такое Claude, как подключить к задачам, база</span></>, <> <b>как скачать –</b><span> установка, что выбрать: телефон / десктоп</span></>, <> <b>как научить –</b><span> скиллы, обучение под нишу и тон, промпты</span></>, <> <b>что делать,</b><span> если проблемы с доступом</span></>] },
+  { number: "02", title: "Стратегия", lines: [<> <b>подготовка:</b><span> как настроить регулярный сбор данных о конкурентах и трендах ниши (Apify)</span></>, <> <b>промпты для разработки контент-стратегии,</b><span> примеры агентства</span></>, <> <b>работа с большими объемами данных</b><span> для разработки стратегии</span></>] },
+  { number: "03", title: "Воронка и чат-боты", lines: [<> <b>построение и тестирование гипотез воронки</b></>, <> <b>анализ точек отвала на основе данных</b><span> (заявка → запись)</span></>, <> <b>автогенерация офферов/сообщений</b><span> под этапы воронки – на майнд-карте</span></>, <> <b>создание простого чат-бота</b><span> на базе Claude</span></>] },
+  { number: "04", title: "Аналитика", lines: [<> <b>подключение Claude к API соцсетей</b><span> (Instagram, Threads и др.) для мониторинга</span></>, <> <b>разбор отчетов и цифр с помощью Claude</b></>, <> <b>поиск точек роста на основе данных</b></>, <> <b>как превращать сырые цифры в выводы</b><span> для клиента (или себя)</span></>] },
 ];
 
 const TARIFFS = [
-  { id: "Старт", price: "3 990 ₽", old: "7 990 ₽", chat: "Без чата", curator: "Без куратора" },
-  { id: "База", price: "7 990 ₽", old: "11 990 ₽", chat: "Общий чат", curator: "Куратор в чате" },
-  { id: "Премиум", price: "13 990 ₽", old: "19 990 ₽", chat: "Общий чат", curator: "Личный куратор", unlimited: true },
+  { id: "Старт", duration: "5 дней", chat: "без чата", curator: "без куратора", price: "3 990", old: "7 990" },
+  { id: "База", duration: "5 дней", chat: "общий чат", curator: "куратор в чате", price: "7 990", old: "11 990" },
+  { id: "Премиум", duration: "5 дней + бессрочный доступ", chat: "общий чат", curator: "личный куратор", price: "13 990", old: "19 990" },
 ];
 
-function pad(value: number) {
-  return String(Math.max(0, value)).padStart(2, "0");
-}
+function pad(value: number) { return String(Math.max(0, value)).padStart(2, "0"); }
 
 export default function IntensiveClient() {
   const [tariff, setTariff] = useState("База");
@@ -41,21 +38,14 @@ export default function IntensiveClient() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const initialTimer = window.setTimeout(() => setRemaining(Math.max(0, DEADLINE - Date.now())), 0);
-    const timer = window.setInterval(() => setRemaining(Math.max(0, DEADLINE - Date.now())), 1000);
-    return () => {
-      window.clearTimeout(initialTimer);
-      window.clearInterval(timer);
-    };
+    const update = () => setRemaining(Math.max(0, DEADLINE - Date.now()));
+    const initial = window.setTimeout(update, 0);
+    const timer = window.setInterval(update, 1000);
+    return () => { window.clearTimeout(initial); window.clearInterval(timer); };
   }, []);
 
-  const totalSeconds = Math.floor(remaining / 1000);
-  const time = {
-    days: Math.floor(totalSeconds / 86400),
-    hours: Math.floor((totalSeconds % 86400) / 3600),
-    minutes: Math.floor((totalSeconds % 3600) / 60),
-    seconds: totalSeconds % 60,
-  };
+  const seconds = Math.floor(remaining / 1000);
+  const time = [Math.floor(seconds / 86400), Math.floor((seconds % 86400) / 3600), Math.floor((seconds % 3600) / 60), seconds % 60];
 
   const chooseTariff = (name: string) => {
     setTariff(name);
@@ -66,120 +56,67 @@ export default function IntensiveClient() {
     event.preventDefault();
     if (sending) return;
     const form = event.currentTarget;
-    const values = Object.fromEntries(new FormData(form).entries());
-    setSending(true);
-    setError("");
+    setSending(true); setError("");
     try {
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...values,
-          kind: "course",
-          source: `Прикладной интенсив по Claude · тариф ${tariff}`,
-          tariff,
-          page: `${window.location.pathname}${window.location.search}`,
-          attribution: getLeadAttribution(),
-        }),
-      });
+      const values = Object.fromEntries(new FormData(form).entries());
+      const response = await fetch("/api/leads", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...values, kind: "course", source: `Прикладной интенсив по Claude · тариф ${tariff}`, tariff, page: `${window.location.pathname}${window.location.search}`, attribution: getLeadAttribution() }) });
       const result = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(result.error || "Не удалось отправить заявку");
       trackAnalyticsGoal("lead_sent", { kind: "course", source: "Прикладной интенсив по Claude", tariff });
-      form.reset();
-      setSent(true);
-    } catch (submitError) {
-      setError(submitError instanceof Error ? submitError.message : "Не удалось отправить заявку");
-    } finally {
-      setSending(false);
-    }
+      form.reset(); setSent(true);
+    } catch (submitError) { setError(submitError instanceof Error ? submitError.message : "Не удалось отправить заявку"); }
+    finally { setSending(false); }
   };
 
-  return (
-    <>
-      <section className={styles.format} id="format">
-        <p className={styles.eyebrow}>Формат</p>
-        <div className={styles.formatLead}>
-          <h2>Записанные лекции с подробными инструкциями</h2>
-          <p>Вы проходите интенсив в своём темпе за рабочую неделю</p>
-        </div>
-        <div className={styles.formatFacts}>
-          <p>К каждой лекции идёт <strong>практическое задание</strong>, которое закрепляет тему</p>
-          <p><strong>3 тарифа</strong><br />разница — в поддержке на эти 5 дней</p>
-          <p><strong>Никакой воды</strong><br />только то, что реально нужно применить</p>
-        </div>
-      </section>
+  return <>
+    <section className={`${styles.canvas} ${styles.hero}`}>
+      <nav className={styles.breadcrumbs} aria-label="Хлебные крошки"><Link href="/">Главная</Link><span>→</span><Link href="/shkola-smm">Школа SMM</Link><span>→</span><b>Прикладной интенсив</b></nav>
+      <h1>Поднимаем чек<br />с помощью <em>Claude</em></h1>
+      <img className={styles.heroStar} src="/intensive/hero-star.svg" alt="" />
+      <p className={styles.days}>За <strong>5</strong> дней</p>
+      <div className={styles.heroNote}><strong>С ним мы увеличили выручку<br />в 3 раза!</strong><span>прикладной интенсив для маркетологов /<br />агентств / бизнеса</span></div>
+      <a className={styles.heroButton} href="#tariffs">Выбрать тариф</a>
+    </section>
 
-      <section className={styles.audience}>
-        <div className={styles.sectionIntro}>
-          <h2>Кому рекомендуем пройти интенсив?</h2>
-          <p><strong>SMM-специалисты, агентства и бизнесы</strong>, которые уже пробовали ИИ для текстов и рутины, но хотят выйти на новый уровень.</p>
-        </div>
-        <div className={styles.audienceList}>
-          {AUDIENCES.map((item, index) => {
-            const open = openAudience === index;
-            return (
-              <article key={item.title} className={open ? styles.audienceOpen : ""}>
-                <button type="button" onClick={() => setOpenAudience(open ? null : index)} aria-expanded={open}>
-                  <span>{pad(index + 1)}</span><strong>{item.title}</strong><i aria-hidden="true">{open ? "↖" : "↘"}</i>
-                </button>
-                <div><p>{item.text}</p></div>
-              </article>
-            );
-          })}
-        </div>
-        <p className={styles.income}><span>×3–5 к текущему чеку</span> делают те, кто внедряют <em>Claude</em> в свою работу и жизнь</p>
-      </section>
+    <section className={`${styles.canvas} ${styles.format}`} id="format">
+      <img className={styles.formatStar} src="/intensive/format-star.svg" alt="" />
+      <h2>Формат</h2>
+      <div className={styles.formatCard}><strong>Записанные лекции с подробными<br />инструкциями</strong><span>вы проходите в своем темпе за рабочую неделю</span></div>
+      <div className={styles.formatFacts}><p>К каждой лекции идет<br /><b>практическое задание,</b><br />которое закрепляет тему</p><p><b>3 тарифа</b><br />разница – в поддержке<br />на эти 5 дней</p><p><b>никакой воды,</b><br />только то что реально<br />нужно применить!</p></div>
+      <a className={styles.more} href="#audience">↓ подробнее ↓</a>
+    </section>
 
-      <section className={styles.program} id="program">
-        <h2>Программа</h2>
-        <div className={styles.programGrid}>
-          <article><span>01</span><h3>Вводный блок</h3><p><strong>Как это работает</strong> — что такое Claude, как подключить к задачам, база</p><p><strong>Как скачать</strong> — установка и выбор устройства</p><p><strong>Как научить</strong> — скиллы, обучение под нишу и тон, промпты</p><p><strong>Что делать</strong>, если проблемы с доступом</p></article>
-          <article><span>02</span><h3>Стратегия</h3><p><strong>Подготовка:</strong> регулярный сбор данных о конкурентах и трендах ниши</p><p><strong>Промпты</strong> для контент-стратегии, примеры агентства</p><p>Работа с большими объёмами данных для разработки стратегии</p></article>
-          <article><span>03</span><h3>Воронка и чат-боты</h3><p>Построение и тестирование гипотез воронки</p><p>Анализ точек отвала на основе данных</p><p>Автогенерация офферов и сообщений под этапы воронки</p><p>Создание простого чат-бота на базе Claude</p></article>
-          <article><span>04</span><h3>Аналитика</h3><p>Подключение Claude к API соцсетей для мониторинга</p><p>Разбор отчётов и цифр с помощью Claude</p><p>Поиск точек роста на основе данных</p><p>Как превращать сырые цифры в выводы для клиента или себя</p></article>
-        </div>
-      </section>
+    <section className={`${styles.canvas} ${styles.audience}`} id="audience">
+      <div className={styles.audienceIntro}><h2>Кому рекомендуем пройти<br />интенсив?</h2><p><b>SMM-специалисты, агентства и бизнесы</b><br /><span>которые уже пробовали ИИ для текстов<br />и рутины, но хотят выйти на новый<br />уровень</span></p></div>
+      <div className={styles.audienceList}>{AUDIENCES.map(([title, text], index) => <article key={title} className={openAudience === index ? styles.open : ""}><button type="button" aria-expanded={openAudience === index} onClick={() => setOpenAudience(openAudience === index ? null : index)}><span>{pad(index + 1)}</span><b>{title}</b><i>{openAudience === index ? "↖" : "↘"}</i></button><div><p>{text}</p></div></article>)}</div>
+      <p className={styles.income}><b>×3-5 к текущему чеку</b><span>делают те, кто внедряют</span><em>Claude</em> в свою работу и жизнь</p>
+    </section>
 
-      <section className={styles.tariffs} id="tariffs">
-        <div className={styles.tariffHeading}><h2>Тарифы</h2><p>Пока другие продают за 60 000 ₽, мы устраиваем аукцион невиданной щедрости — <strong>только в этом потоке</strong></p></div>
-        <div className={styles.tariffGrid}>
-          <div className={`${styles.tariffCard} ${styles.tariffLabels}`}><h3>О курсе</h3><p>Длительность</p><p>Чат</p><p>Куратор</p><p>Стоимость</p></div>
-          {TARIFFS.map((item) => (
-            <button key={item.id} type="button" className={`${styles.tariffCard} ${tariff === item.id ? styles.selected : ""}`} onClick={() => chooseTariff(item.id)}>
-              <h3>{item.id}<span aria-hidden="true">↘</span></h3>
-              <p>5 дней {item.unlimited ? <small>+ бессрочный доступ</small> : null}</p>
-              <p>{item.chat}</p><p>{item.curator}</p>
-              <p className={styles.price}>{item.price}<small>вместо {item.old}</small></p>
-            </button>
-          ))}
-        </div>
-        <div className={styles.countdown}>
-          <p>Цена действует<br /><strong>до 27 августа</strong></p>
-          <span>Повышение через</span>
-          <div>{[[time.days, "дней"], [time.hours, "часов"], [time.minutes, "минут"], [time.seconds, "секунд"]].map(([value, label]) => <b key={label as string}>{pad(value as number)}<small>{label}</small></b>)}</div>
-          <button type="button" onClick={() => chooseTariff(tariff)}>Получить скидку</button>
-        </div>
-      </section>
+    <section className={`${styles.canvas} ${styles.program}`} id="program"><h2>Программа</h2><div className={styles.programList}>{PROGRAM.map((item) => <article key={item.number}><span>{item.number}</span><div><h3>{item.title}</h3>{item.lines.map((line, index) => <p key={index}>{line}</p>)}</div></article>)}</div></section>
 
-      <section className={styles.formSection} id="intensive-form">
-        <div>
-          <p className={styles.eyebrow}>Прикладной интенсив · I AM AGENCY</p>
-          <h2>{sent ? <>Спасибо!<br />Заявка отправлена</> : <>Забрать скидку<br />на интенсив</>}</h2>
-          {sent ? <p className={styles.sent}>Мы получили заявку и скоро свяжемся с вами.</p> : (
-            <form onSubmit={submit}>
-              <label>Имя<input name="name" autoComplete="name" required /></label>
-              <label>Телефон<input name="phone" type="tel" autoComplete="tel" required /></label>
-              <label>Почта<input name="email" type="email" autoComplete="email" /></label>
-              <label>Тариф<select name="selectedTariff" value={tariff} onChange={(event) => setTariff(event.target.value)}>{TARIFFS.map((item) => <option key={item.id}>{item.id}</option>)}</select></label>
-              <label className={styles.consent}><input name="consent" type="checkbox" required /><span>Согласен с <a href="/privacy-consent" target="_blank">обработкой персональных данных</a></span></label>
-              <input className={styles.honeypot} name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-              {error ? <p className={styles.error} role="alert">{error}</p> : null}
-              <button type="submit" disabled={sending}>{sending ? "Отправляем…" : "Отправить"}</button>
-            </form>
-          )}
-        </div>
-        <div className={styles.formBurst} aria-hidden="true" />
-      </section>
-    </>
-  );
+    <section className={`${styles.canvas} ${styles.tariffs}`} id="tariffs">
+      <header><h2>Тарифы</h2><p>Пока другие продают за 60 000₽,<br /><b>мы устраиваем аукцион невиданной щедрости –</b><br /><strong>только в этом потоке</strong></p></header>
+      <div className={styles.tariffTable}>
+        <div className={styles.tariffLabels}><h3>О курсе</h3><p>Длительность</p><p>Чат</p><p>Куратор</p><p>Стоимость</p></div>
+        {TARIFFS.map(item => <button key={item.id} type="button" className={tariff === item.id ? styles.selected : ""} onClick={() => setTariff(item.id)}><h3>{item.id}<i>↘</i></h3><p>{item.duration}</p><p>{item.chat}</p><p>{item.curator}</p><p className={styles.price}>{item.price} ₽<small>вместо {item.old} ₽</small></p></button>)}
+      </div>
+      <div className={styles.deadline}><h3>Цена действует<br /><span>до 27 августа</span></h3><p>повышение через</p><div className={styles.clock}>{time.map((value, index) => <b key={index}>{pad(value)}<small>{["дней","часов","минут","секунд"][index]}</small></b>)}</div><button type="button" onClick={() => chooseTariff(tariff)}>Получить скидку</button></div>
+    </section>
+
+    <section className={`${styles.canvas} ${styles.formSection}`} id="intensive-form">
+      <h2>{sent ? <>Спасибо!<br />Заявка отправлена</> : <>Забрать скидку<br />на интенсив</>}</h2>
+      {!sent ? <form onSubmit={submit}>
+        <label>Имя<input name="name" autoComplete="name" placeholder="Ваше имя" required /></label>
+        <label>Телефон<input name="phone" type="tel" autoComplete="tel" placeholder="+7 999 999 99 99" required /></label>
+        <label>Почта<input name="email" type="email" autoComplete="email" placeholder="mail@example.com" /></label>
+        <label>Тариф<select name="selectedTariff" value={tariff} onChange={e => setTariff(e.target.value)}>{TARIFFS.map(item => <option key={item.id}>{item.id}</option>)}</select></label>
+        <label className={styles.consent}><input name="consent" type="checkbox" required /><span>Согласен с <Link href="/privacy-consent" target="_blank">обработкой персональных данных</Link></span></label>
+        <input className={styles.honeypot} name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+        {error && <p className={styles.error}>{error}</p>}<button type="submit" disabled={sending}>{sending ? "Отправляем…" : "Отправить"}</button>
+      </form> : <p className={styles.sent}>Мы получили заявку и скоро свяжемся с вами.</p>}
+      <img className={styles.contactStar} src="/intensive/contact-star.svg" alt="" />
+    </section>
+
+    <footer className={`${styles.canvas} ${styles.footer}`}><img src="/intensive/footer-logo.svg" alt="I AM AGENCY" /><p>I AM AGENCY © 2019<br />— 2026</p><div><Link href="/privacy-policy">Политика конфиденциальности</Link><Link href="/privacy-consent">Согласие на обработку данных</Link></div><p>ИП Громова М. А.<br />ИНН 420545021010<br />ОГРНИП 324420500100030</p></footer>
+  </>;
 }

@@ -1,9 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import ResponsiveBlock from "@/app/blocks/ResponsiveBlock";
-import { futerHtml, futerH } from "@/app/blocks/gen/futerHtml";
-import { futerTabletHtml, futerTabletH } from "@/app/blocks/gen/futerTabletHtml";
-import { futerMobileHtml, futerMobileH } from "@/app/blocks/gen/futerMobileHtml";
 import IntensiveClient from "./IntensiveClient";
 import styles from "./intensive.module.css";
 
@@ -51,19 +46,8 @@ export default function AppliedIntensivePage() {
     <>
       <div className="header-spacer" />
       <main className={styles.page}>
-        <section className={styles.hero}>
-          <nav aria-label="Хлебные крошки" className={styles.breadcrumbs}>
-            <Link href="/">Главная</Link><span>/</span><Link href="/shkola-smm">Школа SMM</Link><span>/</span><span>Прикладной интенсив</span>
-          </nav>
-          <h1>Поднимаем чек<br />с помощью <em>Claude</em></h1>
-          <div className={styles.burst} aria-hidden="true" />
-          <p className={styles.days}>За <strong>5</strong> дней</p>
-          <div className={styles.heroNote}><strong>С ним мы увеличили выручку<br />в 3 раза!</strong><span>прикладной интенсив для маркетологов /<br />агентств / бизнеса</span></div>
-          <a className={styles.heroButton} href="#tariffs">Выбрать тариф</a>
-        </section>
         <IntensiveClient />
       </main>
-      <ResponsiveBlock desktopHtml={futerHtml} desktopH={futerH} tabletHtml={futerTabletHtml} tabletH={futerTabletH} mobileHtml={futerMobileHtml} mobileH={futerMobileH} overflow="hidden" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </>
   );
