@@ -68,7 +68,8 @@ function readSessionTouch(): LeadAttributionTouch | null {
 function sessionTouch() {
   const stored = readSessionTouch();
   const current = currentTouch();
-  const touch = stored || current;
+  const shouldRefreshSessionTouch = hasCampaignData(current) || hasExternalReferrer(current) || !stored;
+  const touch = shouldRefreshSessionTouch ? current : stored;
   if (!touch.client_id && current.client_id) touch.client_id = current.client_id;
   try {
     window.sessionStorage.setItem(SESSION_KEY, JSON.stringify(touch));
