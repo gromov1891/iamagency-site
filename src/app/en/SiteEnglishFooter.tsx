@@ -9,7 +9,7 @@ import { translateGeneratedHtml as en } from "@/lib/i18n/translate-generated-htm
 
 export default function SiteEnglishFooter() {
   const pathname = usePathname();
-  return pathname === "/en" ? null : (
+  return pathname === "/en" || pathname === "/en/smm-school/applied-claude-intensive" ? null : (
     <ResponsiveBlock
       desktopHtml={en(futerHtml)}
       desktopH={futerH}

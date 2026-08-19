@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import IntensiveClient from "./IntensiveClient";
 import styles from "./intensive.module.css";
+import { getSeoAlternates } from "@/lib/i18n/routes";
 
 const SITE = "https://iamagency.su";
 const PATH = "/shkola-smm/prikladnoy-intensiv";
@@ -8,7 +9,7 @@ const PATH = "/shkola-smm/prikladnoy-intensiv";
 export const metadata: Metadata = {
   title: { absolute: "Практический интенсив по Claude для SMM и маркетинга | I AM AGENCY" },
   description: "Практический интенсив по Claude за 5 дней: стратегия, воронки, чат-боты и аналитика для SMM-специалистов, агентств и бизнеса. Три тарифа от 3 990 ₽." ,
-  alternates: { canonical: `${SITE}${PATH}` },
+  alternates: getSeoAlternates(PATH),
   openGraph: {
     title: "Поднимаем чек с помощью Claude за 5 дней",
     description: "Прикладной интенсив по Claude для SMM, маркетинговых агентств и бизнеса: стратегия, воронки, чат-боты и аналитика.",

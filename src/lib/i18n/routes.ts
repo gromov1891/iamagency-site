@@ -40,6 +40,7 @@ const TRANSLATION_ROUTE_PLAN: TranslationRoute[] = [
   { id: "experiential", ru: "/marketing/offline-prodvizhenie", en: "/en/marketing/experiential-marketing", status: "planned" },
   { id: "web-development", ru: "/marketing/razrabotka-saytov", en: "/en/marketing/web-development", status: "planned" },
   { id: "smm-school", ru: "/shkola-smm", en: "/en/smm-school", status: "planned" },
+  { id: "applied-claude-intensive", ru: "/shkola-smm/prikladnoy-intensiv", en: "/en/smm-school/applied-claude-intensive", status: "published" },
   { id: "blog", ru: "/blog", en: "/en/blog", status: "planned" },
   { id: "blog-claude", ru: "/blog/claude-dlya-biznesa-prostym-yazykom", en: "/en/blog/claude-for-business-explained", status: "planned" },
   { id: "blog-sales-2026", ru: "/blog/chto-vliyaet-na-prodazhi-v-2026", en: "/en/blog/what-drives-sales-in-2026", status: "planned" },

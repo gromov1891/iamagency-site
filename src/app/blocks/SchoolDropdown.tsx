@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./ServicesDropdown.module.css";
 
@@ -10,12 +11,14 @@ const isSchoolTrigger = (target: EventTarget | null) => {
   const anchor = target instanceof Element ? target.closest<HTMLAnchorElement>("a") : null;
   if (!anchor) return null;
   const label = anchor.textContent?.trim().toLocaleLowerCase("ru-RU");
-  if (label !== "школа smm" && label !== "школа смм") return null;
+  if (label !== "школа smm" && label !== "школа смм" && label !== "smm school") return null;
   const rect = anchor.getBoundingClientRect();
   return rect.top >= -2 && rect.bottom <= 150 ? anchor : null;
 };
 
 export default function SchoolDropdown() {
+  const pathname = usePathname();
+  const isEnglish = pathname.startsWith("/en");
   const [position, setPosition] = useState<Position | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -32,7 +35,7 @@ export default function SchoolDropdown() {
   useEffect(() => {
     const openFor = (anchor: HTMLAnchorElement) => {
       cancelClose();
-      anchor.setAttribute("href", "/shkola-smm");
+      anchor.setAttribute("href", isEnglish ? "/en/smm-school" : "/shkola-smm");
       const rect = anchor.getBoundingClientRect();
       const width = Math.min(510, window.innerWidth - 32);
       const left = Math.max(16, Math.min(window.innerWidth - width - 16, rect.left - 28));
@@ -69,23 +72,23 @@ export default function SchoolDropdown() {
       window.removeEventListener("resize", close);
       window.removeEventListener("scroll", close);
     };
-  }, [cancelClose, closeSoon]);
+  }, [cancelClose, closeSoon, isEnglish]);
 
   if (!position) return null;
 
   return (
     <nav
       className={styles.menu}
-      aria-label="Обучение в школе SMM"
+      aria-label={isEnglish ? "SMM School programmes" : "Обучение в школе SMM"}
       style={position}
       onPointerEnter={cancelClose}
       onPointerLeave={closeSoon}
     >
-      <p className={styles.label}>Школа SMM</p>
+      <p className={styles.label}>{isEnglish ? "SMM School" : "Школа SMM"}</p>
       <div className={styles.list}>
-        <Link href="/shkola-smm/prikladnoy-intensiv" onClick={() => setPosition(null)}>
+        <Link href={isEnglish ? "/en/smm-school/applied-claude-intensive" : "/shkola-smm/prikladnoy-intensiv"} onClick={() => setPosition(null)}>
           <span className={styles.number}>01</span>
-          <span>Прикладной интенсив по Claude</span>
+          <span>{isEnglish ? "Applied Claude Intensive" : "Прикладной интенсив по Claude"}</span>
           <span className={styles.arrow} aria-hidden="true">↗</span>
         </Link>
       </div>

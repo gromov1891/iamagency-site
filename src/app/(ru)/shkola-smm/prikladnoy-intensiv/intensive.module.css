@@ -22,12 +22,12 @@
 .audienceIntro h2{font-size:2.65cqw;white-space:nowrap}
 .audienceList{top:22.8cqw}
 
-.program{min-height:126.25cqw}
+.program{min-height:117.5cqw}
 .program>h2,.programList{position:relative;z-index:2}
 .programFigureTop,.programFigureSide,.programClaudeIcon,.tariffFigure{position:absolute;z-index:1;display:block;pointer-events:none;user-select:none}
-.programFigureTop{left:43.54cqw;top:-20.42cqw;width:56.72cqw;height:56.72cqw;object-fit:cover}
-.programFigureSide{left:-6.806cqw;top:49.86cqw;width:28.61cqw;height:31.55cqw;object-fit:cover}
-.programClaudeIcon{left:77.57cqw;top:97.5cqw;width:17.43cqw;height:17.43cqw}
+.programFigureTop{left:43.54cqw;top:-12cqw;width:56.72cqw;height:56.72cqw;object-fit:contain}
+.programFigureSide{left:0;top:49.86cqw;width:28.61cqw;height:31.55cqw;object-fit:contain}
+.programClaudeIcon{left:77.57cqw;top:99.5cqw;width:17.43cqw;height:17.43cqw}
 
 .tariffs{min-height:116.736cqw}
 .tariffs header,.tariffTable,.deadline{position:relative;z-index:2}

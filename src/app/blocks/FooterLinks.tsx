@@ -35,7 +35,8 @@ export default function FooterLinks() {
         "Маркетинг": isEnglish ? "/en/marketing" : "/marketing",
         "Блог": isEnglish ? "/en/blog" : "/blog",
         "Школа СММ": isEnglish ? "/en/smm-school" : "/shkola-smm",
-        "Прикладной интенсив": "/shkola-smm/prikladnoy-intensiv",
+        "Прикладной интенсив": isEnglish ? "/en/smm-school/applied-claude-intensive" : "/shkola-smm/prikladnoy-intensiv",
+        "Applied intensive": "/en/smm-school/applied-claude-intensive",
         "Брендбук и SMM-стратегия": isEnglish ? "/en/services/brand-social-strategy" : "/uslugi/brendbuk-i-smm-strategiya",
         "Ведение соцсетей": isEnglish ? "/en/services/social-media-management" : "/uslugi/vedenie-sotssetey",
         "Маркетинг и продвижение": isEnglish ? "/en/services/social-media-marketing" : "/uslugi/marketing-i-prodvizhenie",
@@ -50,8 +51,8 @@ export default function FooterLinks() {
 
         for (const [name, href] of Object.entries(navigation)) wrap(byName(name), href);
 
-        if (!isEnglish) {
-          const school = byName("Школа СММ");
+        {
+          const school = byName(isEnglish ? "SMM School" : "Школа СММ") || byName("Школа СММ");
           if (school && !root.querySelector('[layer-name="Прикладной интенсив"]')) {
             const intensive = school.cloneNode(true) as HTMLElement;
             intensive.setAttribute("layer-name", "Прикладной интенсив");
@@ -61,12 +62,18 @@ export default function FooterLinks() {
             intensive.style.width = "245px";
             intensive.style.color = "#90BEE9";
             const text = intensive.querySelector("span") || intensive;
-            text.textContent = "↳ Прикладной интенсив";
+            text.textContent = isEnglish ? "↳ Applied intensive" : "↳ Прикладной интенсив";
             if (text instanceof HTMLElement) text.style.color = "#90BEE9";
             const schoolLink = school.closest("a");
             (schoolLink?.parentElement || school.parentElement)?.appendChild(intensive);
-            wrap(intensive, "/shkola-smm/prikladnoy-intensiv");
+            wrap(intensive, isEnglish ? "/en/smm-school/applied-claude-intensive" : "/shkola-smm/prikladnoy-intensiv");
           }
+        }
+
+        if (isEnglish) {
+          root.querySelectorAll<HTMLAnchorElement>('a[href="/shkola-smm/prikladnoy-intensiv"]').forEach((anchor) => {
+            anchor.href = "/en/smm-school/applied-claude-intensive";
+          });
         }
 
         const pol = byName("Политика конфиденциальности");

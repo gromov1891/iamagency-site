@@ -9,7 +9,7 @@ const page = { metaTitle: "English Sitemap | I AM AGENCY", metaDescription: "Bro
 export const metadata: Metadata = englishMetadata(page, "/en/sitemap", "/sitemap");
 
 const groups = [
-  { title: "Main", links: [["Home", "/en"], ["Services", "/en#uslugi"], ["Cases", "/en/cases"], ["Marketing", "/en/marketing"], ["Packages", "/en#tarify"], ["Insights", "/en/blog"], ["SMM School", "/en/smm-school"], ["Contacts", "/en/contacts"]] },
+  { title: "Main", links: [["Home", "/en"], ["Services", "/en#uslugi"], ["Cases", "/en/cases"], ["Marketing", "/en/marketing"], ["Packages", "/en#tarify"], ["Insights", "/en/blog"], ["SMM School", "/en/smm-school"], ["Applied Claude Intensive", "/en/smm-school/applied-claude-intensive"], ["Contacts", "/en/contacts"]] },
   { title: "Services", links: EN_SERVICES.map((item) => [item.name, `/en/services/${item.slug}`]) },
   { title: "Cases", links: EN_CASES.map((item) => [item.name, `/en/cases/${item.slug}`]) },
   { title: "Marketing", links: EN_MARKETING.map((item) => [item.name, `/en/marketing/${item.slug}`]) },

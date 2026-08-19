@@ -59,7 +59,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       entry(`/marketing/${item.slug}`, 0.8)
     ),
     entry("/shkola-smm", 0.9, "monthly"),
-    entry("/shkola-smm/prikladnoy-intensiv", 0.9, "weekly", new Date("2026-08-18T00:00:00+03:00"), false),
+    entry("/shkola-smm/prikladnoy-intensiv", 0.9, "weekly", new Date("2026-08-18T00:00:00+03:00")),
     entry("/blog", 0.9, "weekly"),
     ...blogArticles.map((item) => entry(
       `/blog/${item.slug}`,

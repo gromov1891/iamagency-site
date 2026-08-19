@@ -14,11 +14,24 @@ const AUDIENCES = [
   ["Предприниматель со своим продуктом", "Научитесь ставить задачи Claude для маркетинга, находить точки роста и превращать данные в решения для бизнеса."],
 ] as const;
 
+const EN_AUDIENCES = [
+  ["Freelancer / SMM specialist in digital", "Speed up research, strategy, content and reporting. Free up time for new projects and more valuable work with clients."],
+  ["SMM or marketing agency", "Integrate Claude into your team workflow — from market research to funnels and analytics — without expanding your headcount."],
+  ["Founder with their own product", "Learn to brief Claude for marketing, identify growth opportunities and turn data into confident business decisions."],
+] as const;
+
 const PROGRAM = [
   { number: "01", title: "Вводный блок", lines: [<> <b>как это работает</b><span> – что такое Claude, как подключить к задачам, база</span></>, <> <b>как скачать –</b><span> установка, что выбрать: телефон / десктоп</span></>, <> <b>как научить –</b><span> скиллы, обучение под нишу и тон, промпты</span></>, <> <b>что делать,</b><span> если проблемы с доступом</span></>] },
   { number: "02", title: "Стратегия", lines: [<> <b>подготовка:</b><span> как настроить регулярный сбор данных о конкурентах и трендах ниши (Apify)</span></>, <> <b>промпты для разработки контент-стратегии,</b><span> примеры агентства</span></>, <> <b>работа с большими объемами данных</b><span> для разработки стратегии</span></>] },
   { number: "03", title: "Воронка и чат-боты", lines: [<> <b>построение и тестирование гипотез воронки</b></>, <> <b>анализ точек отвала на основе данных</b><span> (заявка → запись)</span></>, <> <b>автогенерация офферов/сообщений</b><span> под этапы воронки – на майнд-карте</span></>, <> <b>создание простого чат-бота</b><span> на базе Claude</span></>] },
   { number: "04", title: "Аналитика", lines: [<> <b>подключение Claude к API соцсетей</b><span> (Instagram, Threads и др.) для мониторинга</span></>, <> <b>разбор отчетов и цифр с помощью Claude</b></>, <> <b>поиск точек роста на основе данных</b></>, <> <b>как превращать сырые цифры в выводы</b><span> для клиента (или себя)</span></>] },
+];
+
+const EN_PROGRAM = [
+  { number: "01", title: "Getting started", lines: [<> <b>how it works</b><span> — what Claude is, how to connect it to tasks, the essentials</span></>, <> <b>how to install it —</b><span> setup and choosing mobile or desktop</span></>, <> <b>how to train it —</b><span> skills, niche and tone training, prompts</span></>, <> <b>what to do</b><span> if you have access issues</span></>] },
+  { number: "02", title: "Strategy", lines: [<> <b>preparation:</b><span> setting up regular competitor and industry trend collection with Apify</span></>, <> <b>prompts for building a content strategy,</b><span> with agency examples</span></>, <> <b>working with large data sets</b><span> to develop a strategy</span></>] },
+  { number: "03", title: "Funnels and chatbots", lines: [<> <b>building and testing funnel hypotheses</b></>, <> <b>analysing drop-off points using data</b><span> (enquiry → booking)</span></>, <> <b>automatically generating offers and messages</b><span> for each funnel stage on a mind map</span></>, <> <b>building a simple chatbot</b><span> with Claude</span></>] },
+  { number: "04", title: "Analytics", lines: [<> <b>connecting Claude to social media APIs</b><span> (Instagram, Threads and others) for monitoring</span></>, <> <b>reviewing reports and metrics with Claude</b></>, <> <b>finding data-backed growth opportunities</b></>, <> <b>turning raw numbers into conclusions</b><span> for a client or your own business</span></>] },
 ];
 
 const TARIFFS = [
@@ -27,10 +40,20 @@ const TARIFFS = [
   { id: "Премиум", duration: "5 дней", durationNote: "+ бессрочный доступ", chat: "Общий чат", chatNote: <>со всеми участниками. остается<br />у вас навсегда. дальше –<br />самостоятельное общение</>, curator: "Личный куратор", curatorNote: <>индивидуально проверяет<br />и комментирует ваши задания<br />весь период</>, price: "13 990", old: "19 990" },
 ];
 
+const EN_TARIFFS = [
+  { id: "Start", duration: "5 days", chat: "No group chat", curator: "No curator", price: "3,990", old: "7,990" },
+  { id: "Core", duration: "5 days", chat: "Group chat", chatNote: <>with all participants; available<br />to you permanently for continued<br />independent communication</>, curator: "Chat curator", curatorNote: <>available for 7 days after launch<br />to answer every question</>, price: "7,990", old: "11,990" },
+  { id: "Premium", duration: "5 days", durationNote: "+ lifetime access", chat: "Group chat", chatNote: <>with all participants; available<br />to you permanently for continued<br />independent communication</>, curator: "Personal curator", curatorNote: <>personally reviews and comments<br />on your assignments throughout<br />the programme</>, price: "13,990", old: "19,990" },
+];
+
 function pad(value: number) { return String(Math.max(0, value)).padStart(2, "0"); }
 
-export default function IntensiveClient() {
-  const [tariff, setTariff] = useState("База");
+export default function IntensiveClient({ locale = "ru" }: { locale?: "ru" | "en" }) {
+  const isEnglish = locale === "en";
+  const audiences = isEnglish ? EN_AUDIENCES : AUDIENCES;
+  const program = isEnglish ? EN_PROGRAM : PROGRAM;
+  const tariffs = isEnglish ? EN_TARIFFS : TARIFFS;
+  const [tariff, setTariff] = useState(isEnglish ? "Core" : "База");
   const [openAudience, setOpenAudience] = useState<number | null>(null);
   const [remaining, setRemaining] = useState(0);
   const [sending, setSending] = useState(false);
@@ -59,71 +82,72 @@ export default function IntensiveClient() {
     setSending(true); setError("");
     try {
       const values = Object.fromEntries(new FormData(form).entries());
-      const response = await fetch("/api/leads", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...values, kind: "course", source: `Прикладной интенсив по Claude · тариф ${tariff}`, tariff, page: `${window.location.pathname}${window.location.search}`, attribution: getLeadAttribution() }) });
+      const leadSource = isEnglish ? `Applied Claude Intensive · plan ${tariff}` : `Прикладной интенсив по Claude · тариф ${tariff}`;
+      const response = await fetch("/api/leads", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...values, kind: "course", source: leadSource, tariff, page: `${window.location.pathname}${window.location.search}`, attribution: getLeadAttribution() }) });
       const result = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(result.error || "Не удалось отправить заявку");
-      trackAnalyticsGoal("lead_sent", { kind: "course", source: "Прикладной интенсив по Claude", tariff });
+      if (!response.ok) throw new Error(result.error || (isEnglish ? "Unable to send your enquiry" : "Не удалось отправить заявку"));
+      trackAnalyticsGoal("lead_sent", { kind: "course", source: isEnglish ? "Applied Claude Intensive" : "Прикладной интенсив по Claude", tariff });
       form.reset(); setSent(true);
-    } catch (submitError) { setError(submitError instanceof Error ? submitError.message : "Не удалось отправить заявку"); }
+    } catch (submitError) { setError(submitError instanceof Error ? submitError.message : isEnglish ? "Unable to send your enquiry" : "Не удалось отправить заявку"); }
     finally { setSending(false); }
   };
 
   return <>
     <section className={`${styles.canvas} ${styles.hero}`}>
-      <nav className={styles.breadcrumbs} aria-label="Хлебные крошки"><Link href="/">Главная</Link><span>→</span><Link href="/shkola-smm">Школа SMM</Link><span>→</span><b>Прикладной интенсив</b></nav>
-      <h1>Поднимаем чек<br />с помощью <em>Claude</em></h1>
+      <nav className={styles.breadcrumbs} aria-label={isEnglish ? "Breadcrumbs" : "Хлебные крошки"}><Link href={isEnglish ? "/en" : "/"}>{isEnglish ? "Home" : "Главная"}</Link><span>→</span><Link href={isEnglish ? "/en/smm-school" : "/shkola-smm"}>{isEnglish ? "SMM School" : "Школа SMM"}</Link><span>→</span><b>{isEnglish ? "Applied intensive" : "Прикладной интенсив"}</b></nav>
+      <h1>{isEnglish ? <>Raise your rates<br />with <em>Claude</em></> : <>Поднимаем чек<br />с помощью <em>Claude</em></>}</h1>
       <img className={styles.heroStar} src="/intensive/hero-star.svg" alt="" />
-      <p className={styles.days}>За <strong>5</strong> дней</p>
-      <div className={styles.heroNote}><strong>С ним мы увеличили выручку<br />в 3 раза!</strong><span>прикладной интенсив для маркетологов /<br />агентств / бизнеса</span></div>
-      <a className={styles.heroButton} href="#tariffs">Выбрать тариф</a>
+      <p className={styles.days}>{isEnglish ? "In" : "За"} <strong>5</strong> {isEnglish ? "days" : "дней"}</p>
+      <div className={styles.heroNote}><strong>{isEnglish ? <>With Claude, we tripled<br />our revenue!</> : <>С ним мы увеличили выручку<br />в 3 раза!</>}</strong><span>{isEnglish ? <>a practical intensive for marketers /<br />agencies / businesses</> : <>прикладной интенсив для маркетологов /<br />агентств / бизнеса</>}</span></div>
+      <a className={styles.heroButton} href="#tariffs">{isEnglish ? "Choose a plan" : "Выбрать тариф"}</a>
     </section>
 
     <section className={`${styles.canvas} ${styles.format}`} id="format">
       <img className={styles.formatStar} src="/intensive/format-star.svg" alt="" />
-      <h2>Формат</h2>
-      <div className={styles.formatCard}><strong>Записанные лекции с подробными<br />инструкциями</strong><span>вы проходите в своем темпе за рабочую неделю</span></div>
-      <div className={styles.formatFacts}><p>К каждой лекции идет<br /><b>практическое задание,</b><br />которое закрепляет тему</p><p><b>3 тарифа</b><br />разница – в поддержке<br />на эти 5 дней</p><p><b>никакой воды,</b><br />только то что реально<br />нужно применить!</p></div>
-      <a className={styles.more} href="#audience">↓ подробнее ↓</a>
+      <h2>{isEnglish ? "Format" : "Формат"}</h2>
+      <div className={styles.formatCard}><strong>{isEnglish ? <>Pre-recorded lessons with detailed<br />instructions</> : <>Записанные лекции с подробными<br />инструкциями</>}</strong><span>{isEnglish ? "complete them at your own pace within one working week" : "вы проходите в своем темпе за рабочую неделю"}</span></div>
+      <div className={styles.formatFacts}>{isEnglish ? <><p>Every lesson includes<br /><b>a practical assignment</b><br />to reinforce the topic</p><p><b>3 plans</b><br />with different levels of support<br />for these 5 days</p><p><b>no filler,</b><br />only what you can<br />put into practice</p></> : <><p>К каждой лекции идет<br /><b>практическое задание,</b><br />которое закрепляет тему</p><p><b>3 тарифа</b><br />разница – в поддержке<br />на эти 5 дней</p><p><b>никакой воды,</b><br />только то что реально<br />нужно применить!</p></>}</div>
+      <a className={styles.more} href="#audience">↓ {isEnglish ? "learn more" : "подробнее"} ↓</a>
     </section>
 
     <section className={`${styles.canvas} ${styles.audience}`} id="audience">
-      <div className={styles.audienceIntro}><h2>Кому рекомендуем пройти<br />интенсив?</h2><p><b>SMM-специалисты, агентства и бизнесы</b><br /><span>которые уже пробовали ИИ для текстов<br />и рутины, но хотят выйти на новый<br />уровень</span></p></div>
-      <div className={styles.audienceList}>{AUDIENCES.map(([title, text], index) => <article key={title} className={openAudience === index ? styles.open : ""}><button type="button" aria-expanded={openAudience === index} onClick={() => setOpenAudience(openAudience === index ? null : index)}><span>{pad(index + 1)}</span><b>{title}</b><i>{openAudience === index ? "↖" : "↘"}</i></button><div><p>{text}</p></div></article>)}</div>
-      <p className={styles.income}><b>×3-5 к текущему чеку</b><span>делают те, кто внедряют</span><em>Claude</em> в свою работу и жизнь</p>
+      <div className={styles.audienceIntro}><h2>{isEnglish ? <>Who should take<br />the intensive?</> : <>Кому рекомендуем пройти<br />интенсив?</>}</h2><p><b>{isEnglish ? "SMM specialists, agencies and businesses" : "SMM-специалисты, агентства и бизнесы"}</b><br /><span>{isEnglish ? <>already using AI for copy and routine tasks,<br />but ready to move to the next<br />level</> : <>которые уже пробовали ИИ для текстов<br />и рутины, но хотят выйти на новый<br />уровень</>}</span></p></div>
+      <div className={styles.audienceList}>{audiences.map(([title, text], index) => <article key={title} className={openAudience === index ? styles.open : ""}><button type="button" aria-expanded={openAudience === index} onClick={() => setOpenAudience(openAudience === index ? null : index)}><span>{pad(index + 1)}</span><b>{title}</b><i>{openAudience === index ? "↖" : "↘"}</i></button><div><p>{text}</p></div></article>)}</div>
+      <p className={styles.income}><b>{isEnglish ? "×3–5 to your current fee" : "×3-5 к текущему чеку"}</b><span>{isEnglish ? "is what people achieve when they integrate" : "делают те, кто внедряют"}</span><em>Claude</em> {isEnglish ? "into their work and life" : "в свою работу и жизнь"}</p>
     </section>
 
     <section className={`${styles.canvas} ${styles.program}`} id="program">
-      <h2>Программа</h2>
+      <h2>{isEnglish ? "Programme" : "Программа"}</h2>
       <img className={styles.programFigureTop} src="/intensive/program-figure-top.png" alt="" />
       <img className={styles.programFigureSide} src="/intensive/program-figure-side.png" alt="" />
       <img className={styles.programClaudeIcon} src="/intensive/program-claude-icon.png" alt="" />
-      <div className={styles.programList}>{PROGRAM.map((item) => <article key={item.number}><span>{item.number}</span><div><h3>{item.title}</h3>{item.lines.map((line, index) => <p key={index}>{line}</p>)}</div></article>)}</div>
+      <div className={styles.programList}>{program.map((item) => <article key={item.number}><span>{item.number}</span><div><h3>{item.title}</h3>{item.lines.map((line, index) => <p key={index}>{line}</p>)}</div></article>)}</div>
     </section>
 
     <section className={`${styles.canvas} ${styles.tariffs}`} id="tariffs">
       <img className={styles.tariffFigure} src="/intensive/tariff-figure.png" alt="" />
-      <header><h2>Тарифы</h2><p>Пока другие продают за 60 000₽,<br /><b>мы устраиваем аукцион невиданной щедрости –</b><br /><strong>только в этом потоке</strong></p></header>
+      <header><h2>{isEnglish ? "Plans" : "Тарифы"}</h2><p>{isEnglish ? <>While others sell this for ₽60,000,<br /><b>we are making an exceptionally generous offer —</b><br /><strong>for this cohort only</strong></> : <>Пока другие продают за 60 000₽,<br /><b>мы устраиваем аукцион невиданной щедрости –</b><br /><strong>только в этом потоке</strong></>}</p></header>
       <div className={styles.tariffTable}>
-        <div className={styles.tariffLabels}><h3>О курсе</h3><p>Длительность</p><p>Чат</p><p>Куратор</p><p>Стоимость</p></div>
-        {TARIFFS.map(item => <button key={item.id} type="button" className={tariff === item.id ? styles.selected : ""} onClick={() => setTariff(item.id)}><h3>{item.id}<i>↘</i></h3><p>{item.duration}{item.durationNote && <small>{item.durationNote}</small>}</p><p>{item.chat}{item.chatNote && <small>{item.chatNote}</small>}</p><p>{item.curator}{item.curatorNote && <small>{item.curatorNote}</small>}</p><p className={styles.price}>{item.price} ₽<small>вместо {item.old} ₽</small></p></button>)}
+        <div className={styles.tariffLabels}><h3>{isEnglish ? "Course" : "О курсе"}</h3><p>{isEnglish ? "Duration" : "Длительность"}</p><p>{isEnglish ? "Chat" : "Чат"}</p><p>{isEnglish ? "Curator" : "Куратор"}</p><p>{isEnglish ? "Price" : "Стоимость"}</p></div>
+        {tariffs.map(item => <button key={item.id} type="button" className={tariff === item.id ? styles.selected : ""} onClick={() => setTariff(item.id)}><h3>{item.id}<i>↘</i></h3><p>{item.duration}{item.durationNote && <small>{item.durationNote}</small>}</p><p>{item.chat}{item.chatNote && <small>{item.chatNote}</small>}</p><p>{item.curator}{item.curatorNote && <small>{item.curatorNote}</small>}</p><p className={styles.price}>{item.price} ₽<small>{isEnglish ? "instead of" : "вместо"} {item.old} ₽</small></p></button>)}
       </div>
-      <div className={styles.deadline}><h3>Цена действует<br /><span>до 27 августа</span></h3><p>повышение через</p><div className={styles.clock}>{time.map((value, index) => <b key={index}>{pad(value)}<small>{["дней","часов","минут","секунд"][index]}</small></b>)}</div><button type="button" onClick={() => chooseTariff(tariff)}>Получить скидку</button></div>
+      <div className={styles.deadline}><h3>{isEnglish ? "Price valid" : "Цена действует"}<br /><span>{isEnglish ? "until 27 August" : "до 27 августа"}</span></h3><p>{isEnglish ? "price rises in" : "повышение через"}</p><div className={styles.clock}>{time.map((value, index) => <b key={index}>{pad(value)}<small>{(isEnglish ? ["days","hours","minutes","seconds"] : ["дней","часов","минут","секунд"])[index]}</small></b>)}</div><button type="button" onClick={() => chooseTariff(tariff)}>{isEnglish ? "Get the discount" : "Получить скидку"}</button></div>
     </section>
 
     <section className={`${styles.canvas} ${styles.formSection}`} id="intensive-form">
-      <h2>{sent ? <>Спасибо!<br />Заявка отправлена</> : <>Забрать скидку<br />на интенсив</>}</h2>
+      <h2>{sent ? isEnglish ? <>Thank you!<br />Enquiry sent</> : <>Спасибо!<br />Заявка отправлена</> : isEnglish ? <>Claim your discount<br />for the intensive</> : <>Забрать скидку<br />на интенсив</>}</h2>
       {!sent ? <form onSubmit={submit}>
-        <label>Имя<input name="name" autoComplete="name" placeholder="Ваше имя" required /></label>
-        <label>Телефон<input name="phone" type="tel" autoComplete="tel" placeholder="+7 999 999 99 99" required /></label>
-        <label>Почта<input name="email" type="email" autoComplete="email" placeholder="mail@example.com" /></label>
-        <label>Тариф<select name="selectedTariff" value={tariff} onChange={e => setTariff(e.target.value)}>{TARIFFS.map(item => <option key={item.id}>{item.id}</option>)}</select></label>
-        <label className={styles.consent}><input name="consent" type="checkbox" required /><span>Согласен с <Link href="/privacy-consent" target="_blank">обработкой персональных данных</Link></span></label>
+        <label>{isEnglish ? "Name" : "Имя"}<input name="name" autoComplete="name" placeholder={isEnglish ? "Your name" : "Ваше имя"} required /></label>
+        <label>{isEnglish ? "Phone" : "Телефон"}<input name="phone" type="tel" autoComplete="tel" placeholder={isEnglish ? "+__ ___ ___ ____" : "+7 999 999 99 99"} required /></label>
+        <label>{isEnglish ? "Email" : "Почта"}<input name="email" type="email" autoComplete="email" placeholder="mail@example.com" /></label>
+        <label>{isEnglish ? "Plan" : "Тариф"}<select name="selectedTariff" value={tariff} onChange={e => setTariff(e.target.value)}>{tariffs.map(item => <option key={item.id}>{item.id}</option>)}</select></label>
+        <label className={styles.consent}><input name="consent" type="checkbox" required /><span>{isEnglish ? "I agree to the " : "Согласен с "}<Link href={isEnglish ? "/en/personal-data-consent" : "/privacy-consent"} target="_blank">{isEnglish ? "processing of my personal data" : "обработкой персональных данных"}</Link></span></label>
         <input className={styles.honeypot} name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-        {error && <p className={styles.error}>{error}</p>}<button type="submit" disabled={sending}>{sending ? "Отправляем…" : "Отправить"}</button>
-      </form> : <p className={styles.sent}>Мы получили заявку и скоро свяжемся с вами.</p>}
+        {error && <p className={styles.error}>{error}</p>}<button type="submit" disabled={sending}>{sending ? isEnglish ? "Sending…" : "Отправляем…" : isEnglish ? "Send enquiry" : "Отправить"}</button>
+      </form> : <p className={styles.sent}>{isEnglish ? "We have received your enquiry and will contact you shortly." : "Мы получили заявку и скоро свяжемся с вами."}</p>}
       <img className={styles.contactStar} src="/intensive/contact-star.svg" alt="" />
     </section>
 
-    <footer className={`${styles.canvas} ${styles.footer}`}><img src="/intensive/footer-logo.svg" alt="I AM AGENCY" /><p>I AM AGENCY © 2019<br />— 2026</p><div><Link href="/privacy-policy">Политика конфиденциальности</Link><Link href="/privacy-consent">Согласие на обработку данных</Link></div><p>ИП Громова М. А.<br />ИНН 420545021010<br />ОГРНИП 324420500100030</p></footer>
+    <footer className={`${styles.canvas} ${styles.footer}`}><img src="/intensive/footer-logo.svg" alt="I AM AGENCY" /><p>I AM AGENCY © 2019<br />— 2026</p><div><Link href={isEnglish ? "/en/privacy-policy" : "/privacy-policy"}>{isEnglish ? "Privacy policy" : "Политика конфиденциальности"}</Link><Link href={isEnglish ? "/en/personal-data-consent" : "/privacy-consent"}>{isEnglish ? "Personal data consent" : "Согласие на обработку данных"}</Link></div><p>{isEnglish ? <>Sole proprietor M. A. Gromova<br />Tax ID 420545021010<br />Registration No. 324420500100030</> : <>ИП Громова М. А.<br />ИНН 420545021010<br />ОГРНИП 324420500100030</>}</p></footer>
   </>;
 }

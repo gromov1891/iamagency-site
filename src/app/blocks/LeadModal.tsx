@@ -57,6 +57,7 @@ function getLeadContext(label: string, pathname: string) {
   const englishPackage = EN_PACKAGE_NAMES[englishPackageSlug] || "";
   if (englishPackage) return { kind: "tariff" as const, source: `Package · ${englishPackage} · ${label}`, tariff: englishPackage };
   if (pathname === "/en/smm-school") return { kind: "course" as const, source: "SMM School · course enquiry", tariff: "" };
+  if (pathname === "/en/smm-school/applied-claude-intensive") return { kind: "course" as const, source: `Applied Claude Intensive · ${label}`, tariff: "" };
   if (pathname.startsWith("/en")) return { kind: "business" as const, source: `English site · ${label}`, tariff: "" };
   if (pathname === "/shkola-smm/prikladnoy-intensiv") return { kind: "course" as const, source: `Прикладной интенсив по Claude · ${label}`, tariff: "" };
   const tariffSlug = pathname.match(/^\/tarify\/([^/]+)/)?.[1] || "";
@@ -70,7 +71,7 @@ function getLeadContext(label: string, pathname: string) {
 
 const isCourseLeadLabel = (value: string | null | undefined, pathname: string) => {
   const text = normalizeText(value);
-  return text.includes("обучение") || text.includes("course") || pathname.startsWith("/shkola-smm") || pathname === "/en/smm-school";
+  return text.includes("обучение") || text.includes("course") || pathname.startsWith("/shkola-smm") || pathname.startsWith("/en/smm-school");
 };
 
 function resolveLeadTrigger(start: HTMLElement | null) {
@@ -273,7 +274,7 @@ export default function LeadModal() {
   const stopControlPropagation = (event: ReactKeyboardEvent<HTMLElement>) => event.stopPropagation();
   const isCourse = kind === "course";
   const isTariff = kind === "tariff";
-  const isIntensive = pathname === "/shkola-smm/prikladnoy-intensiv";
+  const isIntensive = pathname === "/shkola-smm/prikladnoy-intensiv" || pathname === "/en/smm-school/applied-claude-intensive";
 
   return (
     <>

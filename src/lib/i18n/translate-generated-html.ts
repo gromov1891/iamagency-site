@@ -2,6 +2,7 @@ import autoTranslations from "./auto-translations.json";
 import { CASE_TRANSLATIONS } from "./case-translations";
 
 const PATH_REPLACEMENTS: Array<[string, string]> = [
+  ['href="/shkola-smm/prikladnoy-intensiv"', 'href="/en/smm-school/applied-claude-intensive"'],
   ['href="/uslugi/brendbuk-i-smm-strategiya"', 'href="/en/services/brand-social-strategy"'],
   ['href="/uslugi/vedenie-sotssetey"', 'href="/en/services/social-media-management"'],
   ['href="/uslugi/marketing-i-prodvizhenie"', 'href="/en/services/social-media-marketing"'],
@@ -28,6 +29,8 @@ const PATH_REPLACEMENTS: Array<[string, string]> = [
 ];
 
 const TEXT_REPLACEMENTS: Array<[string, string]> = [
+  ["Прикладной интенсив по Claude", "Applied Claude Intensive"],
+  ["Прикладной интенсив", "Applied intensive"],
   ["Одна команда на все задачи — превращаем ваши соцсети в источник клиентов", "One team for every task — turning your social media into a source of customers"],
   ["подробно расскажем, что нужно вашему бизнесу, а что нет", "We will explain what your business actually needs — and what it does not"],
   ["Записаться на бесплатную консультацию", "Book a free consultation"],

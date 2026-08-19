@@ -283,13 +283,13 @@ export default function Header() {
             ))}
           </div>
           {links.slice(1).map((link) =>
-            link.label === "ШКОЛА SMM" ? (
+            (link.label === "ШКОЛА SMM" || link.label === "SMM SCHOOL") ? (
               <div key={link.label}>
                 <div className={styles.mobileMenuRow}>
                   <Link href={link.href} onClick={() => setMenuOpen(false)}>{link.label}</Link>
                   <button
                     type="button"
-                    aria-label={schoolOpen ? "Скрыть интенсивы" : "Показать интенсивы"}
+                    aria-label={schoolOpen ? (isEnglish ? "Hide intensives" : "Скрыть интенсивы") : (isEnglish ? "Show intensives" : "Показать интенсивы")}
                     aria-expanded={schoolOpen}
                     onClick={() => setSchoolOpen((value) => !value)}
                   >
@@ -297,8 +297,8 @@ export default function Header() {
                   </button>
                 </div>
                 <div className={`${styles.mobileServices} ${schoolOpen ? styles.mobileServicesOpen : ""}`}>
-                  <Link href="/shkola-smm/prikladnoy-intensiv" onClick={() => setMenuOpen(false)}>
-                    <span>01</span><span>Прикладной интенсив по Claude</span><span aria-hidden="true">↗</span>
+                  <Link href={isEnglish ? "/en/smm-school/applied-claude-intensive" : "/shkola-smm/prikladnoy-intensiv"} onClick={() => setMenuOpen(false)}>
+                    <span>01</span><span>{isEnglish ? "Applied Claude Intensive" : "Прикладной интенсив по Claude"}</span><span aria-hidden="true">↗</span>
                   </Link>
                 </div>
               </div>
