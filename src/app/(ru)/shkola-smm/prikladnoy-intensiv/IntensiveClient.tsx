@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { getLeadAttribution } from "@/lib/lead-attribution";
 import { trackAnalyticsGoal } from "@/lib/analytics";
 import { translateGeneratedHtml as en } from "@/lib/i18n/translate-generated-html";
@@ -64,6 +64,9 @@ export default function IntensiveClient({ locale = "ru" }: { locale?: "ru" | "en
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
+  const [scrollProgress, setScrollProgress] = useState({ percent: 0, section: 0 });
+  const motionRoot = useRef<HTMLDivElement>(null);
+  const progressFrame = useRef<number | null>(null);
 
   useEffect(() => {
     const update = () => setRemaining(Math.max(0, DEADLINE - Date.now()));
@@ -72,8 +75,62 @@ export default function IntensiveClient({ locale = "ru" }: { locale?: "ru" | "en
     return () => { window.clearTimeout(initial); window.clearInterval(timer); };
   }, []);
 
+  useEffect(() => {
+    const page = motionRoot.current;
+    if (!page) return;
+
+    const revealTargets = Array.from(page.querySelectorAll<HTMLElement>("[data-reveal]"));
+    revealTargets.forEach((target, index) => {
+      target.style.setProperty("--reveal-delay", `${(index % 5) * 70}ms`);
+    });
+    page.classList.add(styles.motionReady);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          (entry.target as HTMLElement).classList.add(styles.revealed);
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+    );
+    revealTargets.forEach((target) => observer.observe(target));
+
+    const sections = Array.from(page.querySelectorAll<HTMLElement>("section"));
+    const updateScrollProgress = () => {
+      progressFrame.current = null;
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const percent = Math.min(100, Math.max(0, Math.round((window.scrollY / maxScroll) * 100)));
+      const marker = window.scrollY + window.innerHeight * 0.42;
+      let section = 0;
+      sections.forEach((item, index) => {
+        if (item.offsetTop <= marker) section = index;
+      });
+      setScrollProgress((current) => current.percent === percent && current.section === section ? current : { percent, section });
+    };
+    const onScroll = () => {
+      if (progressFrame.current !== null) return;
+      progressFrame.current = window.requestAnimationFrame(updateScrollProgress);
+    };
+    updateScrollProgress();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (progressFrame.current !== null) window.cancelAnimationFrame(progressFrame.current);
+      page.classList.remove(styles.motionReady);
+    };
+  }, []);
+
   const seconds = Math.floor(remaining / 1000);
   const time = [Math.floor(seconds / 86400), Math.floor((seconds % 86400) / 3600), Math.floor((seconds % 3600) / 60), seconds % 60];
+  const progressSections = isEnglish
+    ? ["Introduction", "Format", "Who it is for", "Programme", "Plans", "Enquiry"]
+    : ["Вступление", "Формат", "Для кого", "Программа", "Тарифы", "Заявка"];
 
   const chooseTariff = (name: string) => {
     setTariff(name);
@@ -97,51 +154,59 @@ export default function IntensiveClient({ locale = "ru" }: { locale?: "ru" | "en
     finally { setSending(false); }
   };
 
-  return <>
+  return <div ref={motionRoot}>
+    <aside
+      className={`${styles.scrollProgress} ${scrollProgress.percent > 2 ? styles.scrollProgressVisible : ""}`}
+      aria-label={isEnglish ? `Page progress: ${scrollProgress.percent}%` : `Прогресс страницы: ${scrollProgress.percent}%`}
+    >
+      <span><small>{isEnglish ? "INTENSIVE" : "ИНТЕНСИВ"}</small>{progressSections[Math.min(scrollProgress.section, progressSections.length - 1)]}</span>
+      <i><b style={{ width: `${scrollProgress.percent}%` }} /></i>
+      <strong>{scrollProgress.percent}%</strong>
+    </aside>
     <section className={`${styles.canvas} ${styles.hero}`}>
-      <nav className={styles.breadcrumbs} aria-label={isEnglish ? "Breadcrumbs" : "Хлебные крошки"}><Link href={isEnglish ? "/en" : "/"}>{isEnglish ? "Home" : "Главная"}</Link><span>→</span><Link href={isEnglish ? "/en/smm-school" : "/shkola-smm"}>{isEnglish ? "SMM School" : "Школа SMM"}</Link><span>→</span><b>{isEnglish ? "Applied intensive" : "Прикладной интенсив"}</b></nav>
-      <h1>{isEnglish ? <>Raise your rates<br />with <em>Claude</em></> : <>Поднимаем чек<br />с помощью <em>Claude</em></>}</h1>
-      <img className={styles.heroStar} src="/intensive/hero-star.svg" alt="" />
-      <p className={styles.days}>{isEnglish ? "In" : "За"} <strong>5</strong> {isEnglish ? "days" : "дней"}</p>
-      <div className={styles.heroNote}><strong>{isEnglish ? <>With Claude, we tripled<br />our revenue!</> : <>С ним мы увеличили выручку<br />в 3 раза!</>}</strong><span>{isEnglish ? <>a practical intensive for marketers /<br />agencies / businesses</> : <>прикладной интенсив для маркетологов /<br />агентств / бизнеса</>}</span></div>
-      <a className={styles.heroButton} href="#tariffs">{isEnglish ? "Choose a plan" : "Выбрать тариф"}</a>
+      <nav data-reveal className={styles.breadcrumbs} aria-label={isEnglish ? "Breadcrumbs" : "Хлебные крошки"}><Link href={isEnglish ? "/en" : "/"}>{isEnglish ? "Home" : "Главная"}</Link><span>→</span><Link href={isEnglish ? "/en/smm-school" : "/shkola-smm"}>{isEnglish ? "SMM School" : "Школа SMM"}</Link><span>→</span><b>{isEnglish ? "Applied intensive" : "Прикладной интенсив"}</b></nav>
+      <h1 data-reveal>{isEnglish ? <>Raise your rates<br />with <em>Claude</em></> : <>Поднимаем чек<br />с помощью <em>Claude</em></>}</h1>
+      <img data-reveal data-reveal-figure className={styles.heroStar} src="/intensive/hero-star.svg" alt="" />
+      <p data-reveal className={styles.days}>{isEnglish ? "In" : "За"} <strong>5</strong> {isEnglish ? "days" : "дней"}</p>
+      <div data-reveal className={styles.heroNote}><strong>{isEnglish ? <>With Claude, we tripled<br />our revenue!</> : <>С ним мы увеличили выручку<br />в 3 раза!</>}</strong><span>{isEnglish ? <>a practical intensive for marketers /<br />agencies / businesses</> : <>прикладной интенсив для маркетологов /<br />агентств / бизнеса</>}</span></div>
+      <a data-reveal className={styles.heroButton} href="#tariffs">{isEnglish ? "Choose a plan" : "Выбрать тариф"}</a>
     </section>
 
     <section className={`${styles.canvas} ${styles.format}`} id="format">
-      <img className={styles.formatStar} src="/intensive/format-star.svg" alt="" />
-      <h2>{isEnglish ? "Format" : "Формат"}</h2>
-      <div className={styles.formatCard}><strong>{isEnglish ? <>Pre-recorded lessons with detailed<br />instructions</> : <>Записанные лекции с подробными<br />инструкциями</>}</strong><span>{isEnglish ? "complete them at your own pace within one working week" : "вы проходите в своем темпе за рабочую неделю"}</span></div>
-      <div className={styles.formatFacts}>{isEnglish ? <><p>Every lesson includes<br /><b>a practical assignment</b><br />to reinforce the topic</p><p><b>3 plans</b><br />with different levels of support<br />for these 5 days</p><p><b>no filler,</b><br />only what you can<br />put into practice</p></> : <><p>К каждой лекции идет<br /><b>практическое задание,</b><br />которое закрепляет тему</p><p><b>3 тарифа</b><br />разница – в поддержке<br />на эти 5 дней</p><p><b>никакой воды,</b><br />только то что реально<br />нужно применить!</p></>}</div>
-      <a className={styles.more} href="#audience">↓ {isEnglish ? "learn more" : "подробнее"} ↓</a>
+      <img data-reveal data-reveal-figure className={styles.formatStar} src="/intensive/format-star.svg" alt="" />
+      <h2 data-reveal>{isEnglish ? "Format" : "Формат"}</h2>
+      <div data-reveal className={styles.formatCard}><strong>{isEnglish ? <>Pre-recorded lessons with detailed<br />instructions</> : <>Записанные лекции с подробными<br />инструкциями</>}</strong><span>{isEnglish ? "complete them at your own pace within one working week" : "вы проходите в своем темпе за рабочую неделю"}</span></div>
+      <div data-reveal className={styles.formatFacts}>{isEnglish ? <><p>Every lesson includes<br /><b>a practical assignment</b><br />to reinforce the topic</p><p><b>3 plans</b><br />with different levels of support<br />for these 5 days</p><p><b>no filler,</b><br />only what you can<br />put into practice</p></> : <><p>К каждой лекции идет<br /><b>практическое задание,</b><br />которое закрепляет тему</p><p><b>3 тарифа</b><br />разница – в поддержке<br />на эти 5 дней</p><p><b>никакой воды,</b><br />только то что реально<br />нужно применить!</p></>}</div>
+      <a data-reveal className={styles.more} href="#audience">↓ {isEnglish ? "learn more" : "подробнее"} ↓</a>
     </section>
 
     <section className={`${styles.canvas} ${styles.audience}`} id="audience">
-      <div className={styles.audienceIntro}><h2>{isEnglish ? <>Who should take<br />the intensive?</> : <>Кому рекомендуем пройти<br />интенсив?</>}</h2><p><b>{isEnglish ? "SMM specialists, agencies and businesses" : "SMM-специалисты, агентства и бизнесы"}</b><br /><span>{isEnglish ? <>already using AI for copy and routine tasks,<br />but ready to move to the next<br />level</> : <>которые уже пробовали ИИ для текстов<br />и рутины, но хотят выйти на новый<br />уровень</>}</span></p></div>
-      <div className={styles.audienceList}>{audiences.map(([title, text], index) => <article key={title} className={openAudience === index ? styles.open : ""}><button type="button" aria-expanded={openAudience === index} onClick={() => setOpenAudience(openAudience === index ? null : index)}><span>{pad(index + 1)}</span><b>{title}</b><i>{openAudience === index ? "↖" : "↘"}</i></button><div><p>{text}</p></div></article>)}</div>
-      <p className={styles.income}><b>{isEnglish ? "×3–5 to your current fee" : "×3-5 к текущему чеку"}</b><span>{isEnglish ? "is what people achieve when they integrate" : "делают те, кто внедряют"}</span><em>Claude</em> {isEnglish ? "into their work and life" : "в свою работу и жизнь"}</p>
+      <div data-reveal className={styles.audienceIntro}><h2>{isEnglish ? <>Who should take<br />the intensive?</> : <>Кому рекомендуем пройти<br />интенсив?</>}</h2><p><b>{isEnglish ? "SMM specialists, agencies and businesses" : "SMM-специалисты, агентства и бизнесы"}</b><br /><span>{isEnglish ? <>already using AI for copy and routine tasks,<br />but ready to move to the next<br />level</> : <>которые уже пробовали ИИ для текстов<br />и рутины, но хотят выйти на новый<br />уровень</>}</span></p></div>
+      <div className={styles.audienceList}>{audiences.map(([title, text], index) => <article data-reveal key={title} className={openAudience === index ? styles.open : ""}><button type="button" aria-expanded={openAudience === index} onClick={() => setOpenAudience(openAudience === index ? null : index)}><span>{pad(index + 1)}</span><b>{title}</b><i>{openAudience === index ? "↖" : "↘"}</i></button><div><p>{text}</p></div></article>)}</div>
+      <p data-reveal className={styles.income}><b>{isEnglish ? "×3–5 to your current fee" : "×3-5 к текущему чеку"}</b><span>{isEnglish ? "is what people achieve when they integrate" : "делают те, кто внедряют"}</span><em>Claude</em> {isEnglish ? "into their work and life" : "в свою работу и жизнь"}</p>
     </section>
 
     <section className={`${styles.canvas} ${styles.program}`} id="program">
-      <h2>{isEnglish ? "Programme" : "Программа"}</h2>
-      <img className={styles.programFigureTop} src="/intensive/program-figure-top.png" alt="" />
-      <img className={styles.programFigureSide} src="/intensive/program-figure-side.png" alt="" />
-      <img className={styles.programClaudeIcon} src="/intensive/program-claude-icon.png" alt="" />
-      <div className={styles.programList}>{program.map((item) => <article key={item.number}><span>{item.number}</span><div><h3>{item.title}</h3>{item.lines.map((line, index) => <p key={index}>{line}</p>)}</div></article>)}</div>
+      <h2 data-reveal>{isEnglish ? "Programme" : "Программа"}</h2>
+      <img data-reveal data-reveal-figure className={styles.programFigureTop} src="/intensive/program-figure-top.png" alt="" />
+      <img data-reveal data-reveal-figure className={styles.programFigureSide} src="/intensive/program-figure-side.png" alt="" />
+      <img data-reveal data-reveal-figure className={styles.programClaudeIcon} src="/intensive/program-claude-icon.png" alt="" />
+      <div className={styles.programList}>{program.map((item) => <article data-reveal key={item.number}><span>{item.number}</span><div><h3>{item.title}</h3>{item.lines.map((line, index) => <p key={index}>{line}</p>)}</div></article>)}</div>
     </section>
 
     <section className={`${styles.canvas} ${styles.tariffs}`} id="tariffs">
-      <img className={styles.tariffFigure} src="/intensive/tariff-figure.png" alt="" />
-      <header><h2>{isEnglish ? "Plans" : "Тарифы"}</h2><p>{isEnglish ? <>While others sell this for ₽60,000,<br /><b>we are making an exceptionally generous offer —</b><br /><strong>for this cohort only</strong></> : <>Пока другие продают за 60 000₽,<br /><b>мы устраиваем аукцион невиданной щедрости –</b><br /><strong>только в этом потоке</strong></>}</p></header>
-      <div className={styles.tariffTable}>
+      <img data-reveal data-reveal-figure className={styles.tariffFigure} src="/intensive/tariff-figure.png" alt="" />
+      <header data-reveal><h2>{isEnglish ? "Plans" : "Тарифы"}</h2><p>{isEnglish ? <>While others sell this for ₽60,000,<br /><b>we are making an exceptionally generous offer —</b><br /><strong>for this cohort only</strong></> : <>Пока другие продают за 60 000₽,<br /><b>мы устраиваем аукцион невиданной щедрости –</b><br /><strong>только в этом потоке</strong></>}</p></header>
+      <div data-reveal className={styles.tariffTable}>
         <div className={styles.tariffLabels}><h3>{isEnglish ? "Course" : "О курсе"}</h3><p>{isEnglish ? "Duration" : "Длительность"}</p><p>{isEnglish ? "Chat" : "Чат"}</p><p>{isEnglish ? "Curator" : "Куратор"}</p><p>{isEnglish ? "Price" : "Стоимость"}</p></div>
         {tariffs.map(item => <button key={item.id} type="button" className={tariff === item.id ? styles.selected : ""} onClick={() => setTariff(item.id)}><h3>{item.id}<i>↘</i></h3><p>{item.duration}{item.durationNote && <small>{item.durationNote}</small>}</p><p>{item.chat}{item.chatNote && <small>{item.chatNote}</small>}</p><p>{item.curator}{item.curatorNote && <small>{item.curatorNote}</small>}</p><p className={styles.price}>{item.price} ₽<small>{isEnglish ? "instead of" : "вместо"} {item.old} ₽</small></p></button>)}
       </div>
-      <div className={styles.deadline}><h3>{isEnglish ? "Price valid" : "Цена действует"}<br /><span>{isEnglish ? "until 27 August" : "до 27 августа"}</span></h3><p>{isEnglish ? "price rises in" : "повышение через"}</p><div className={styles.clock}>{time.map((value, index) => <b key={index}>{pad(value)}<small>{(isEnglish ? ["days","hours","minutes","seconds"] : ["дней","часов","минут","секунд"])[index]}</small></b>)}</div><button type="button" onClick={() => chooseTariff(tariff)}>{isEnglish ? "Get the discount" : "Получить скидку"}</button></div>
+      <div data-reveal className={styles.deadline}><h3>{isEnglish ? "Price valid" : "Цена действует"}<br /><span>{isEnglish ? "until 27 August" : "до 27 августа"}</span></h3><p>{isEnglish ? "price rises in" : "повышение через"}</p><div className={styles.clock}>{time.map((value, index) => <b key={index}>{pad(value)}<small>{(isEnglish ? ["days","hours","minutes","seconds"] : ["дней","часов","минут","секунд"])[index]}</small></b>)}</div><button type="button" onClick={() => chooseTariff(tariff)}>{isEnglish ? "Get the discount" : "Получить скидку"}</button></div>
     </section>
 
     <section className={`${styles.canvas} ${styles.formSection}`} id="intensive-form">
-      <h2>{sent ? isEnglish ? <>Thank you!<br />Enquiry sent</> : <>Спасибо!<br />Заявка отправлена</> : isEnglish ? <>Claim your discount<br />for the intensive</> : <>Забрать скидку<br />на интенсив</>}</h2>
-      {!sent ? <form onSubmit={submit}>
+      <h2 data-reveal>{sent ? isEnglish ? <>Thank you!<br />Enquiry sent</> : <>Спасибо!<br />Заявка отправлена</> : isEnglish ? <>Claim your discount<br />for the intensive</> : <>Забрать скидку<br />на интенсив</>}</h2>
+      {!sent ? <form data-reveal onSubmit={submit}>
         <label>{isEnglish ? "Name" : "Имя"}<input name="name" autoComplete="name" placeholder={isEnglish ? "Your name" : "Ваше имя"} required /></label>
         <label>{isEnglish ? "Phone" : "Телефон"}<input name="phone" type="tel" autoComplete="tel" placeholder={isEnglish ? "+__ ___ ___ ____" : "+7 999 999 99 99"} required /></label>
         <label>{isEnglish ? "Email" : "Почта"}<input name="email" type="email" autoComplete="email" placeholder="mail@example.com" /></label>
@@ -149,8 +214,8 @@ export default function IntensiveClient({ locale = "ru" }: { locale?: "ru" | "en
         <label className={styles.consent}><input name="consent" type="checkbox" required /><span>{isEnglish ? "I agree to the " : "Согласен с "}<Link href={isEnglish ? "/en/personal-data-consent" : "/privacy-consent"} target="_blank">{isEnglish ? "processing of my personal data" : "обработкой персональных данных"}</Link></span></label>
         <input className={styles.honeypot} name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
         {error && <p className={styles.error}>{error}</p>}<button type="submit" disabled={sending}>{sending ? isEnglish ? "Sending…" : "Отправляем…" : isEnglish ? "Send enquiry" : "Отправить"}</button>
-      </form> : <p className={styles.sent}>{isEnglish ? "We have received your enquiry and will contact you shortly." : "Мы получили заявку и скоро свяжемся с вами."}</p>}
-      <img className={styles.contactStar} src="/intensive/contact-star.svg" alt="" />
+      </form> : <p data-reveal className={styles.sent}>{isEnglish ? "We have received your enquiry and will contact you shortly." : "Мы получили заявку и скоро свяжемся с вами."}</p>}
+      <img data-reveal data-reveal-figure className={styles.contactStar} src="/intensive/contact-star.svg" alt="" />
     </section>
 
     <ResponsiveBlock
@@ -162,5 +227,5 @@ export default function IntensiveClient({ locale = "ru" }: { locale?: "ru" | "en
       mobileH={futerMobileH}
       overflow="hidden"
     />
-  </>;
+  </div>;
 }
