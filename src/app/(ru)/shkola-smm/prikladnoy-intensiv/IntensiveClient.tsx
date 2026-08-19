@@ -4,6 +4,11 @@ import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import { getLeadAttribution } from "@/lib/lead-attribution";
 import { trackAnalyticsGoal } from "@/lib/analytics";
+import { translateGeneratedHtml as en } from "@/lib/i18n/translate-generated-html";
+import ResponsiveBlock from "@/app/blocks/ResponsiveBlock";
+import { futerHtml, futerH } from "@/app/blocks/gen/futerHtml";
+import { futerTabletHtml, futerTabletH } from "@/app/blocks/gen/futerTabletHtml";
+import { futerMobileHtml, futerMobileH } from "@/app/blocks/gen/futerMobileHtml";
 import styles from "./intensive.module.css";
 
 const DEADLINE = new Date("2026-08-27T23:59:59+03:00").getTime();
@@ -148,6 +153,14 @@ export default function IntensiveClient({ locale = "ru" }: { locale?: "ru" | "en
       <img className={styles.contactStar} src="/intensive/contact-star.svg" alt="" />
     </section>
 
-    <footer className={`${styles.canvas} ${styles.footer}`}><img src="/intensive/footer-logo.svg" alt="I AM AGENCY" /><p>I AM AGENCY © 2019<br />— 2026</p><div><Link href={isEnglish ? "/en/privacy-policy" : "/privacy-policy"}>{isEnglish ? "Privacy policy" : "Политика конфиденциальности"}</Link><Link href={isEnglish ? "/en/personal-data-consent" : "/privacy-consent"}>{isEnglish ? "Personal data consent" : "Согласие на обработку данных"}</Link></div><p>{isEnglish ? <>Sole proprietor M. A. Gromova<br />Tax ID 420545021010<br />Registration No. 324420500100030</> : <>ИП Громова М. А.<br />ИНН 420545021010<br />ОГРНИП 324420500100030</>}</p></footer>
+    <ResponsiveBlock
+      desktopHtml={isEnglish ? en(futerHtml) : futerHtml}
+      desktopH={futerH}
+      tabletHtml={isEnglish ? en(futerTabletHtml) : futerTabletHtml}
+      tabletH={futerTabletH}
+      mobileHtml={isEnglish ? en(futerMobileHtml) : futerMobileHtml}
+      mobileH={futerMobileH}
+      overflow="hidden"
+    />
   </>;
 }
