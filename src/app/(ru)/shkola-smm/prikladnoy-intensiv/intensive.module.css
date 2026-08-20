@@ -52,6 +52,9 @@
 .tariffTable p small{display:block;margin-top:.22cqw;color:var(--gray);font-size:.69cqw;font-weight:400;line-height:.9;text-align:center;text-transform:none}
 .tariffTable .tariffLabels p{align-items:center;padding-left:0;font-size:1.45cqw}
 .tariffTable .price{font-size:1.99cqw;line-height:1;color:var(--orange)}
+.tariffTable h3 i{position:relative;width:1em;height:1em;font-size:.7em;font-style:normal}
+.tariffTable h3 i::before{content:"";position:absolute;left:8%;top:50%;width:78%;height:.08em;background:currentColor;transform:rotate(45deg);transform-origin:center}
+.tariffTable h3 i::after{content:"";position:absolute;right:1%;bottom:3%;width:42%;height:42%;border-right:.08em solid currentColor;border-bottom:.08em solid currentColor}
 .price small{position:relative;color:var(--ink)!important;font-size:.86cqw!important;text-decoration:none!important}
 .price small::after{content:"";position:absolute;left:2%;right:2%;top:45%;height:.08cqw;background:var(--orange);transform:rotate(-7deg);transform-origin:center}
 
@@ -140,5 +143,69 @@
 @media(min-width:701px) and (max-width:1024px){
   .audienceList button,.tariffTable button{position:relative;z-index:2}
   .audienceList button b{min-width:0;overflow-wrap:anywhere}
+}
+
+/* The Mobile page is a separate Figma frame, not a scaled desktop composition. */
+@media(max-width:700px){
+  .format{min-height:370px}
+  .format h2{top:18px;font-size:25px}
+  .formatCard{left:50%;top:78px;width:68%;height:72px;padding:9px;border-radius:12px;transform:translateX(-50%)}
+  .formatCard strong{font-size:13px;line-height:.9}
+  .formatCard span{margin-top:6px;font-size:7px}
+  .formatFacts{top:182px;gap:8px}
+  .formatFacts p,.formatFacts p:nth-child(2),.formatFacts p:nth-child(3){font-size:7px;line-height:.95}
+  .more{bottom:14px;font-size:7px}
+
+  .audience{min-height:470px;padding:32px 18px 26px}
+  .audienceIntro{display:grid;grid-template-columns:1.18fr 1fr;gap:14px;align-items:end}
+  .audienceIntro h2{font-size:20px;line-height:.9}
+  .audienceIntro p{margin-top:0!important;font-size:8.5px;line-height:.92}
+  .audienceList{margin-top:72px}
+  .audienceList button{height:44px;padding:0 10px;grid-template-columns:25px minmax(0,1fr) 16px}
+  .audienceList button span{font-size:13px}
+  .audienceList button b{font-size:12.5px;line-height:.87;letter-spacing:-.3px}
+  .audienceList button i{position:relative;width:13px;height:13px;justify-self:end;color:var(--gray);font-size:0;transition:transform .2s ease}
+  .audienceList button i::before{content:"";position:absolute;left:1px;top:6px;width:11px;height:1px;background:currentColor;transform:rotate(45deg);transform-origin:center}
+  .audienceList button i::after{content:"";position:absolute;right:0;bottom:0;width:5px;height:5px;border-right:1px solid currentColor;border-bottom:1px solid currentColor}
+  .audienceList .open button i{transform:rotate(180deg)}
+  .audienceList article>div{display:block;max-height:0;overflow:hidden;transition:max-height .24s ease}
+  .audienceList article>div p{padding:0 35px;font-size:9.5px;line-height:1.12}
+  .audienceList .open>div{max-height:130px}
+  .audienceList .open>div p{padding-bottom:11px}
+  .income{margin-top:28px!important;width:225px;font-size:13px;line-height:.92}
+
+  .program{padding:34px 18px 20px}
+  .program>h2{font-size:28px}
+  .programFigureTop{left:58%;top:-58px;width:42%}
+  .programFigureSide{left:8px;top:145px;width:38px}
+  .programClaudeIcon{right:8px;top:400px;width:34px}
+  .programList{margin-top:32px}
+  .programList article,.programList article:nth-child(even){grid-template-columns:38px minmax(0,1fr);gap:7px;margin-bottom:31px}
+  .programList article>span{font-size:28px}
+  .programList h3{margin-bottom:5px;padding:4px 10px;font-size:12px}
+  .programList p{margin:2px 0!important;font-size:9.25px!important;line-height:1.01;letter-spacing:-.2px}
+
+  .tariffs{padding-top:36px}
+  .tariffs header h2{font-size:27px}
+  .tariffs header p{font-size:7.5px}
+  .tariffTable{margin-top:25px}
+  .tariffTable>div,.tariffTable>button{grid-template-rows:39px repeat(4,43px)}
+  .tariffTable h3{font-size:11px}
+  .tariffTable .tariffLabels h3{font-size:10px}
+  .tariffTable p,.tariffTable .tariffLabels p{font-size:7px}
+  .tariffTable .price{font-size:11.5px}
+  .deadline{margin-top:36px}
+  .deadline h3{font-size:24px}
+  .deadline>p{margin:13px 0 7px!important;font-size:12px}
+  .clock b{height:64px;font-size:31px}
+  .clock small{font-size:7px}
+  .deadline>button{width:145px;height:31px;margin-top:18px;font-size:12px}
+
+  .formSection{min-height:535px;padding-top:36px}
+  .formSection h2{font-size:33px}
+  .formSection form{margin-top:38px}
+  .formSection form>label:not(.consent){grid-template-columns:60px 1fr;height:44px;font-size:11px}
+  .formSection input,.formSection select{font-size:11px}
+  .formSection form>button{width:105px;height:29px;margin-top:16px;font-size:11px}
 }
 @media(prefers-reduced-motion:reduce){.page *{scroll-behavior:auto!important}.audienceList article>div{transition:none}.motionReady [data-reveal],.motionReady [data-reveal][data-reveal-figure]{opacity:1!important;filter:none!important;translate:none!important;scale:1!important;rotate:0deg!important;transition:none!important}.scrollProgress{transition:none}}
