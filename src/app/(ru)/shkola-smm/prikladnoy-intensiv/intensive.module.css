@@ -57,4 +57,88 @@
 
 @media(max-width:700px){.canvas{width:100%}.hero,.format,.audience,.formSection{aspect-ratio:auto;min-height:720px}.breadcrumbs{left:18px;top:24px;font-size:11px;gap:6px}.hero h1{left:18px;top:95px;font-size:49px;line-height:.84}.heroStar{left:-175px;top:245px;width:650px}.days{right:18px;top:315px;font-size:43px}.days strong{width:43px;height:58px}.heroNote{right:18px;bottom:155px;width:280px}.heroNote strong{font-size:21px}.heroNote span{font-size:11px;margin-top:16px}.heroButton{left:18px;bottom:55px;width:235px;height:43px;font-size:18px}.format{min-height:650px;padding:25px 18px}.formatStar{display:none}.format h2{right:18px;top:35px;font-size:52px}.formatCard{left:18px;top:175px;width:calc(100% - 36px);height:170px;border-radius:28px;padding:20px}.formatCard strong{font-size:31px}.formatCard span{font-size:17px;margin-top:12px}.formatFacts{left:18px;right:18px;top:375px;grid-template-columns:1fr;gap:18px}.formatFacts p,.formatFacts p:nth-child(2),.formatFacts p:nth-child(3){font-size:15px;text-align:left}.more{font-size:12px;bottom:20px}.audience{min-height:770px;padding:55px 18px}.audienceIntro{position:static;display:block}.audienceIntro h2{font-size:37px}.audienceIntro p{margin-top:24px!important;font-size:16px}.audienceList{position:static;margin-top:42px}.audienceList article,.audienceList article:last-child{border-radius:22px 22px 0 0}.audienceList article:last-child{border-radius:22px}.audienceList button{height:82px;padding:0 14px;grid-template-columns:38px 1fr 24px}.audienceList button span{font-size:22px}.audienceList button b{font-size:21px;letter-spacing:-1px}.audienceList button i{font-size:20px}.audienceList article>div p{padding:0 52px;font-size:14px}.audienceList .open>div p{padding-bottom:18px}.income{position:static;margin-top:45px!important;width:280px;font-size:20px}.program,.tariffs{min-height:auto;padding:65px 18px}.programFigureTop{top:-115px}.program>h2,.tariffs header h2{font-size:54px}.programList{margin-top:55px}.programList article,.programList article:nth-child(even){grid-template-columns:48px 1fr;margin:0 0 58px;gap:8px}.programList article>span{font-size:42px}.programList h3{font-size:23px;padding:7px 14px}.programList p{font-size:15px!important;line-height:1.05;margin:5px 0!important}.tariffs header{display:block}.tariffs header p{font-size:17px;text-align:left;margin-top:28px!important}.tariffTable{grid-template-columns:1fr;margin-top:40px;padding:0;background:transparent;box-shadow:none;gap:14px}.tariffLabels{display:none!important}.tariffTable>button{grid-template-rows:62px repeat(4,54px);border-radius:18px;background:#f0f0f0;overflow:hidden}.tariffTable h3{font-size:31px;margin:0;border-radius:18px}.tariffTable p{font-size:15px}.tariffTable .price{font-size:25px}.price small{font-size:10px}.deadline{margin-top:55px}.deadline h3{font-size:37px}.deadline>p{font-size:19px;margin:25px 0 12px!important}.clock{gap:5px}.clock b{width:calc(25% - 4px);height:82px;border-radius:9px;font-size:42px}.clock small{font-size:9px;margin-top:7px}.deadline>button{float:none;width:100%;height:48px;margin-top:30px;font-size:20px}.formSection{min-height:720px;padding:65px 18px}.formSection h2{font-size:52px}.formSection form{width:100%;margin-top:60px}.formSection form>label:not(.consent){grid-template-columns:75px 1fr;height:65px;font-size:16px}.formSection input,.formSection select{font-size:16px}.formSection .consent{font-size:11px;margin-top:15px}.consent input{width:16px;height:16px}.formSection form>button{width:155px;height:42px;margin-top:25px;font-size:17px}.contactStar{right:-330px;top:275px;width:690px;opacity:.32}.footer{height:auto;min-height:330px;grid-template-columns:1fr 1fr;padding:42px 18px;gap:28px}.footer>img{width:150px}.footer p,.footer a{font-size:12px}.scrollProgress{right:10px;top:auto;bottom:12px;width:164px;min-height:54px;grid-template-columns:1fr 42px;grid-template-rows:1fr 4px;gap:5px 8px;padding:8px 8px 7px 12px;border-radius:18px}.scrollProgress>span{font-size:11px}.scrollProgress>span small{margin-bottom:2px;font-size:7px}.scrollProgress>strong{width:42px;height:42px;font-size:13px}.scrollProgress>i{height:4px}}
 @media(max-width:700px){.program{overflow:visible}}
+
+/* Mobile frame from Figma: compact rhythm, four-column plans and unclipped copy. */
+@media(max-width:700px){
+  .hero{min-height:680px}
+  .breadcrumbs{display:none}
+  .hero h1{top:44px;font-size:34px;line-height:.88}
+  .heroStar{left:-95px;top:170px;width:350px}
+  .days{right:20px;top:245px;font-size:34px}
+  .days strong{width:35px;height:46px}
+  .heroNote{right:18px;bottom:125px;width:230px}
+  .heroNote strong{font-size:16px}
+  .heroNote span{margin-top:12px;font-size:9px}
+  .heroButton{left:18px;bottom:62px;width:170px;height:34px;font-size:14px}
+
+  .format{min-height:430px;padding:20px 18px}
+  .format h2{top:20px;font-size:36px}
+  .formatCard{top:95px;height:95px;padding:14px;border-radius:18px}
+  .formatCard strong{font-size:19px}
+  .formatCard span{margin-top:8px;font-size:11px}
+  .formatFacts{top:225px;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .formatFacts p,.formatFacts p:nth-child(2),.formatFacts p:nth-child(3){font-size:9px;line-height:.95;text-align:left}
+  .formatFacts p:nth-child(2){text-align:center}
+  .formatFacts p:nth-child(3){text-align:right}
+  .more{bottom:16px;font-size:10px}
+
+  .audience{min-height:600px;padding:38px 18px;overflow:visible}
+  .audienceIntro h2{font-size:30px;line-height:.92;white-space:normal}
+  .audienceIntro p{margin-top:18px!important;font-size:12px;line-height:.95}
+  .audienceList{margin-top:28px}
+  .audienceList article,.audienceList article:last-child{position:relative;border-radius:15px 15px 0 0}
+  .audienceList article:last-child{border-radius:15px}
+  .audienceList button{position:relative;z-index:2;height:58px;padding:0 12px;grid-template-columns:30px minmax(0,1fr) 18px}
+  .audienceList button span{font-size:17px}
+  .audienceList button b{min-width:0;font-size:16px;line-height:.88;letter-spacing:-.5px;overflow-wrap:anywhere}
+  .audienceList button i{font-size:15px}
+  .audienceList article>div p{padding:0 42px;font-size:12px}
+  .audienceList .open>div p{padding-bottom:13px}
+  .income{margin-top:32px!important;width:250px;font-size:16px}
+
+  .program{padding:45px 18px 35px}
+  .programFigureTop{left:45%;top:-85px;width:52%;height:auto}
+  .programFigureSide{left:8px;top:205px;width:44px;height:auto;object-fit:contain}
+  .programClaudeIcon{left:auto;right:8px;top:455px;width:44px;height:auto}
+  .program>h2,.tariffs header h2{font-size:38px}
+  .programList{margin-top:42px}
+  .programList article,.programList article:nth-child(even){grid-template-columns:40px minmax(0,1fr);gap:8px;margin:0 0 45px}
+  .programList article>span{font-size:36px}
+  .programList h3{margin-bottom:7px;padding:5px 12px;font-size:17px}
+  .programList p{margin:3px 0!important;font-size:12px!important;line-height:1.02}
+
+  .tariffs{padding:45px 12px 55px;overflow:hidden}
+  .tariffs header{display:grid;grid-template-columns:.8fr 1.2fr;gap:10px}
+  .tariffs header p{margin-top:0!important;font-size:10px;line-height:.95;text-align:right}
+  .tariffTable{grid-template-columns:.8fr repeat(3,1fr);gap:0;margin-top:34px;padding:3px;border-radius:10px;background:#eee;box-shadow:0 1px 3px #0003,inset 0 1px 2px #fff}
+  .tariffLabels{display:grid!important}
+  .tariffTable>div,.tariffTable>button{grid-template-rows:44px repeat(4,48px);gap:1px;overflow:visible;border-radius:0;background:transparent}
+  .tariffTable h3{margin:1px;padding:0 5px;border-radius:8px;font-size:13px;box-shadow:0 0 4px #d77655,0 1px 2px #0005}
+  .tariffTable p{margin:1px!important;border-radius:8px;font-size:8px;line-height:.9}
+  .tariffTable p small{margin-top:2px;font-size:5px}
+  .tariffTable .tariffLabels h3{font-size:12px}
+  .tariffTable .tariffLabels p{padding-left:0;font-size:8px}
+  .tariffTable .price{font-size:13px}
+  .price small{font-size:6px!important}
+  .deadline{margin-top:45px}
+  .deadline h3{font-size:28px}
+  .deadline>p{margin:16px 0 8px!important;font-size:14px}
+  .clock{gap:5px}
+  .clock b{height:72px;font-size:36px}
+  .deadline>button{float:right;width:160px;height:34px;margin-top:22px;font-size:14px}
+
+  .formSection{min-height:590px;padding:42px 18px}
+  .formSection h2{font-size:40px}
+  .formSection form{width:100%;margin-top:48px}
+  .formSection form>label:not(.consent){grid-template-columns:66px 1fr;height:50px;font-size:13px}
+  .formSection input,.formSection select{font-size:13px}
+  .formSection .consent{margin-top:10px;font-size:8px}
+  .formSection form>button{width:120px;height:32px;margin-top:18px;font-size:13px}
+  .contactStar{right:-155px;top:150px;width:360px;opacity:1}
+}
+
+@media(min-width:701px) and (max-width:1024px){
+  .audienceList button,.tariffTable button{position:relative;z-index:2}
+  .audienceList button b{min-width:0;overflow-wrap:anywhere}
+}
 @media(prefers-reduced-motion:reduce){.page *{scroll-behavior:auto!important}.audienceList article>div{transition:none}.motionReady [data-reveal],.motionReady [data-reveal][data-reveal-figure]{opacity:1!important;filter:none!important;translate:none!important;scale:1!important;rotate:0deg!important;transition:none!important}.scrollProgress{transition:none}}

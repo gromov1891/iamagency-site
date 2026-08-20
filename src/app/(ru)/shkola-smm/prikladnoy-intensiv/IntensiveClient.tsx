@@ -58,7 +58,7 @@ export default function IntensiveClient({ locale = "ru" }: { locale?: "ru" | "en
   const audiences = isEnglish ? EN_AUDIENCES : AUDIENCES;
   const program = isEnglish ? EN_PROGRAM : PROGRAM;
   const tariffs = isEnglish ? EN_TARIFFS : TARIFFS;
-  const [tariff, setTariff] = useState(isEnglish ? "Core" : "База");
+  const [tariff, setTariff] = useState(isEnglish ? "Premium" : "Премиум");
   const [openAudience, setOpenAudience] = useState<number | null>(null);
   const [remaining, setRemaining] = useState(0);
   const [sending, setSending] = useState(false);
@@ -182,7 +182,7 @@ export default function IntensiveClient({ locale = "ru" }: { locale?: "ru" | "en
 
     <section className={`${styles.canvas} ${styles.audience}`} id="audience">
       <div data-reveal className={styles.audienceIntro}><h2>{isEnglish ? <>Who should take<br />the intensive?</> : <>Кому рекомендуем пройти<br />интенсив?</>}</h2><p><b>{isEnglish ? "SMM specialists, agencies and businesses" : "SMM-специалисты, агентства и бизнесы"}</b><br /><span>{isEnglish ? <>already using AI for copy and routine tasks,<br />but ready to move to the next<br />level</> : <>которые уже пробовали ИИ для текстов<br />и рутины, но хотят выйти на новый<br />уровень</>}</span></p></div>
-      <div className={styles.audienceList}>{audiences.map(([title, text], index) => <article data-reveal key={title} className={openAudience === index ? styles.open : ""}><button type="button" aria-expanded={openAudience === index} onClick={() => setOpenAudience(openAudience === index ? null : index)}><span>{pad(index + 1)}</span><b>{title}</b><i>{openAudience === index ? "↖" : "↘"}</i></button><div><p>{text}</p></div></article>)}</div>
+      <div className={styles.audienceList}>{audiences.map(([title, text], index) => <article data-reveal key={title} className={openAudience === index ? styles.open : ""}><button type="button" aria-expanded={openAudience === index} aria-controls={`audience-answer-${index}`} onClick={() => setOpenAudience(current => current === index ? null : index)}><span>{pad(index + 1)}</span><b>{title}</b><i>{openAudience === index ? "↖" : "↘"}</i></button><div id={`audience-answer-${index}`}><p>{text}</p></div></article>)}</div>
       <p data-reveal className={styles.income}><b>{isEnglish ? "×3–5 to your current fee" : "×3-5 к текущему чеку"}</b><span>{isEnglish ? "is what people achieve when they integrate" : "делают те, кто внедряют"}</span><em>Claude</em> {isEnglish ? "into their work and life" : "в свою работу и жизнь"}</p>
     </section>
 
