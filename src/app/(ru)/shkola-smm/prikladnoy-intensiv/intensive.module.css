@@ -270,15 +270,15 @@
   .programList article:nth-child(2){left:min(115px,30.67cqw);top:min(279px,74.4cqw)}
   .programList article:nth-child(3){left:min(71px,18.93cqw);top:min(432px,115.2cqw)}
   .programList article:nth-child(4){left:min(21px,5.6cqw);top:min(593px,158.13cqw)}
-  .programList article>span{font-size:min(37.57px,10.02cqw);line-height:.86;letter-spacing:min(-1.5px,-.4cqw)}
+  .programList article>span{font-size:min(37.57px,10.02cqw);line-height:.86;letter-spacing:normal}
   .programList article:nth-child(1)>div{transform:translateX(max(-7.62px,-2.03cqw))}
   .programList article:nth-child(2)>div{transform:translateX(max(-.76px,-.2cqw))}
-  .programList h3{display:flex;align-items:center;box-sizing:border-box;height:min(22.1px,5.89cqw);margin:min(3.98px,1.06cqw) 0 min(7.99px,2.13cqw);padding:0 min(7.97px,2.13cqw);border-radius:min(11.05px,2.95cqw);font-size:min(14.49px,3.86cqw);line-height:1;white-space:nowrap}
+  .programList h3{display:flex;align-items:center;box-sizing:border-box;height:min(22.1px,5.89cqw);margin:min(3.98px,1.06cqw) 0 min(7.99px,2.13cqw);padding:0 min(7.97px,2.13cqw);border-radius:min(11.05px,2.95cqw);background:linear-gradient(270deg,#d77655 24%,#1c1c1c 100%);font-size:min(14.49px,3.86cqw);line-height:1;letter-spacing:normal;white-space:nowrap}
   .programList article:nth-child(1) h3{width:min(114.47px,30.53cqw)}
   .programList article:nth-child(2) h3{width:min(84.77px,22.61cqw)}
   .programList article:nth-child(3) h3{width:min(150.7px,40.19cqw)}
   .programList article:nth-child(4) h3{width:min(93.83px,25.02cqw)}
-  .programList p{width:min(222.79px,59.41cqw);margin:0 0 min(7.99px,2.13cqw)!important;font-size:min(9.42px,2.51cqw)!important;line-height:.86;letter-spacing:min(-.49px,-.13cqw)}
+  .programList p{width:min(222.79px,59.41cqw);margin:0 0 min(7.99px,2.13cqw)!important;font-size:min(9.42px,2.51cqw)!important;line-height:.86;letter-spacing:normal;text-transform:lowercase}
   .programList p b{font-weight:400}
   .programFigureTop{left:min(256.95px,68.52cqw);top:max(-91px,-24.27cqw);width:min(166.99px,44.53cqw);height:min(166.99px,44.53cqw);transform:rotate(30deg);transform-origin:top left}
   .programFigureSide{left:max(-44px,-11.73cqw);top:min(319.5px,85.2cqw);width:min(73.58px,19.62cqw);height:min(119.48px,31.86cqw);transform:rotate(-33deg);transform-origin:top left}
