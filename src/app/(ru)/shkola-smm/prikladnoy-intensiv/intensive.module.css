@@ -225,23 +225,28 @@
   .heroNote span{margin-top:2.93cqw;font-size:2.37cqw;line-height:.86}
   .heroButton{left:3.53cqw;bottom:auto;top:178.99cqw;width:35.45cqw;height:5.51cqw;border-radius:3.73cqw;font-size:3.02cqw}
 
-  .format{height:148.27cqw;min-height:0;aspect-ratio:auto;overflow:hidden}
+  .format{height:min(556px,148.27cqw);min-height:0;aspect-ratio:auto;overflow:hidden}
   .formatStar{display:none}
-  .format h2{right:5.07cqw;top:6.67cqw;font-size:8.73cqw;line-height:.86}
-  .formatCard{left:7.47cqw;top:29.07cqw;width:88.27cqw;height:42.13cqw;padding:0;border-radius:4.06cqw;transform:none}
-  .formatCard strong{font-size:5.39cqw;line-height:1}
-  .formatCard span{margin-top:3.2cqw;font-size:3.73cqw;line-height:.86}
-  .formatFacts{left:0;right:0;top:80cqw;display:block}
-  .formatFacts p,.formatFacts p:nth-child(2),.formatFacts p:nth-child(3){position:absolute;margin:0!important;font-size:3.47cqw;line-height:.86;letter-spacing:-.13cqw;text-align:left}
-  .formatFacts p:nth-child(1){left:5.33cqw;top:0;width:34.13cqw}
-  .formatFacts p:nth-child(2){left:36.8cqw;top:18.4cqw;width:37.87cqw;text-align:center}
-  .formatFacts p:nth-child(3){left:70.4cqw;top:34.13cqw;width:24.27cqw;text-align:right}
-  .more{bottom:auto;top:137.07cqw;font-size:3.47cqw;line-height:.86}
+  .format h2{right:min(19px,5.07cqw);top:min(25px,6.67cqw);font-size:min(32.75px,8.73cqw);line-height:.86}
+  .formatCard{left:min(28px,7.47cqw);top:min(109px,29.07cqw);width:min(331px,88.27cqw);height:min(158px,42.13cqw);padding:0;border-radius:min(15.22px,4.06cqw);transform:none}
+  .formatCard strong{font-size:min(20.2px,5.39cqw);font-weight:400;line-height:1}
+  .formatCard span{margin-top:min(12px,3.2cqw);font:400 min(14px,3.73cqw)/.86 Inter,sans-serif}
+  .formatFacts{left:0;right:0;top:min(300px,80cqw);display:block}
+  .formatFacts p,.formatFacts p:nth-child(2),.formatFacts p:nth-child(3){position:absolute;margin:0!important;color:var(--gray);font:500 min(13px,3.47cqw)/.86 Inter,sans-serif;letter-spacing:normal;text-align:left}
+  .formatFacts p b{color:var(--ink);font-weight:500}
+  .formatFacts p span{color:var(--gray)}
+  .formatFacts p:nth-child(1){left:min(20px,5.33cqw);top:0;width:min(128px,34.13cqw)}
+  .formatFacts p:nth-child(2){left:min(138px,36.8cqw);top:min(69px,18.4cqw);width:min(142px,37.87cqw);text-align:left}
+  .formatFacts p:nth-child(3){left:min(264px,70.4cqw);top:min(128px,34.13cqw);width:min(91px,24.27cqw);text-align:left}
+  .more{bottom:auto;top:min(514px,137.07cqw);font:400 min(13px,3.47cqw)/.86 Inter,sans-serif}
 
   .audience{height:min(510px,136cqw);min-height:0;aspect-ratio:auto;padding:0;overflow:visible}
   .audienceIntro{position:absolute;left:0;top:0;display:block;width:100%}
   .audienceIntro h2{position:absolute;left:min(20px,5.33cqw);top:min(25px,6.67cqw);width:min(271.7px,72.45cqw);font-size:min(20.2px,5.39cqw);line-height:1;white-space:normal}
-  .audienceIntro p{position:absolute;left:min(183px,48.8cqw);top:min(69px,18.4cqw);width:min(168.81px,45.01cqw);margin:0!important;font-size:min(13px,3.47cqw);line-height:.86;letter-spacing:normal}
+  .audienceIntro p{position:absolute;left:min(183px,48.8cqw);top:min(69px,18.4cqw);width:min(168.81px,45.01cqw);margin:0!important;text-align:justify;font:400 min(13px,3.47cqw)/.86 Inter,sans-serif;letter-spacing:normal}
+  .audienceIntro p b{display:block;margin-bottom:min(4px,1.07cqw);font-weight:500}
+  .audienceIntro p br{display:none}
+  .audienceIntro p span{font-weight:400}
   .audienceList{position:absolute;left:min(20px,5.33cqw);right:auto;top:min(189px,50.4cqw);width:min(335px,89.33cqw);margin:0}
   .audienceList article,.audienceList article:last-child{border:min(.63px,.17cqw) solid var(--gray);border-bottom:0;border-radius:min(13.22px,3.53cqw) min(13.22px,3.53cqw) 0 0;overflow:hidden}
   .audienceList article:last-child{border-bottom:min(.63px,.17cqw) solid var(--gray);border-radius:min(13.22px,3.53cqw)}
@@ -305,15 +310,15 @@
   .deadline>button{float:right;width:29.32cqw;height:4.55cqw;margin-top:13.07cqw;border-radius:3.08cqw;font-size:2.5cqw;line-height:.86}
   .tariffFigure{left:-19cqw;top:139cqw;width:58cqw;height:58cqw;object-fit:contain;transform:rotate(-45deg);opacity:1}
 
-  .formSection{position:relative;height:123.2cqw;min-height:0;aspect-ratio:auto;padding:0;overflow:hidden}
-  .formSection h2{position:absolute;left:6.13cqw;top:6.4cqw;font-size:8.73cqw;line-height:.86;letter-spacing:-.22cqw}
-  .formSection form{position:absolute;left:6.92cqw;top:36.27cqw;width:87.48cqw;margin:0}
-  .formSection form>label:not(.consent){display:flex;flex-direction:column;align-items:stretch;justify-content:space-between;height:14.13cqw;padding:0 0 2.93cqw;border-bottom:.23cqw solid var(--gray);font-size:3.04cqw;line-height:.86}
-  .formSection input,.formSection select{width:100%;padding:0;border:0;font-size:3.04cqw;line-height:.86}
-  .formSection .consent{height:4.53cqw;margin-top:2.13cqw;gap:1.07cqw;font-size:1.87cqw;line-height:1}
-  .consent input{width:2.4cqw;height:2.4cqw}
-  .formSection form>button{width:21.51cqw;height:4.69cqw;margin-top:2.4cqw;border-radius:6.93cqw;font-size:2.81cqw;line-height:.86}
-  .contactStar{left:88.96cqw;right:auto;top:-3.53cqw;width:37.13cqw;height:37.18cqw;transform:rotate(22deg);transform-origin:top left;opacity:1}
+  .formSection{position:relative;height:min(487px,129.87cqw);min-height:0;aspect-ratio:auto;padding:0;overflow:hidden}
+  .formSection h2{position:absolute;left:min(20px,5.33cqw);top:min(50.24px,13.4cqw);font-size:min(32.75px,8.73cqw);font-weight:400;line-height:.86;letter-spacing:normal}
+  .formSection form{position:absolute;left:min(22.96px,6.12cqw);top:min(162.3px,43.28cqw);width:min(328.04px,87.48cqw);margin:0}
+  .formSection form>label:not(.consent){display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;height:min(38.19px,10.18cqw);margin:0 0 min(14.86px,3.96cqw);padding:0;border-bottom:min(.85px,.23cqw) solid var(--gray);font:400 min(11.41px,3.04cqw)/.86 Inter,sans-serif}
+  .formSection input,.formSection select{width:100%;margin-top:min(13.09px,3.49cqw);padding:0;border:0;font:400 min(11.41px,3.04cqw)/.86 Inter,sans-serif}
+  .formSection .consent{height:min(17px,4.53cqw);margin-top:min(2px,.53cqw);gap:min(4px,1.07cqw);font:400 min(7px,1.87cqw)/1 Inter,sans-serif}
+  .consent input{width:min(9px,2.4cqw);height:min(9px,2.4cqw);margin:0}
+  .formSection form>button{position:absolute;left:0;top:min(249.94px,66.65cqw);width:min(80.68px,21.51cqw);height:min(17.6px,4.69cqw);margin:0;border-radius:min(26px,6.93cqw);font:400 min(10.53px,2.81cqw)/.86 Inter,sans-serif}
+  .contactStar{left:min(330.6px,88.16cqw);right:auto;top:min(13px,3.47cqw);width:min(139.23px,37.13cqw);height:min(139.43px,37.18cqw);transform:rotate(22deg);transform-origin:top left;opacity:1}
   .sent{position:absolute;left:6.13cqw;top:36.27cqw;margin:0!important;font-size:3.47cqw}
   .error{font-size:2.13cqw}
 }
