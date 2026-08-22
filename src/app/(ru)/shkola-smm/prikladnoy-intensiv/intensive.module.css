@@ -262,20 +262,27 @@
   .audience:has(.open){height:min(565px,150.67cqw)}
   .audience:has(.open) .income{top:min(475.24px,126.73cqw)}
 
-  .program{position:relative;height:197.87cqw;min-height:0;padding:0;overflow:visible}
-  .program>h2{position:absolute;left:5.6cqw;top:7.2cqw;font-size:8.73cqw;line-height:.86}
+  .program{position:relative;height:min(742px,197.87cqw);min-height:0;padding:0;overflow:visible}
+  .program>h2{position:absolute;left:min(21px,5.6cqw);top:min(27px,7.2cqw);font-size:min(32.75px,8.73cqw);line-height:.86}
   .programList{position:absolute;inset:0;margin:0}
-  .programList article,.programList article:nth-child(even){position:absolute;display:grid;width:72.94cqw;grid-template-columns:11.47cqw minmax(0,1fr);gap:2.07cqw;margin:0}
-  .programList article:nth-child(1){left:5.33cqw;top:29.33cqw}
-  .programList article:nth-child(2){left:32.27cqw;top:74.4cqw}
-  .programList article:nth-child(3){left:18.93cqw;top:114.93cqw}
-  .programList article:nth-child(4){left:5.6cqw;top:157.87cqw}
-  .programList article>span{font-size:10.02cqw;line-height:.86;letter-spacing:-.4cqw}
-  .programList h3{height:5.89cqw;margin:1.06cqw 0 2.13cqw;padding:1.06cqw 2.13cqw;border-radius:2.95cqw;font-size:3.86cqw;line-height:1;white-space:nowrap}
-  .programList p{width:59.41cqw;margin:0 0 2.13cqw!important;font-size:2.51cqw!important;line-height:.86;letter-spacing:-.13cqw}
-  .programFigureTop{left:68.52cqw;top:-24.27cqw;width:44.53cqw;height:44.53cqw;transform:rotate(30deg);transform-origin:top left}
-  .programFigureSide{left:-11.73cqw;top:85.2cqw;width:19.62cqw;height:31.86cqw;transform:rotate(-33deg);transform-origin:top left}
-  .programClaudeIcon{left:81.96cqw;right:auto;top:157.33cqw;width:11.69cqw;height:11.69cqw;transform:rotate(12deg);transform-origin:top left}
+  .programList article,.programList article:nth-child(even){position:absolute;display:grid;width:min(273.53px,72.94cqw);grid-template-columns:min(43.01px,11.47cqw) minmax(0,1fr);gap:min(7.76px,2.07cqw);margin:0}
+  .programList article:nth-child(1){left:min(20px,5.33cqw);top:min(110px,29.33cqw)}
+  .programList article:nth-child(2){left:min(115px,30.67cqw);top:min(279px,74.4cqw)}
+  .programList article:nth-child(3){left:min(71px,18.93cqw);top:min(432px,115.2cqw)}
+  .programList article:nth-child(4){left:min(21px,5.6cqw);top:min(593px,158.13cqw)}
+  .programList article>span{font-size:min(37.57px,10.02cqw);line-height:.86;letter-spacing:min(-1.5px,-.4cqw)}
+  .programList article:nth-child(1)>div{transform:translateX(max(-7.62px,-2.03cqw))}
+  .programList article:nth-child(2)>div{transform:translateX(max(-.76px,-.2cqw))}
+  .programList h3{display:flex;align-items:center;box-sizing:border-box;height:min(22.1px,5.89cqw);margin:min(3.98px,1.06cqw) 0 min(7.99px,2.13cqw);padding:0 min(7.97px,2.13cqw);border-radius:min(11.05px,2.95cqw);font-size:min(14.49px,3.86cqw);line-height:1;white-space:nowrap}
+  .programList article:nth-child(1) h3{width:min(114.47px,30.53cqw)}
+  .programList article:nth-child(2) h3{width:min(84.77px,22.61cqw)}
+  .programList article:nth-child(3) h3{width:min(150.7px,40.19cqw)}
+  .programList article:nth-child(4) h3{width:min(93.83px,25.02cqw)}
+  .programList p{width:min(222.79px,59.41cqw);margin:0 0 min(7.99px,2.13cqw)!important;font-size:min(9.42px,2.51cqw)!important;line-height:.86;letter-spacing:min(-.49px,-.13cqw)}
+  .programList p b{font-weight:400}
+  .programFigureTop{left:min(256.95px,68.52cqw);top:max(-91px,-24.27cqw);width:min(166.99px,44.53cqw);height:min(166.99px,44.53cqw);transform:rotate(30deg);transform-origin:top left}
+  .programFigureSide{left:max(-44px,-11.73cqw);top:min(319.5px,85.2cqw);width:min(73.58px,19.62cqw);height:min(119.48px,31.86cqw);transform:rotate(-33deg);transform-origin:top left}
+  .programClaudeIcon{left:min(307.35px,81.96cqw);right:auto;top:min(590px,157.33cqw);width:min(43.84px,11.69cqw);height:min(43.84px,11.69cqw);transform:rotate(12deg);transform-origin:top left}
 
   .tariffs{position:relative;height:217.33cqw;min-height:0;padding:0;overflow:visible}
   .tariffs header{display:block;position:static}
