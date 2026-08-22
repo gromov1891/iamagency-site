@@ -64,8 +64,8 @@
 /* Mobile frame from Figma: compact rhythm, four-column plans and unclipped copy. */
 @media(max-width:700px){
   .hero{min-height:680px}
-  .breadcrumbs{display:none}
-  .hero h1{top:44px;font-size:34px;line-height:.88}
+  .breadcrumbs{display:flex;left:18px;top:20px;gap:5px;font-size:8px;line-height:1;letter-spacing:-.2px;white-space:nowrap}
+  .hero h1{top:58px;font-size:34px;line-height:.88}
   .heroStar{left:-95px;top:170px;width:350px}
   .days{right:20px;top:245px;font-size:34px}
   .days strong{width:35px;height:46px}
