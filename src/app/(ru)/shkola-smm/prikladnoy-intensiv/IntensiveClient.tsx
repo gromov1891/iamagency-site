@@ -14,8 +14,8 @@ import styles from "./intensive.module.css";
 const DEADLINE = new Date("2026-08-27T23:59:59+03:00").getTime();
 
 const AUDIENCES = [
-  ["Фрилансер / SMM-специалист в digital", "Ускоряете рутину — отчёты, сбор статистики, типовые тексты — и глубже копаете в стратегию и аналитику. Берёте больше проектов или поднимаете чек. Освобождаете часы каждую неделю и вкладываете их в клиентов."],
-  ["SMM- или маркетинговое агентство", "Покупаете доступ на тарифе «Премиум» — материалы остаются у вас навсегда. Один специалист проходит интенсив, выполняет практические задания и передаёт знания остальной команде. Один тариф — прокачана вся команда."],
+  ["Фрилансер / СММ-специалист в Digital", "Ускоряете рутину — отчёты, сбор статистики, типовые тексты — и глубже копаете в стратегию и аналитику. Берёте больше проектов или поднимаете чек. Освобождаете часы каждую неделю и вкладываете их в клиентов."],
+  ["СММ- или маркетинговое агентство", "Покупаете доступ на тарифе «Премиум» — материалы остаются у вас навсегда. Один специалист проходит интенсив, выполняет практические задания и передаёт знания остальной команде. Один тариф — прокачана вся команда."],
   ["Предприниматель со своим продуктом", "Закрываете часть SMM-задач самостоятельно, без подрядчика, но автоматизированно. Экономите бюджет на команду или агентство и заодно лучше понимаете, как ваш бизнес выглядит в соцсетях."],
 ] as const;
 
@@ -181,9 +181,9 @@ export default function IntensiveClient({ locale = "ru" }: { locale?: "ru" | "en
     </section>
 
     <section className={`${styles.canvas} ${styles.audience}`} id="audience">
-      <div data-reveal className={styles.audienceIntro}><h2>{isEnglish ? <>Who should take<br />the intensive?</> : <>Кому рекомендуем пройти<br />интенсив?</>}</h2><p><b>{isEnglish ? "SMM specialists, agencies and businesses" : "SMM-специалисты, агентства и бизнесы"}</b><br /><span>{isEnglish ? <>already using AI for copy and routine tasks,<br />but ready to move to the next<br />level</> : <>которые уже пробовали ИИ для текстов<br />и рутины, но хотят выйти на новый<br />уровень</>}</span></p></div>
-      <div className={styles.audienceList}>{audiences.map(([title, text], index) => <article data-reveal key={title} className={openAudience === index ? styles.open : ""}><button type="button" aria-expanded={openAudience === index} aria-controls={`audience-answer-${index}`} onClick={() => setOpenAudience(current => current === index ? null : index)}><span>{pad(index + 1)}</span><b>{title}</b><i aria-hidden="true" /></button><div id={`audience-answer-${index}`}><p>{text}</p></div></article>)}</div>
-      <p data-reveal className={styles.income}><b>{isEnglish ? "×3–5 to your current fee" : "×3-5 к текущему чеку"}</b><span>{isEnglish ? "is what people achieve when they integrate" : "делают те, кто внедряют"}</span><em>Claude</em> {isEnglish ? "into their work and life" : "в свою работу и жизнь"}</p>
+      <div data-reveal className={styles.audienceIntro}><h2>{isEnglish ? "Who should take the intensive?" : "Кому рекомендуем пройти интенсив?"}</h2><p><b>{isEnglish ? "SMM specialists, agencies and businesses" : "Смм-специалисты, агентства и бизнесы"}</b><br /><span>{isEnglish ? "already using AI for copy and routine tasks, but ready to move to the next level" : "которые уже пробовали ИИ для текстов и рутины, но хотят выйти на новый уровень"}</span></p></div>
+      <div className={styles.audienceList}>{audiences.map(([title, text], index) => <article data-reveal key={title} className={openAudience === index ? styles.open : ""}><button type="button" aria-expanded={openAudience === index} aria-controls={`audience-answer-${index}`} onClick={() => setOpenAudience(current => current === index ? null : index)}><span>{pad(index + 1)}</span><b>{index === 0 ? <>{isEnglish ? "Freelancer /" : "Фрилансер /"}<br />{isEnglish ? "SMM specialist in digital" : "СММ-специалист в Digital"}</> : title}</b><i aria-hidden="true" /></button><div id={`audience-answer-${index}`}><p>{text}</p></div></article>)}</div>
+      <p data-reveal className={styles.income}><b>{isEnglish ? "×3–5 to your current fee" : "×3-5 к текущему чеку"}</b><span>{isEnglish ? "is what people achieve when they integrate" : "делают те, кто внедряют"}</span><span><em>Claude</em> {isEnglish ? "into their work and life" : "в свою работу и жизнь"}</span></p>
     </section>
 
     <section className={`${styles.canvas} ${styles.program}`} id="program">
