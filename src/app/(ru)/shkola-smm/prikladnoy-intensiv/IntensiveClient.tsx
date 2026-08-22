@@ -14,15 +14,15 @@ import styles from "./intensive.module.css";
 const DEADLINE = new Date("2026-08-27T23:59:59+03:00").getTime();
 
 const AUDIENCES = [
-  ["Фрилансер / SMM-специалист в digital", "Ускорите анализ, стратегию, контент и отчёты. Освободите время для новых проектов и более глубокой работы с клиентами."],
-  ["SMM- или маркетинговое агентство", "Встройте Claude в процессы команды — от исследования ниши до воронок и аналитики — без раздувания штата."],
-  ["Предприниматель со своим продуктом", "Научитесь ставить задачи Claude для маркетинга, находить точки роста и превращать данные в решения для бизнеса."],
+  ["Фрилансер / SMM-специалист в digital", "Ускоряете рутину — отчёты, сбор статистики, типовые тексты — и глубже копаете в стратегию и аналитику. Берёте больше проектов или поднимаете чек. Освобождаете часы каждую неделю и вкладываете их в клиентов."],
+  ["SMM- или маркетинговое агентство", "Покупаете доступ на тарифе «Премиум» — материалы остаются у вас навсегда. Один специалист проходит интенсив, выполняет практические задания и передаёт знания остальной команде. Один тариф — прокачана вся команда."],
+  ["Предприниматель со своим продуктом", "Закрываете часть SMM-задач самостоятельно, без подрядчика, но автоматизированно. Экономите бюджет на команду или агентство и заодно лучше понимаете, как ваш бизнес выглядит в соцсетях."],
 ] as const;
 
 const EN_AUDIENCES = [
-  ["Freelancer / SMM specialist in digital", "Speed up research, strategy, content and reporting. Free up time for new projects and more valuable work with clients."],
-  ["SMM or marketing agency", "Integrate Claude into your team workflow — from market research to funnels and analytics — without expanding your headcount."],
-  ["Founder with their own product", "Learn to brief Claude for marketing, identify growth opportunities and turn data into confident business decisions."],
+  ["Freelancer / SMM specialist in digital", "Automate reports, statistics and routine copy, then go deeper into strategy and analytics. Take on more projects or raise your rates while freeing up hours for client work every week."],
+  ["SMM or marketing agency", "Choose Premium and keep the materials forever. One specialist completes the intensive and practical tasks, then passes the system to the rest of the team — one plan upgrades the whole agency."],
+  ["Founder with their own product", "Handle part of your SMM work independently and with automation. Save on contractors while gaining a clearer understanding of how your business performs on social media."],
 ] as const;
 
 const PROGRAM = [
