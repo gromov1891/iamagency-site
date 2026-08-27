@@ -222,8 +222,8 @@
 
   .hero{height:198.4cqw;min-height:0;aspect-ratio:auto;overflow:hidden}
   .breadcrumbs{display:flex;left:5.13cqw;top:18.67cqw;gap:1.33cqw;font-size:2.08cqw;line-height:.86;letter-spacing:-.08cqw;white-space:nowrap}
-  .hero h1{left:5.13cqw;top:28.13cqw;width:98.68cqw;font-size:8.73cqw;line-height:1;letter-spacing:-.22cqw}
-  .heroStar{left:-20.09cqw;top:45.28cqw;width:119.53cqw;height:119.7cqw;transform:none}
+  .hero h1{left:5.13cqw;top:28.13cqw;width:98.68cqw;font-family:Inter,sans-serif;font-size:8.73cqw;font-weight:400;line-height:1;letter-spacing:-.22cqw;font-synthesis:none;-webkit-font-smoothing:antialiased}
+  .heroStar{left:-20.09cqw;top:45.28cqw;width:119.53cqw;height:119.7cqw;transform:rotate(26deg);transform-origin:top left}
   .days{left:51.47cqw;right:auto;top:77.07cqw;font-size:8.73cqw;line-height:.86;letter-spacing:-.22cqw;white-space:nowrap}
   .days strong{width:7.41cqw;height:9.3cqw}
   .heroNote{left:58.13cqw;right:auto;bottom:auto;top:169.33cqw;width:36.57cqw;text-align:right}
@@ -235,7 +235,7 @@
   .formatStar{display:none}
   .format h2{right:min(19px,5.07cqw);top:min(25px,6.67cqw);font-size:min(32.75px,8.73cqw);line-height:.86}
   .formatCard{left:min(28px,7.47cqw);top:min(109px,29.07cqw);width:min(331px,88.27cqw);height:min(158px,42.13cqw);padding:0;border-radius:min(15.22px,4.06cqw);transform:none}
-  .formatCard strong{font-size:min(20.2px,5.39cqw);font-weight:400;line-height:1}
+  .formatCard strong{font-family:Inter,sans-serif;font-size:min(20.2px,5.39cqw);font-weight:400;line-height:1;letter-spacing:normal;font-synthesis:none;-webkit-font-smoothing:antialiased}
   .formatCard span{margin-top:min(12px,3.2cqw);font:400 min(14px,3.73cqw)/.86 Inter,sans-serif}
   .formatFacts{left:0;right:0;top:min(300px,80cqw);display:block}
   .formatFacts p,.formatFacts p:nth-child(2),.formatFacts p:nth-child(3){position:absolute;margin:0!important;color:var(--gray);font:500 min(13px,3.47cqw)/.86 Inter,sans-serif;letter-spacing:normal;text-align:left}
@@ -244,6 +244,7 @@
   .formatFacts p:nth-child(1){left:min(20px,5.33cqw);top:0;width:min(128px,34.13cqw)}
   .formatFacts p:nth-child(2){left:min(138px,36.8cqw);top:min(69px,18.4cqw);width:min(142px,37.87cqw);text-align:left}
   .formatFacts p:nth-child(3){left:min(264px,70.4cqw);top:min(128px,34.13cqw);width:min(91px,24.27cqw);text-align:left}
+  .formatFacts p:nth-child(3) b{white-space:nowrap}
   .more{bottom:auto;top:min(514px,137.07cqw);font:400 min(13px,3.47cqw)/.86 Inter,sans-serif}
 
   .audience{height:min(510px,136cqw);min-height:0;aspect-ratio:auto;padding:0;overflow:visible}
