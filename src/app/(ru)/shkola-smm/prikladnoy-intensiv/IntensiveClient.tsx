@@ -69,6 +69,12 @@ export default function IntensiveClient({ locale = "ru" }: { locale?: "ru" | "en
   const progressFrame = useRef<number | null>(null);
 
   useEffect(() => {
+    const roots = [document.documentElement, document.body];
+    roots.forEach((root) => root.classList.add("intensive-scroll-boundary"));
+    return () => roots.forEach((root) => root.classList.remove("intensive-scroll-boundary"));
+  }, []);
+
+  useEffect(() => {
     const update = () => setRemaining(Math.max(0, DEADLINE - Date.now()));
     const initial = window.setTimeout(update, 0);
     const timer = window.setInterval(update, 1000);

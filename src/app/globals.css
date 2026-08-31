@@ -124,6 +124,14 @@
 .case-hub-mobile-canvas { display: none; }
 
 html { scroll-behavior: smooth; }
+html.intensive-scroll-boundary {
+  background: #1c1c1c;
+  overscroll-behavior-y: none;
+}
+body.intensive-scroll-boundary {
+  background: #fff;
+  overscroll-behavior-y: none;
+}
 body {
   font-family: var(--font-sans);
   background: var(--color-bg);
