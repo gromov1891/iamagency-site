@@ -7,6 +7,7 @@ import Header from "./blocks/Header";
 import ServicesDropdown from "./blocks/ServicesDropdown";
 import SchoolDropdown from "./blocks/SchoolDropdown";
 import LeadModal from "./blocks/LeadModal";
+import IntensivePromoModal from "./blocks/IntensivePromoModal";
 import Analytics from "./blocks/Analytics";
 import SiteEnglishFooter from "./en/SiteEnglishFooter";
 
@@ -184,6 +185,7 @@ export default function SiteDocument({
         <ServicesDropdown />
         <SchoolDropdown />
         <LeadModal />
+        <IntensivePromoModal locale={locale} />
         <div className="site-shell">{children}</div>
         {locale === "en" ? <SiteEnglishFooter /> : null}
         <div
