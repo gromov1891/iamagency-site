@@ -22,9 +22,9 @@ export const metadata: Metadata = {
 };
 
 const TARIFF_OFFERS = [
-  { "@type": "Offer", name: "Start", price: "3990", priceCurrency: "RUB", availability: "https://schema.org/InStock", url: `${SITE}${PATH}#tariffs` },
-  { "@type": "Offer", name: "Core", price: "7990", priceCurrency: "RUB", availability: "https://schema.org/InStock", url: `${SITE}${PATH}#tariffs` },
-  { "@type": "Offer", name: "Premium", price: "13990", priceCurrency: "RUB", availability: "https://schema.org/InStock", url: `${SITE}${PATH}#tariffs` },
+  { "@type": "Offer", name: "Start", price: "7990", priceCurrency: "RUB", availability: "https://schema.org/InStock", url: `${SITE}${PATH}#tariffs` },
+  { "@type": "Offer", name: "Core", price: "11990", priceCurrency: "RUB", availability: "https://schema.org/InStock", url: `${SITE}${PATH}#tariffs` },
+  { "@type": "Offer", name: "Premium", price: "19990", priceCurrency: "RUB", availability: "https://schema.org/InStock", url: `${SITE}${PATH}#tariffs` },
 ];
 
 export default function AppliedClaudeIntensivePage() {

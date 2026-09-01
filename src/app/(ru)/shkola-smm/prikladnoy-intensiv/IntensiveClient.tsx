@@ -11,7 +11,7 @@ import { futerTabletHtml, futerTabletH } from "@/app/blocks/gen/futerTabletHtml"
 import { futerMobileHtml, futerMobileH } from "@/app/blocks/gen/futerMobileHtml";
 import styles from "./intensive.module.css";
 
-const DEADLINE = new Date("2026-08-27T23:59:59+03:00").getTime();
+const DEADLINE = new Date("2026-09-12T17:00:00+03:00").getTime();
 
 const AUDIENCES = [
   ["Фрилансер / СММ-специалист в Digital", "Ускоряете рутину — отчёты, сбор статистики, типовые тексты — и глубже копаете в стратегию и аналитику. Берёте больше проектов или поднимаете чек. Освобождаете часы каждую неделю и вкладываете их в клиентов."],
@@ -40,15 +40,15 @@ const EN_PROGRAM = [
 ];
 
 const TARIFFS = [
-  { id: "Старт", duration: "5 дней", chat: "Без чата", curator: "Без куратора", price: "3 990", old: "7 990" },
-  { id: "База", duration: "5 дней", chat: "Общий чат", chatNote: <>со всеми участниками. остается<br />у вас навсегда. дальше –<br />самостоятельное общение</>, curator: "Куратор в чате", curatorNote: <>на связи 7 дней после старта,<br />отвечает на все вопросы</>, price: "7 990", old: "11 990" },
-  { id: "Премиум", duration: "5 дней", durationNote: "+ бессрочный доступ", chat: "Общий чат", chatNote: <>со всеми участниками. остается<br />у вас навсегда. дальше –<br />самостоятельное общение</>, curator: "Личный куратор", curatorNote: <>индивидуально проверяет<br />и комментирует ваши задания<br />весь период</>, price: "13 990", old: "19 990" },
+  { id: "Старт", duration: "5 дней", chat: "Без чата", curator: "Без куратора", price: "7 990", old: "14 990" },
+  { id: "База", duration: "5 дней", chat: "Общий чат", chatNote: <>со всеми участниками. остается<br />у вас навсегда. дальше –<br />самостоятельное общение</>, curator: "Куратор в чате", curatorNote: <>на связи 7 дней после старта,<br />отвечает на все вопросы</>, price: "11 990", old: "22 990" },
+  { id: "Премиум", duration: "5 дней", durationNote: "+ бессрочный доступ", chat: "Общий чат", chatNote: <>со всеми участниками. остается<br />у вас навсегда. дальше –<br />самостоятельное общение</>, curator: "Личный куратор", curatorNote: <>индивидуально проверяет<br />и комментирует ваши задания<br />весь период</>, price: "19 990", old: "38 990" },
 ];
 
 const EN_TARIFFS = [
-  { id: "Start", duration: "5 days", chat: "No group chat", curator: "No curator", price: "3,990", old: "7,990" },
-  { id: "Core", duration: "5 days", chat: "Group chat", chatNote: <>with all participants; available<br />to you permanently for continued<br />independent communication</>, curator: "Chat curator", curatorNote: <>available for 7 days after launch<br />to answer every question</>, price: "7,990", old: "11,990" },
-  { id: "Premium", duration: "5 days", durationNote: "+ lifetime access", chat: "Group chat", chatNote: <>with all participants; available<br />to you permanently for continued<br />independent communication</>, curator: "Personal curator", curatorNote: <>personally reviews and comments<br />on your assignments throughout<br />the programme</>, price: "13,990", old: "19,990" },
+  { id: "Start", duration: "5 days", chat: "No group chat", curator: "No curator", price: "7,990", old: "14,990" },
+  { id: "Core", duration: "5 days", chat: "Group chat", chatNote: <>with all participants; available<br />to you permanently for continued<br />independent communication</>, curator: "Chat curator", curatorNote: <>available for 7 days after launch<br />to answer every question</>, price: "11,990", old: "22,990" },
+  { id: "Premium", duration: "5 days", durationNote: "+ lifetime access", chat: "Group chat", chatNote: <>with all participants; available<br />to you permanently for continued<br />independent communication</>, curator: "Personal curator", curatorNote: <>personally reviews and comments<br />on your assignments throughout<br />the programme</>, price: "19,990", old: "38,990" },
 ];
 
 function pad(value: number) { return String(Math.max(0, value)).padStart(2, "0"); }
@@ -207,7 +207,7 @@ export default function IntensiveClient({ locale = "ru" }: { locale?: "ru" | "en
         <div className={styles.tariffLabels}><h3>{isEnglish ? "Course" : "О курсе"}</h3><p>{isEnglish ? "Duration" : "Длительность"}</p><p>{isEnglish ? "Chat" : "Чат"}</p><p>{isEnglish ? "Curator" : "Куратор"}</p><p>{isEnglish ? "Price" : "Стоимость"}</p></div>
         {tariffs.map(item => <button key={item.id} type="button" className={tariff === item.id ? styles.selected : ""} onClick={() => chooseTariff(item.id)} aria-label={isEnglish ? `Choose ${item.id} plan for ${item.price} rubles` : `Выбрать тариф ${item.id} за ${item.price} рублей`}><h3>{item.id}<i aria-hidden="true" /></h3><p>{item.duration}{item.durationNote && <small>{item.durationNote}</small>}</p><p>{item.chat}{item.chatNote && <small>{item.chatNote}</small>}</p><p>{item.curator}{item.curatorNote && <small>{item.curatorNote}</small>}</p><p className={styles.price}>{item.price} ₽<small>{isEnglish ? "instead of" : "вместо"} {item.old} ₽</small></p></button>)}
       </div>
-      <div data-reveal className={styles.deadline}><h3>{isEnglish ? "Price valid" : "Цена действует"}<br /><span>{isEnglish ? "until 27 August" : "до 27 августа"}</span></h3><p>{isEnglish ? "price rises in" : "повышение через"}</p><div className={styles.clock}>{time.map((value, index) => <b key={index}>{pad(value)}<small>{(isEnglish ? ["days","hours","minutes","seconds"] : ["дней","часов","минут","секунд"])[index]}</small></b>)}</div><button type="button" onClick={() => chooseTariff(tariff)}>{isEnglish ? "Get the discount" : "Получить скидку"}</button></div>
+      <div data-reveal className={styles.deadline}><h3>{isEnglish ? "Price valid" : "Цена действует"}<br /><span>{isEnglish ? "until 12 September, 17:00 MSK" : "до 12 сентября, 17:00 МСК"}</span></h3><p>{isEnglish ? "price rises in" : "повышение через"}</p><div className={styles.clock}>{time.map((value, index) => <b key={index}>{pad(value)}<small>{(isEnglish ? ["days","hours","minutes","seconds"] : ["дней","часов","минут","секунд"])[index]}</small></b>)}</div><button type="button" onClick={() => chooseTariff(tariff)}>{isEnglish ? "Get the discount" : "Получить скидку"}</button></div>
     </section>
 
     <section className={`${styles.canvas} ${styles.formSection}`} id="intensive-form">

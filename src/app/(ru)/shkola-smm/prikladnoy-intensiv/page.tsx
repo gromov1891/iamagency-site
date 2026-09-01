@@ -8,7 +8,7 @@ const PATH = "/shkola-smm/prikladnoy-intensiv";
 
 export const metadata: Metadata = {
   title: { absolute: "Практический интенсив по Claude для SMM и маркетинга | I AM AGENCY" },
-  description: "Практический интенсив по Claude за 5 дней: стратегия, воронки, чат-боты и аналитика для SMM-специалистов, агентств и бизнеса. Три тарифа от 3 990 ₽." ,
+  description: "Практический интенсив по Claude за 5 дней: стратегия, воронки, чат-боты и аналитика для SMM-специалистов, агентств и бизнеса. Три тарифа от 7 990 ₽." ,
   alternates: getSeoAlternates(PATH),
   openGraph: {
     title: "Поднимаем чек с помощью Claude за 5 дней",
@@ -55,7 +55,7 @@ export default function AppliedIntensivePage() {
 }
 
 const TARIFF_OFFERS = [
-  { "@type": "Offer", name: "Старт", price: "3990", priceCurrency: "RUB", availability: "https://schema.org/InStock", url: `${SITE}${PATH}#tariffs` },
-  { "@type": "Offer", name: "База", price: "7990", priceCurrency: "RUB", availability: "https://schema.org/InStock", url: `${SITE}${PATH}#tariffs` },
-  { "@type": "Offer", name: "Премиум", price: "13990", priceCurrency: "RUB", availability: "https://schema.org/InStock", url: `${SITE}${PATH}#tariffs` },
+  { "@type": "Offer", name: "Старт", price: "7990", priceCurrency: "RUB", availability: "https://schema.org/InStock", url: `${SITE}${PATH}#tariffs` },
+  { "@type": "Offer", name: "База", price: "11990", priceCurrency: "RUB", availability: "https://schema.org/InStock", url: `${SITE}${PATH}#tariffs` },
+  { "@type": "Offer", name: "Премиум", price: "19990", priceCurrency: "RUB", availability: "https://schema.org/InStock", url: `${SITE}${PATH}#tariffs` },
 ];
