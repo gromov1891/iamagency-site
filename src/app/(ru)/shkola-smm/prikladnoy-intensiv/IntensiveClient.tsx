@@ -40,15 +40,15 @@ const EN_PROGRAM = [
 ];
 
 const TARIFFS = [
-  { id: "Старт", duration: "5 дней", chat: "Без чата", curator: "Без куратора", price: "7 990", old: "14 990" },
-  { id: "База", duration: "5 дней", chat: "Общий чат", chatNote: <>со всеми участниками. остается<br />у вас навсегда. дальше –<br />самостоятельное общение</>, curator: "Куратор в чате", curatorNote: <>на связи 7 дней после старта,<br />отвечает на все вопросы</>, price: "11 990", old: "22 990" },
-  { id: "Премиум", duration: "5 дней", durationNote: "+ бессрочный доступ", chat: "Общий чат", chatNote: <>со всеми участниками. остается<br />у вас навсегда. дальше –<br />самостоятельное общение</>, curator: "Личный куратор", curatorNote: <>индивидуально проверяет<br />и комментирует ваши задания<br />весь период</>, price: "19 990", old: "38 990" },
+  { id: "Старт", duration: "2 недели", chat: "Без чата", curator: "Без куратора", price: "7 990", old: "14 990" },
+  { id: "База", duration: "2 недели", chat: "Общий чат", chatNote: <>со всеми участниками. остаётся<br />у вас навсегда. дальше —<br />самостоятельное общение</>, curator: "Куратор в чате", curatorNote: <>на связи 7 дней после обучения,<br />отвечает на все вопросы</>, price: "11 990", old: "22 990" },
+  { id: "Премиум", duration: "Бессрочно", durationNote: "к материалам", chat: "Общий чат", chatNote: <>со всеми участниками. остаётся<br />у вас навсегда. дальше —<br />самостоятельное общение</>, curator: "Личный куратор", curatorNote: <>индивидуально проверяет<br />и комментирует ваши задания<br />весь интенсив</>, price: "19 990", old: "38 990" },
 ];
 
 const EN_TARIFFS = [
-  { id: "Start", duration: "5 days", chat: "No group chat", curator: "No curator", price: "7,990", old: "14,990" },
-  { id: "Core", duration: "5 days", chat: "Group chat", chatNote: <>with all participants; available<br />to you permanently for continued<br />independent communication</>, curator: "Chat curator", curatorNote: <>available for 7 days after launch<br />to answer every question</>, price: "11,990", old: "22,990" },
-  { id: "Premium", duration: "5 days", durationNote: "+ lifetime access", chat: "Group chat", chatNote: <>with all participants; available<br />to you permanently for continued<br />independent communication</>, curator: "Personal curator", curatorNote: <>personally reviews and comments<br />on your assignments throughout<br />the programme</>, price: "19,990", old: "38,990" },
+  { id: "Start", duration: "2 weeks", chat: "No group chat", curator: "No curator", price: "7,990", old: "14,990" },
+  { id: "Core", duration: "2 weeks", chat: "Group chat", chatNote: <>with all participants; available<br />to you permanently for continued<br />independent communication</>, curator: "Chat curator", curatorNote: <>available for 7 days after the course<br />to answer every question</>, price: "11,990", old: "22,990" },
+  { id: "Premium", duration: "Lifetime", durationNote: "course-material access", chat: "Group chat", chatNote: <>with all participants; available<br />to you permanently for continued<br />independent communication</>, curator: "Personal curator", curatorNote: <>personally reviews and comments<br />on your assignments throughout<br />the intensive</>, price: "19,990", old: "38,990" },
 ];
 
 function pad(value: number) { return String(Math.max(0, value)).padStart(2, "0"); }
@@ -182,7 +182,7 @@ export default function IntensiveClient({ locale = "ru" }: { locale?: "ru" | "en
       <img data-reveal data-reveal-figure className={styles.formatStar} src="/intensive/format-star.svg" alt="" />
       <h2 data-reveal>{isEnglish ? "Format" : "Формат"}</h2>
       <div data-reveal className={styles.formatCard}><strong>{isEnglish ? <>Pre-recorded lessons<br />with detailed<br />instructions</> : <>Записанные лекции<br />с подробными<br />инструкциями</>}</strong><span>{isEnglish ? <>complete them at your own pace<br />within one working week</> : <>вы проходите в своем темпе<br />за рабочую неделю</>}</span></div>
-      <div data-reveal className={styles.formatFacts}>{isEnglish ? <><p><span>Every lesson includes</span><br /><b>a practical assignment,</b><br /><span>to reinforce the topic</span></p><p><b>3 plans</b><br /><span>with different levels of support<br />for these 5 days</span></p><p><b>no filler,</b><br /><span>only what you can<br />put into practice</span></p></> : <><p><span>К каждой лекции идет</span><b> практическое задание, </b><span>которое закрепляет тему</span></p><p><b>3 тарифа<br /></b><span>Разница – в поддержке<br />на эти 5 дней</span></p><p><b>Никакой воды,<br /></b><span>только то что<br />реально нужно<br />применить!</span></p></>}</div>
+      <div data-reveal className={styles.formatFacts}>{isEnglish ? <><p><span>Every lesson includes</span><br /><b>a practical assignment,</b><br /><span>to reinforce the topic</span></p><p><b>3 plans</b><br /><span>with different access<br />and support</span></p><p><b>no filler,</b><br /><span>only what you can<br />put into practice</span></p></> : <><p><span>К каждой лекции идет</span><b> практическое задание, </b><span>которое закрепляет тему</span></p><p><b>3 тарифа<br /></b><span>Разница — в доступе<br />и поддержке</span></p><p><b>Никакой воды,<br /></b><span>только то что<br />реально нужно<br />применить!</span></p></>}</div>
       <a data-reveal className={styles.more} href="#audience">↓ {isEnglish ? "learn more" : "подробнее"} ↓</a>
     </section>
 
@@ -204,7 +204,7 @@ export default function IntensiveClient({ locale = "ru" }: { locale?: "ru" | "en
       <img data-reveal data-reveal-figure className={styles.tariffFigure} src="/intensive/tariff-figure.png" alt="" />
       <header data-reveal><h2>{isEnglish ? "Plans" : "Тарифы"}</h2><p>{isEnglish ? <>While others sell this for ₽60,000,<br /><b>we are making an exceptionally generous offer —</b><br /><strong>for this cohort only</strong></> : <>Пока другие продают за 60 000₽,<br /><b>мы устраиваем аукцион невиданной щедрости –</b><br /><strong>только в этом потоке</strong></>}</p></header>
       <div data-reveal className={styles.tariffTable}>
-        <div className={styles.tariffLabels}><h3>{isEnglish ? "Course" : "О курсе"}</h3><p>{isEnglish ? "Duration" : "Длительность"}</p><p>{isEnglish ? "Chat" : "Чат"}</p><p>{isEnglish ? "Curator" : "Куратор"}</p><p>{isEnglish ? "Price" : "Стоимость"}</p></div>
+        <div className={styles.tariffLabels}><h3>{isEnglish ? "Course" : "О курсе"}</h3><p>{isEnglish ? "Access" : "Доступ"}</p><p>{isEnglish ? "Chat" : "Чат"}</p><p>{isEnglish ? "Curator" : "Куратор"}</p><p>{isEnglish ? "Price" : "Стоимость"}</p></div>
         {tariffs.map(item => <button key={item.id} type="button" className={tariff === item.id ? styles.selected : ""} onClick={() => chooseTariff(item.id)} aria-label={isEnglish ? `Choose ${item.id} plan for ${item.price} rubles` : `Выбрать тариф ${item.id} за ${item.price} рублей`}><h3>{item.id}<i aria-hidden="true" /></h3><p>{item.duration}{item.durationNote && <small>{item.durationNote}</small>}</p><p>{item.chat}{item.chatNote && <small>{item.chatNote}</small>}</p><p>{item.curator}{item.curatorNote && <small>{item.curatorNote}</small>}</p><p className={styles.price}>{item.price} ₽<small>{isEnglish ? "instead of" : "вместо"} {item.old} ₽</small></p></button>)}
       </div>
       <div data-reveal className={styles.deadline}><h3>{isEnglish ? "Price valid" : "Цена действует"}<br /><span>{isEnglish ? "until 12 September, 17:00 MSK" : "до 12 сентября, 17:00 МСК"}</span></h3><p>{isEnglish ? "price rises in" : "повышение через"}</p><div className={styles.clock}>{time.map((value, index) => <b key={index}>{pad(value)}<small>{(isEnglish ? ["days","hours","minutes","seconds"] : ["дней","часов","минут","секунд"])[index]}</small></b>)}</div><button type="button" onClick={() => chooseTariff(tariff)}>{isEnglish ? "Get the discount" : "Получить скидку"}</button></div>
