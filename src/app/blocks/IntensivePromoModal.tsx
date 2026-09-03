@@ -178,7 +178,7 @@ export default function IntensivePromoModal({ locale }: { locale: "ru" | "en" })
       >
         <h2 id="intensive-promo-title" className={styles.srOnly}>Интенсив по Claude</h2>
         <p id="intensive-promo-description" className={styles.srOnly}>
-          Прикладной интенсив для маркетологов, агентств и бизнеса. Доступ к материалам от двух недель.
+          Прикладной интенсив для маркетологов, агентств и бизнеса.
         </p>
         <button className={styles.close} type="button" onClick={() => closeModal("button")} aria-label="Закрыть">
           ×
@@ -192,7 +192,6 @@ export default function IntensivePromoModal({ locale }: { locale: "ru" | "en" })
             sizes="(max-width: 480px) calc(100vw - 24px), 380px"
             alt=""
           />
-          <p className={styles.posterAccess}>ДОСТУП ОТ <em>2</em> НЕДЕЛЬ</p>
         </div>
         <div className={styles.actions}>
           <Link

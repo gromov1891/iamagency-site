@@ -8,7 +8,7 @@ const PATH = "/en/smm-school/applied-claude-intensive";
 
 export const metadata: Metadata = {
   title: { absolute: "Practical Claude Intensive for SMM and Marketing | I AM AGENCY" },
-  description: "A practical Claude intensive covering strategy, funnels, chatbots and analytics for SMM specialists, agencies and business owners, with access from two weeks.",
+  description: "A practical Claude intensive covering strategy, funnels, chatbots and analytics for SMM specialists, agencies and business owners.",
   alternates: getSeoAlternates(PATH),
   openGraph: {
     title: "Raise Your Rates with Claude",
@@ -42,7 +42,7 @@ export default function AppliedClaudeIntensivePage() {
       "@context": "https://schema.org",
       "@type": "Course",
       name: "Applied Claude Intensive for SMM and Marketing",
-      description: "A practical intensive covering strategy, funnels, chatbots and analytics with Claude, with course-material access from two weeks.",
+      description: "A practical intensive covering strategy, funnels, chatbots and analytics with Claude.",
       provider: { "@type": "Organization", name: "I AM AGENCY", sameAs: SITE },
       hasCourseInstance: { "@type": "CourseInstance", courseMode: "online", startDate: "2026-08-28", inLanguage: "en" },
       offers: TARIFF_OFFERS,

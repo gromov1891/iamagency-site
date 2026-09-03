@@ -8,7 +8,7 @@ const PATH = "/shkola-smm/prikladnoy-intensiv";
 
 export const metadata: Metadata = {
   title: { absolute: "Практический интенсив по Claude для SMM и маркетинга | I AM AGENCY" },
-  description: "Практический интенсив по Claude: стратегия, воронки, чат-боты и аналитика для SMM-специалистов, агентств и бизнеса. Доступ от 2 недель, тарифы от 7 990 ₽." ,
+  description: "Практический интенсив по Claude: стратегия, воронки, чат-боты и аналитика для SMM-специалистов, агентств и бизнеса. Три тарифа от 7 990 ₽." ,
   alternates: getSeoAlternates(PATH),
   openGraph: {
     title: "Поднимаем чек с помощью Claude",
@@ -36,7 +36,7 @@ export default function AppliedIntensivePage() {
       "@context": "https://schema.org",
       "@type": "Course",
       name: "Прикладной интенсив по Claude для SMM и маркетинга",
-      description: "Практический интенсив: стратегия, воронки, чат-боты и аналитика с Claude. Доступ к материалам от двух недель.",
+      description: "Практический интенсив: стратегия, воронки, чат-боты и аналитика с Claude.",
       provider: { "@type": "Organization", name: "I AM AGENCY", sameAs: SITE },
       hasCourseInstance: { "@type": "CourseInstance", courseMode: "online", startDate: "2026-08-28", inLanguage: "ru" },
       offers: TARIFF_OFFERS,

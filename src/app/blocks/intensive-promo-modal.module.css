@@ -35,29 +35,15 @@
   background: #fff;
 }
 
-.posterAccess {
+.posterWrap::after {
+  content: "";
   position: absolute;
   right: 3.5%;
   bottom: 2.5%;
   z-index: 1;
-  display: flex;
   width: 57%;
   height: 11.5%;
-  align-items: center;
-  justify-content: flex-end;
-  margin: 0;
   background: #fff;
-  color: #1c1c1c;
-  font: 400 clamp(18px, 6.2vw, 30px)/0.9 Inter, Arial, sans-serif;
-  letter-spacing: -0.06em;
-  text-align: right;
-  text-transform: uppercase;
-}
-
-.posterAccess em {
-  margin: 0 0.12em;
-  color: #da7552;
-  font-style: normal;
 }
 
 .close {

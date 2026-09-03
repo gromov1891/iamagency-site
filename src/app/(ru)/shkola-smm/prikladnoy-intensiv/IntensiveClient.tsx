@@ -173,7 +173,6 @@ export default function IntensiveClient({ locale = "ru" }: { locale?: "ru" | "en
       <nav data-reveal className={styles.breadcrumbs} aria-label={isEnglish ? "Breadcrumbs" : "Хлебные крошки"}><Link href={isEnglish ? "/en" : "/"}>{isEnglish ? "Home" : "Главная"}</Link><span>→</span><Link href={isEnglish ? "/en/smm-school" : "/shkola-smm"}>{isEnglish ? "SMM School" : "Школа SMM"}</Link><span>→</span><b>{isEnglish ? "Applied intensive" : "Прикладной интенсив"}</b></nav>
       <h1 data-reveal>{isEnglish ? <>Raise your rates<br />with <em>Claude</em></> : <>Поднимаем чек<br />с помощью <em>Claude</em></>}</h1>
       <img className={styles.heroStar} src="/intensive/hero-star.svg" alt="" />
-      <p data-reveal className={styles.days}>{isEnglish ? <><span>Access from</span><strong>2</strong><span>weeks</span></> : <><span>Доступ от</span><strong>2</strong><span>недель</span></>}</p>
       <div data-reveal className={styles.heroNote}><strong>{isEnglish ? <>With Claude, we tripled<br />our revenue!</> : <>С ним мы увеличили выручку<br />в 3 раза!</>}</strong><span>{isEnglish ? <>a practical intensive for marketers /<br />agencies / businesses</> : <>прикладной интенсив для маркетологов /<br />агентств / бизнеса</>}</span></div>
       <a data-reveal className={styles.heroButton} href="#tariffs">{isEnglish ? "Choose a plan" : "Выбрать тариф"}</a>
     </section>
