@@ -353,6 +353,17 @@
 
 .articleBody p { margin: 0 0 0.6em; }
 
+.articleBody p a,
+.articleBody li a {
+  color: #d97553;
+  text-decoration: underline;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.13em;
+}
+
+.articleBody p a:hover,
+.articleBody li a:hover { color: #1c1c1c; }
+
 .articleBody ul {
   margin: 0 0 0.7em;
   padding-left: 1em;

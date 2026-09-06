@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState, type ChangeEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import {
   FiChevronDown,
@@ -11,6 +11,7 @@ import {
   FiExternalLink,
   FiFileText,
   FiImage,
+  FiLink,
   FiLogOut,
   FiPlus,
   FiSave,
@@ -66,6 +67,79 @@ function slugify(value: string) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 100);
+}
+
+function normalizeLink(value: string) {
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  if ((trimmed.startsWith("/") && !trimmed.startsWith("//")) || trimmed.startsWith("#")) return trimmed;
+
+  const candidate = /^[\w.-]+\.[a-z]{2,}(?:[/:?#]|$)/i.test(trimmed) ? `https://${trimmed}` : trimmed;
+  try {
+    const url = new URL(candidate);
+    return ["http:", "https:", "mailto:", "tel:"].includes(url.protocol) ? candidate : null;
+  } catch {
+    return null;
+  }
+}
+
+function LinkedTextEditor({ value, onChange, testId }: { value: string; onChange: (value: string) => void; testId: string }) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  function insertLink() {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selected = value.slice(start, end);
+
+    if (!selected.trim() || selected.includes("\n")) {
+      window.alert("Сначала выделите одно слово или фразу в тексте.");
+      textarea.focus();
+      return;
+    }
+
+    const entered = window.prompt(`Введите ссылку для «${selected.trim()}»`, "https://");
+    if (entered === null) return;
+    const href = normalizeLink(entered);
+    if (!href) {
+      window.alert("Введите корректную ссылку: https://…, /страница, mailto:… или tel:…");
+      textarea.focus();
+      return;
+    }
+
+    const leadingSpace = selected.match(/^\s*/)?.[0] || "";
+    const trailingSpace = selected.match(/\s*$/)?.[0] || "";
+    const label = selected.trim().replace(/[\[\]]/g, "");
+    const replacement = `${leadingSpace}[${label}](${href})${trailingSpace}`;
+    const nextValue = `${value.slice(0, start)}${replacement}${value.slice(end)}`;
+    onChange(nextValue);
+
+    requestAnimationFrame(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start + leadingSpace.length, start + replacement.length - trailingSpace.length);
+    });
+  }
+
+  return (
+    <div className={styles.linkTextField}>
+      <div className={styles.linkTextFieldHeader}>
+        <span>Текст</span>
+        <button type="button" data-testid={`${testId}-add-link`} onClick={insertLink} title="Добавить ссылку к выделенному тексту">
+          <FiLink />Вставить ссылку
+        </button>
+      </div>
+      <textarea
+        ref={textareaRef}
+        data-testid={testId}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        rows={7}
+        placeholder="Разделяйте абзацы пустой строкой"
+      />
+      <small>Чтобы добавить ссылку, выделите слово или фразу и нажмите «Вставить ссылку».</small>
+    </div>
+  );
 }
 
 async function prepareImage(file: File) {
@@ -328,7 +402,11 @@ export default function CmsEditor({ user }: { user: string }) {
                       </div>
                     </div>
                     <label><span>Подзаголовок, если нужен</span><input data-testid={`section-heading-${index}`} value={section.heading || ""} onChange={(event) => updateSection(index, { heading: event.target.value })} placeholder="Подзаголовок H2" /></label>
-                    <label><span>Текст</span><textarea data-testid={`section-text-${index}`} value={(section.paragraphs || []).join("\n\n")} onChange={(event) => updateSection(index, { paragraphs: event.target.value.split(/\n\s*\n/).filter(Boolean) })} rows={7} placeholder="Разделяйте абзацы пустой строкой" /></label>
+                    <LinkedTextEditor
+                      testId={`section-text-${index}`}
+                      value={(section.paragraphs || []).join("\n\n")}
+                      onChange={(value) => updateSection(index, { paragraphs: value.split(/\n\s*\n/).filter(Boolean) })}
+                    />
                     <label><span>Маркированный список, по одному пункту в строке</span><textarea value={(section.bullets || []).join("\n")} onChange={(event) => updateSection(index, { bullets: event.target.value.split("\n").map((item) => item.trim()).filter(Boolean) })} rows={3} placeholder="Первый пункт&#10;Второй пункт" /></label>
                     <div className={styles.inlineImageEditor}>
                       {section.image && <div className={styles.inlineImagePreview}><Image src={section.image} alt="" fill sizes="240px" /></div>}

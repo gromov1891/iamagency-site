@@ -336,12 +336,19 @@
 
 .sectionsList { gap: 16px; }
 .contentBlock { border: 1px solid #d8dbe0; border-radius: 8px; background: #fafbfc; padding: 18px; }
-.contentBlock label + label { margin-top: 15px; }
+.contentBlock label + label,
+.contentBlock label + .linkTextField { margin-top: 15px; }
 .blockToolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
 .blockToolbar strong { font-size: 12px; text-transform: uppercase; }
 .blockToolbar > div { gap: 5px; }
 .blockToolbar button { width: 32px; height: 32px; flex-basis: 32px; font-size: 15px; }
 .blockToolbar button:disabled { cursor: default; opacity: 0.3; }
+
+.linkTextField { display: flex; min-width: 0; flex-direction: column; gap: 7px; color: #4e535b; font-size: 13px; font-weight: 600; }
+.linkTextFieldHeader { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.linkTextFieldHeader button { display: inline-flex; min-height: 32px; align-items: center; gap: 7px; border: 1px solid #cbd0d6; border-radius: 6px; background: #fff; color: #30343a; padding: 0 11px; cursor: pointer; font: 600 12px/1 Inter, sans-serif; }
+.linkTextFieldHeader button:hover { border-color: #30343a; background: #f3f4f5; }
+.linkTextField > small { color: #8a8f97; font-size: 12px; font-weight: 400; }
 
 .inlineImageEditor { min-height: 44px; gap: 10px; margin-top: 16px; }
 .smallUploadButton { position: relative; width: max-content; border: 1px solid #cbd0d6; background: #fff; color: #30343a; padding: 0 13px; }

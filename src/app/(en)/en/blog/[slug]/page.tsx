@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ResponsiveBlock from "@/app/blocks/ResponsiveBlock";
 import BlogCard from "@/app/blog/BlogCard";
+import InlineArticleText from "@/app/blog/InlineArticleText";
 import { futerHtml, futerH } from "@/app/blocks/gen/futerHtml";
 import { futerTabletHtml, futerTabletH } from "@/app/blocks/gen/futerTabletHtml";
 import { futerMobileHtml, futerMobileH } from "@/app/blocks/gen/futerMobileHtml";
@@ -45,9 +46,9 @@ export default async function EnglishArticlePage({ params }: { params: Promise<{
         <div className={styles.articleCover}><Image src={article.image} alt={article.imageAlt} fill priority sizes="(max-width: 767px) 58vw, 450px" className={styles.articleCoverImage} /></div>
         <div className={styles.articleTags} aria-label="Article topics">{article.tags.map((tag) => <Link key={tag} href={`/en/blog?tag=${encodeURIComponent(tag)}`} className={styles.articleTag}>#{tag}</Link>)}</div>
         <div className={styles.articleBody}>{article.sections.map((section, index) => <section key={`${section.heading || "text"}-${index}`} className={styles.articleSection}>
-          {section.heading && <h2>{section.heading}</h2>}{section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          {section.heading && <h2>{section.heading}</h2>}{section.paragraphs?.map((paragraph) => <p key={paragraph}><InlineArticleText>{paragraph}</InlineArticleText></p>)}
           {section.commands && <div className={styles.commands}>{section.commands.map((command) => <code key={command}>{command}</code>)}</div>}
-          {section.bullets && <ul>{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>}
+          {section.bullets && <ul>{section.bullets.map((bullet) => <li key={bullet}><InlineArticleText>{bullet}</InlineArticleText></li>)}</ul>}
           {section.image && <figure className={styles.articleInlineFigure}><Image src={section.image} alt={section.imageAlt || "I AM AGENCY article illustration"} width={1200} height={800} sizes="(max-width: 767px) calc(100vw - 30px), 768px" className={styles.articleInlineImage} />{section.caption && <figcaption>{section.caption}</figcaption>}</figure>}
         </section>)}</div>
       </article>

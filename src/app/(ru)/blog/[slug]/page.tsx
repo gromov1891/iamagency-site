@@ -8,6 +8,7 @@ import { futerHtml, futerH } from "@/app/blocks/gen/futerHtml";
 import { futerTabletHtml, futerTabletH } from "@/app/blocks/gen/futerTabletHtml";
 import { futerMobileHtml, futerMobileH } from "@/app/blocks/gen/futerMobileHtml";
 import BlogCard from "@/app/blog/BlogCard";
+import InlineArticleText from "@/app/blog/InlineArticleText";
 import { BLOG_ARTICLES } from "@/app/blog/articles";
 import { getPublishedArticle, getPublishedRelatedArticles } from "@/lib/cms-store";
 import styles from "@/app/blog/blog.module.css";
@@ -129,7 +130,7 @@ export default async function ArticlePage({
               <section key={`${section.heading || "text"}-${index}`} className={styles.articleSection}>
                 {section.heading && <h2>{section.heading}</h2>}
                 {section.paragraphs?.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
+                  <p key={paragraph}><InlineArticleText>{paragraph}</InlineArticleText></p>
                 ))}
                 {section.commands && (
                   <div className={styles.commands}>
@@ -138,7 +139,7 @@ export default async function ArticlePage({
                 )}
                 {section.bullets && (
                   <ul>
-                    {section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
+                    {section.bullets.map((bullet) => <li key={bullet}><InlineArticleText>{bullet}</InlineArticleText></li>)}
                   </ul>
                 )}
                 {section.image && (
