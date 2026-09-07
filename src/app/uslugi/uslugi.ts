@@ -2,6 +2,7 @@ import { brendbukHtml } from "./gen/brendbukHtml";
 import { vedenieHtml } from "./gen/vedenieHtml";
 import { marketingProdvizhenieHtml } from "./gen/marketingProdvizhenieHtml";
 import { kontentSyomkiHtml } from "./gen/kontentSyomkiHtml";
+import { brendbukMobileHtml } from "./gen/brendbukMobileHtml";
 import { mobileFigmaFrame } from "../blocks/gen/mobileFigmaFrame";
 
 /* Реестр страниц услуг /uslugi/<slug>. Каждая страница — 1:1 холст из Figma
@@ -24,22 +25,11 @@ export const USLUGI: Usluga[] = [
     name: "Брендбук и SMM-стратегия",
     html: brendbukHtml,
     height: 7944,
-    mobileHeight: 3126,
-    mobileHtml: mobileFigmaFrame({
-      src: "/blk/responsive/mobile/service-brendbuk.webp",
-      height: 3126,
-      alt: "Разработка SMM-стратегии, айдентики и брендбука",
-      eager: true,
-      hotspots: [
-        { x: 73, y: 818, width: 132, height: 42, label: "Заказать услугу" },
-        { x: 76, y: 1814, width: 132, height: 42, label: "Заказать услугу" },
-        { x: 73, y: 2371, width: 132, height: 42, label: "Заказать услугу" },
-        { x: 73, y: 3021, width: 132, height: 42, label: "Заказать услугу" },
-      ],
-    }),
+    mobileHeight: 2483,
+    mobileHtml: brendbukMobileHtml,
     metaTitle: "Брендбук и SMM-стратегия — разработка под ключ",
     metaDescription:
-      "SMM-стратегия развития, концептуальная стратегия бренда, айдентика и брендбук под ключ. Анализ ниши и конкурентов, позиционирование, контент-план. От 150 000 ₽.",
+      "SMM-стратегия развития, концептуальная стратегия бренда, айдентика и брендбук под ключ. Анализ ниши и конкурентов, позиционирование, контент-план. От 80 000 ₽.",
   },
   {
     slug: "vedenie-sotssetey",

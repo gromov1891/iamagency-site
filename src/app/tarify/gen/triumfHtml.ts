@@ -52,15 +52,15 @@ export const triumfHtml = `
   <!-- H1: название / цена -->
   <h1 style="position:absolute;left:65px;top:197px;${h1big}color:${WHITE};">ТРИУМФ</h1>
   <div style="position:absolute;left:664px;top:197px;${h1big}color:${ORANGE};">/</div>
-  <div style="position:absolute;right:67px;top:197px;text-align:right;${h1big}color:${GRAY};white-space:nowrap;"><span style="font-size:40px">от</span> 450 000₽</div>
+  <div style="position:absolute;right:67px;top:197px;text-align:right;${h1big}color:${GRAY};white-space:nowrap;"><span style="font-size:40px">от</span> 280 000₽</div>
 
   <!-- Что входит в тариф -->
   <div style="position:absolute;left:65px;top:489px;${vhodit}">Что входит в тариф:</div>
 
   <div style="position:absolute;left:65px;top:578px;width:1142px;${list}">${g("&gt;")}  всё, что в тарифе <a href="/tarify/proryv" style="color:inherit;text-transform:uppercase;text-decoration:underline;">«Прорыв»</a>
-${g("&gt;")}  Выездная съёмка фото и видео раз в месяц
-${g("&gt;")}  Перформанс-маркетинг ${g("(контекстная реклама)")}
-${g("&gt;")}  Инфлюенс-маркетинг
+${g("&gt;")}  Выездная съёмка фото и видео раз в месяц ${g("(от 2 часов съёмки)")}
+${g("&gt;")}  Перформанс-маркетинг, контекстная реклама ${g("(бюджет отдельно)")}
+${g("&gt;")}  Инфлюенс-маркетинг: от 3 коллабораций в месяц ${g("(оплата блогеров отдельно)")}
 ${g("&gt;")}  Расширенное сопровождение в приоритете</div>
 
   <!-- Кнопка Купить тариф -->

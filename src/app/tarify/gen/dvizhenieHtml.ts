@@ -61,14 +61,14 @@ export const dvizhenieHtml = `
   <!-- H1: название / цена -->
   <h1 style="position:absolute;left:65px;top:197px;${h1big}color:${WHITE};">Движение</h1>
   <div style="position:absolute;left:760px;top:197px;${h1big}color:${BLUE};">/</div>
-  <div style="position:absolute;left:65px;top:197px;width:1308px;text-align:right;${h1big}color:${GRAY};"><span style="font-size:40px">от</span> 140 000₽</div>
+  <div style="position:absolute;left:65px;top:197px;width:1308px;text-align:right;${h1big}color:${GRAY};"><span style="font-size:40px">от</span> 80 000₽</div>
 
   <!-- Что входит в тариф -->
   <div style="position:absolute;left:65px;top:431px;${vhodit}">Что входит в тариф:</div>
 
   <div style="position:absolute;left:65px;top:520px;width:1142px;${list}">${g("&gt;")}  Стратегия развития
 ${g("&gt;")}  Фирменный стиль и оформление аккаунта
-${g("&gt;")}  Ведение одной площадки: до 15 постов/reels + сторис
+${g("&gt;")}  Ведение одной площадки: до 9 постов/reels + 2 сторис-серии в неделю
 ${g("&gt;")}  ТЗ к съёмкам
 ${g("&gt;")}  Ежемесячный отчёт
 
@@ -143,7 +143,7 @@ ${g("Аккаунт считывается с первого взгляда — 
   <div style="position:absolute;left:191px;top:3599px;width:755px;height:314px;">
     ${num(0, 0, 100, "03")}
     ${chip(140, 11, 398, "Контент под ключ")}
-    <div style="position:absolute;left:140px;top:94px;width:615px;${desc}color:${WHITE};">До 15 постов и reels в месяц
+  <div style="position:absolute;left:140px;top:94px;width:615px;${desc}color:${WHITE};">До 9 постов и reels в месяц + 2 сторис-серии в неделю
 
 Работаем с вашими материалами: монтируем, верстаем, оформляем. ${g("Если контента не хватает — закрываем дизайном, нейросетями и стоками, чтобы аккаунт жил регулярно и в едином стиле")}
 

@@ -51,13 +51,13 @@ export const proryvHtml = `
   <!-- H1: название / цена -->
   <h1 style="position:absolute;left:65px;top:197px;${h1big}color:${WHITE};">ПРОРЫВ</h1>
   <div style="position:absolute;left:664px;top:197px;${h1big}color:${PURPLE};">/</div>
-  <div style="position:absolute;right:67px;top:197px;text-align:right;${h1big}color:${GRAY};white-space:nowrap;"><span style="font-size:40px">от</span> 230 000₽</div>
+  <div style="position:absolute;right:67px;top:197px;text-align:right;${h1big}color:${GRAY};white-space:nowrap;"><span style="font-size:40px">от</span> 140 000₽</div>
 
   <!-- Что входит в тариф -->
   <div style="position:absolute;left:65px;top:431px;${vhodit}">Что входит в тариф:</div>
 
   <div style="position:absolute;left:65px;top:520px;width:1142px;${list}">${g("&gt;")}  всё, что в тарифе <a href="/tarify/dvizhenie" style="color:inherit;text-transform:uppercase;text-decoration:underline;">«Движение»</a>
-${g("&gt;")}  telegram-канал
+${g("&gt;")}  Telegram-канал ${g("(вторая площадка)")}
 ${g("&gt;")}  продвижение для роста охватов
 ${g("&gt;")}  Работа с аудиторией и сообщениями
 ${g("&gt;")}  Чат-бот с приветственным сообщением
