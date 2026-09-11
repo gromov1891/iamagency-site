@@ -53,6 +53,20 @@ export const metadata: Metadata = {
   description:
     "SMM-агентство I AM AGENCY: стратегия, ведение и продвижение соцсетей, контент, съёмки и performance-маркетинг под ключ. 7 лет в нише, 450+ клиентов.",
   alternates: getSeoAlternates("/"),
+  openGraph: {
+    type: "website",
+    url: "https://iamagency.su/",
+    siteName: "I AM AGENCY",
+    title: "I AM AGENCY — SMM-агентство полного цикла",
+    description: "Стратегия, ведение и продвижение соцсетей, контент и performance-маркетинг под ключ.",
+    images: [{ url: "/social/homepage-scroll-v1.gif", width: 600, height: 315, type: "image/gif", alt: "Медленная прокрутка сайта I AM AGENCY" }],
+    videos: [{ url: "https://iamagency.su/social/homepage-scroll-v1.mp4", secureUrl: "https://iamagency.su/social/homepage-scroll-v1.mp4", width: 1200, height: 630, type: "video/mp4" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "I AM AGENCY — SMM-агентство полного цикла",
+    images: ["/social/homepage-scroll-v1.png"],
+  },
 };
 
 /* Главная 1:1 из экспортов Builder.io. Между Hero и УТП — лента Партнёров.
