@@ -1,5 +1,5 @@
 export const CONTACT_CHANNELS = [
-  { key: "telegram", label: "Telegram", value: "@iam_smmagency", href: "https://t.me/iam_smmagency", mark: "TG" },
+  { key: "telegram", label: "Telegram", value: "@iamagency", href: "https://t.me/iamagency", mark: "TG" },
   { key: "whatsapp", label: "WhatsApp", value: "+7 993 437 6760", href: "https://wa.me/79934376760", mark: "WA" },
   { key: "phone", label: "Телефон", value: "+7 993 437 6760", href: "tel:+79934376760", mark: "TEL" },
   { key: "email", label: "Email", value: "iamagency.su@gmail.com", href: "mailto:iamagency.su@gmail.com", mark: "@" },

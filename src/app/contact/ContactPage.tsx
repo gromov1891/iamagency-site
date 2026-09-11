@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import ContactGame from "./ContactGame";
+import ContactLeadButton from "./ContactLeadButton";
 import { CONTACT_CHANNELS, SOCIAL_CHANNELS } from "./contact-data";
 import styles from "./contact-page.module.css";
 
@@ -130,7 +131,7 @@ export default function ContactPage({ locale }: { locale: Locale }) {
         <div className={styles.heroCopy}>
           <p>{t.intro}</p>
           <div className={styles.heroActions}>
-            <button type="button">{t.lead}</button>
+            <ContactLeadButton>{t.lead}</ContactLeadButton>
             <a href="tel:+79934376760">{t.phone}</a>
           </div>
           <small><i />{t.response}</small>
@@ -148,7 +149,9 @@ export default function ContactPage({ locale }: { locale: Locale }) {
           {CONTACT_CHANNELS.map((channel, index) => (
             <a key={channel.key} href={channel.href} target={channel.key === "phone" || channel.key === "email" ? undefined : "_blank"} rel={channel.key === "phone" || channel.key === "email" ? undefined : "noopener noreferrer"} className={styles.contactCard}>
               <span>{String(index + 1).padStart(2, "0")} · {contactLabels[channel.key]}</span>
-              <strong>{channel.value}</strong>
+              <strong>
+                {channel.key === "email" ? <>{channel.value.split("@")[0]}@<wbr />{channel.value.split("@")[1]}</> : channel.value}
+              </strong>
               <i>{channel.mark}</i>
               <b aria-hidden="true">+</b>
             </a>
@@ -205,7 +208,7 @@ export default function ContactPage({ locale }: { locale: Locale }) {
       <section className={styles.endCta}>
         <p>I AM AGENCY</p>
         <h2>{locale === "ru" ? "ВАШ ПРОЕКТ — НАШ СЛЕДУЮЩИЙ ХОРОШИЙ КЕЙС" : "YOUR PROJECT — OUR NEXT GREAT CASE"}</h2>
-        <button type="button">{t.lead}</button>
+        <ContactLeadButton>{t.lead}</ContactLeadButton>
         <div><span>{t.legal}</span><Link href={privacyHref}>{t.privacy}</Link></div>
       </section>
     </main>

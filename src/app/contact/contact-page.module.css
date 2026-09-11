@@ -320,11 +320,26 @@
   .sectionHeading { grid-template-columns: 40px 1fr; gap: 7px; }
   .sectionHeading > span { padding-top: 5px; font-size: 15px; }
   .sectionHeading h2 { font-size: 48px; }
+  .direct .sectionHeading h2 {
+    font-family: Inter, sans-serif;
+    font-size: clamp(39px, 11.4vw, 46px);
+    font-weight: 500;
+    line-height: .9;
+    letter-spacing: -.065em;
+    text-wrap: balance;
+  }
   .contactGrid { width: 100%; margin-top: 42px; gap: 10px; }
   .contactCard,
   .contactCard:nth-child(n) { width: 100%; min-height: 76px; padding: 7px 8px 7px 19px; grid-template-columns: 64px minmax(0,1fr) 45px; gap: 9px; }
   .contactCard > span { font-size: 9px; }
-  .contactCard > strong { font-size: clamp(20px, 6vw, 26px); }
+  .contactCard > strong {
+    overflow-wrap: normal;
+    font-family: Inter, sans-serif;
+    font-size: clamp(18px, 5.5vw, 23px);
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -.045em;
+  }
   .contactCard > i { display: none; }
   .contactCard > b,
   .socialList b { width: 46px; height: 46px; font-size: 31px; }
