@@ -355,6 +355,7 @@
 
 .articleBody p a,
 .articleBody li a {
+  overflow-wrap: anywhere;
   color: #d97553;
   text-decoration: underline;
   text-decoration-thickness: 0.06em;
