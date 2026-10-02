@@ -50,11 +50,12 @@ export async function processTelegramQueue() {
   for (const { key } of objects) {
     if (processed >= 20) break;
     const entry = await readQueueObject<Job>(key);
+    console.info(`Telegram queue record ${key.split("/").pop()}: ${entry ? entry.value.status : "missing"}, due=${entry ? entry.value.nextAttemptAt <= Date.now() : false}, version=${Boolean(entry?.etag)}`);
     if (!entry || entry.value.status === "sent" || entry.value.nextAttemptAt > Date.now()) continue;
     const claimed: Job = { ...entry.value, status: "sending", attempts: entry.value.attempts + 1,
       nextAttemptAt: Date.now() + 300_000, updatedAt: new Date().toISOString() };
     const lease = await writeQueueObject(key, claimed, entry.etag);
-    if (!lease) continue;
+    if (!lease) { console.info(`Lead ${claimed.id} queue claim conflict`); continue; }
     processed++;
     let delivered = false;
     try {
