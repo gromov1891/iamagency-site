@@ -6,7 +6,7 @@ import {
   PutObjectCommand,
   S3Client,
 } from "@aws-sdk/client-s3";
-import { get, list, put, BlobPreconditionFailedError } from "@vercel/blob";
+import { get, head, list, put, BlobNotFoundError, BlobPreconditionFailedError } from "@vercel/blob";
 
 export type StorageBackend = "timeweb-s3" | "vercel-blob" | "none";
 
@@ -49,7 +49,14 @@ function requireS3() {
 // Queue updates must be conditional: only one application instance can claim a job.
 export async function readQueueObject<T>(key: string) {
   if (getStorageBackend() === "vercel-blob") {
-    const result = await get(key, { access: "public", useCache: false, abortSignal: AbortSignal.timeout(30_000) });
+    let metadata;
+    try { metadata = await head(key, { abortSignal: AbortSignal.timeout(30_000) }); }
+    catch (error) { if (error instanceof BlobNotFoundError) return null; throw error; }
+    // useCache:false only bypasses private Blob caching. Public queue reads must
+    // also bypass cached 404s / stale payloads at the CDN edge.
+    const url = new URL(metadata.url);
+    url.searchParams.set("queueRead", `${Date.now()}-${Math.random()}`);
+    const result = await get(url.toString(), { access: "public", useCache: false, abortSignal: AbortSignal.timeout(30_000) });
     if (!result || result.statusCode !== 200) return null;
     return { value: await new Response(result.stream).json() as T, etag: result.blob.etag };
   }
