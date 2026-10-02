@@ -28,6 +28,7 @@ function decrypt(value: string) {
 }
 
 export async function enqueueTelegram(id: string, chatId: string, text: string) {
+  startTelegramWorker();
   const key = `${PREFIX}${id}.json`;
   const existing = await readQueueObject<Job>(key);
   if (existing) return;
@@ -85,5 +86,6 @@ export function startTelegramWorker() {
   };
   workerState.iamTelegramWorker = setInterval(tick, 30_000);
   workerState.iamTelegramWorker.unref();
+  console.info("Telegram delivery queue worker started");
   void tick();
 }
