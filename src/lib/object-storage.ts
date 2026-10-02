@@ -49,7 +49,7 @@ function requireS3() {
 // Queue updates must be conditional: only one application instance can claim a job.
 export async function readQueueObject<T>(key: string) {
   if (getStorageBackend() === "vercel-blob") {
-    const result = await get(key, { access: "public", useCache: false });
+    const result = await get(key, { access: "public", useCache: false, abortSignal: AbortSignal.timeout(30_000) });
     if (!result || result.statusCode !== 200) return null;
     return { value: await new Response(result.stream).json() as T, etag: result.blob.etag };
   }
@@ -123,7 +123,7 @@ export async function listStoredObjects(prefix: string): Promise<StoredObject[]>
     const objects: StoredObject[] = [];
     let cursor: string | undefined;
     do {
-      const page = await list({ prefix, limit: 1000, cursor });
+      const page = await list({ prefix, limit: 1000, cursor, abortSignal: AbortSignal.timeout(30_000) });
       objects.push(...page.blobs.map((blob) => ({ key: blob.pathname })));
       cursor = page.hasMore ? page.cursor : undefined;
     } while (cursor);

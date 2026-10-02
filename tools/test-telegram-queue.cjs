@@ -22,7 +22,7 @@ function load() {
     compilerOptions: {module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020},
   }).outputText;
   vm.runInNewContext(compiled, {
-    exports:mod.exports, module:mod, Buffer, Date, setInterval,
+    exports:mod.exports, module:mod, Buffer, Date, setInterval, setTimeout,
     process:{env:{LEADS_TELEGRAM_BOT_TOKEN:'test', LEADS_VALIDATION_SECRET:'test-secret'}},
     console:{info(){},error(){}},
     require(name) {

@@ -40,8 +40,12 @@ export async function enqueueTelegram(id: string, chatId: string, text: string) 
 
 export async function processTelegramQueue() {
   const token = process.env.LEADS_TELEGRAM_BOT_TOKEN?.trim();
-  if (!token || getStorageBackend() === "none") return;
+  if (!token || getStorageBackend() === "none") {
+    console.error("Telegram queue configuration missing");
+    return;
+  }
   const objects = await listStoredObjects(PREFIX);
+  if (objects.length) console.info(`Telegram queue scan: ${objects.length} records`);
   let processed = 0;
   for (const { key } of objects) {
     if (processed >= 20) break;
@@ -81,11 +85,12 @@ export function startTelegramWorker() {
     if (workerState.iamTelegramBusy) return;
     workerState.iamTelegramBusy = true;
     try { await processTelegramQueue(); }
-    catch { console.error("Telegram queue processing failed; will retry"); }
+    catch (error) { console.error("Telegram queue processing failed; will retry", error instanceof Error ? error.name : "unknown"); }
     finally { workerState.iamTelegramBusy = false; }
   };
   workerState.iamTelegramWorker = setInterval(tick, 30_000);
   workerState.iamTelegramWorker.unref();
   console.info("Telegram delivery queue worker started");
-  void tick();
+  // Do not start storage I/O inside Next's initialization hook.
+  setTimeout(tick, 1_000).unref();
 }
