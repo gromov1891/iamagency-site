@@ -9,6 +9,7 @@ export function GET() {
     status: "ok",
     service: "iamagency-site",
     storage: getStorageBackend(),
+    telegramQueue: "v1",
     timestamp: new Date().toISOString(),
   });
 }

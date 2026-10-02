@@ -6,7 +6,7 @@ import {
   PutObjectCommand,
   S3Client,
 } from "@aws-sdk/client-s3";
-import { get, list, put } from "@vercel/blob";
+import { get, list, put, BlobPreconditionFailedError } from "@vercel/blob";
 
 export type StorageBackend = "timeweb-s3" | "vercel-blob" | "none";
 
@@ -44,6 +44,49 @@ function requireS3() {
   });
 
   return { client: s3Client, bucket: s3Bucket };
+}
+
+// Queue updates must be conditional: only one application instance can claim a job.
+export async function readQueueObject<T>(key: string) {
+  if (getStorageBackend() === "vercel-blob") {
+    const result = await get(key, { access: "public", useCache: false });
+    if (!result || result.statusCode !== 200) return null;
+    return { value: await new Response(result.stream).json() as T, etag: result.blob.etag };
+  }
+  const { client, bucket } = requireS3();
+  try {
+    const result = await client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));
+    return { value: JSON.parse(await result.Body!.transformToString()) as T, etag: result.ETag! };
+  } catch (error) {
+    if ((error as { $metadata?: { httpStatusCode?: number } }).$metadata?.httpStatusCode === 404) return null;
+    throw error;
+  }
+}
+
+export async function writeQueueObject(key: string, value: unknown, etag?: string) {
+  if (getStorageBackend() === "vercel-blob") {
+    try {
+      const result = await put(key, JSON.stringify(value), {
+        access: "public", addRandomSuffix: false, allowOverwrite: Boolean(etag),
+        ...(etag ? { ifMatch: etag } : {}), contentType: "application/json", cacheControlMaxAge: 0,
+      });
+      return result.etag;
+    } catch (error) {
+      if (error instanceof BlobPreconditionFailedError) return null;
+      throw error;
+    }
+  }
+  const { client, bucket } = requireS3();
+  try {
+    const result = await client.send(new PutObjectCommand({
+      Bucket: bucket, Key: key, Body: JSON.stringify(value), ContentType: "application/json",
+      CacheControl: "no-store", ...(etag ? { IfMatch: etag } : { IfNoneMatch: "*" }),
+    }));
+    return result.ETag!;
+  } catch (error) {
+    if ([409, 412].includes((error as { $metadata?: { httpStatusCode?: number } }).$metadata?.httpStatusCode ?? 0)) return null;
+    throw error;
+  }
 }
 
 function publicObjectUrl(key: string) {
