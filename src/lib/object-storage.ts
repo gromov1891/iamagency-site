@@ -58,7 +58,9 @@ export async function readQueueObject<T>(key: string) {
     url.searchParams.set("queueRead", `${Date.now()}-${Math.random()}`);
     const result = await get(url.toString(), { access: "public", useCache: false, abortSignal: AbortSignal.timeout(30_000) });
     if (!result || result.statusCode !== 200) return null;
-    return { value: await new Response(result.stream).json() as T, etag: result.blob.etag };
+    // Public CDN compression weakens the HTTP ETag; Blob's write API requires
+    // the original strong version tag for its conditional update.
+    return { value: await new Response(result.stream).json() as T, etag: result.blob.etag.replace(/^W\//, "") };
   }
   const { client, bucket } = requireS3();
   try {
