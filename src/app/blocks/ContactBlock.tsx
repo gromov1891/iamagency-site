@@ -150,6 +150,17 @@ export default function ContactBlock({
           : `<input type="checkbox" required aria-label="Согласие на обработку персональных данных" style="width:14px;height:14px;margin:0;accent-color:#8992E4"><span>Я согласен с <a href="/privacy-consent" target="_blank" style="color:inherit;text-underline-offset:2px">обработкой персональных данных</a></span>`;
         canvas.appendChild(consent);
         const consentInput = consent.querySelector("input") as HTMLInputElement;
+        consentInput.name = "consent";
+        const privacy = document.createElement("label");
+        privacy.style.cssText = consent.style.cssText;
+        privacy.style.top = `${consentTop + (isMobile || isTablet ? 22 : 28)}px`;
+        privacy.innerHTML = isEnglish
+          ? `<input name="privacyAcknowledged" type="checkbox" required aria-label="I have read the privacy policy" style="width:14px;height:14px;flex-shrink:0;margin:0;accent-color:#8992E4"><span>I have read the <a href="/en/privacy-policy" target="_blank" rel="noopener noreferrer" style="color:inherit;text-underline-offset:2px">privacy policy</a></span>`
+          : `<input name="privacyAcknowledged" type="checkbox" required aria-label="Ознакомлен с политикой конфиденциальности" style="width:14px;height:14px;flex-shrink:0;margin:0;accent-color:#8992E4"><span>Ознакомлен с <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" style="color:inherit;text-underline-offset:2px">политикой конфиденциальности</a></span>`;
+        canvas.appendChild(privacy);
+        const privacyInput = privacy.querySelector("input") as HTMLInputElement;
+        // Leave room for both independent acknowledgements and validation feedback.
+        submit.style.top = `${Math.max(submit.offsetTop, consentTop + (isMobile || isTablet ? 68 : 80))}px`;
 
         const status = document.createElement("div");
         status.setAttribute("role", "status");
@@ -171,6 +182,7 @@ export default function ContactBlock({
           modal.style.display = "none";
           inputs.forEach((i) => (i.style.display = ""));
           consent.style.display = "flex";
+          privacy.style.display = "flex";
           submit.style.display = "flex";
           submit.style.pointerEvents = "";
           submit.style.opacity = "";
@@ -179,6 +191,7 @@ export default function ContactBlock({
         const showThanks = () => {
           inputs.forEach((i) => (i.style.display = "none"));
           consent.style.display = "none";
+          privacy.style.display = "none";
           submit.style.display = "none";
           modal.style.display = "";
         };
@@ -195,6 +208,10 @@ export default function ContactBlock({
           }
           if (!consentInput.checked) {
             consentInput.focus();
+            return;
+          }
+          if (!privacyInput.checked) {
+            privacyInput.focus();
             return;
           }
           submit.dataset.sending = "1";
@@ -232,6 +249,7 @@ export default function ContactBlock({
         close.addEventListener("click", () => {
           inputs.forEach((i) => (i.value = ""));
           consentInput.checked = false;
+          privacyInput.checked = false;
           showForm();
         });
       });
